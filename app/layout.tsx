@@ -1,8 +1,21 @@
+import clsx from 'clsx'
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Rajdhani, Roboto } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const rajdhani = Rajdhani({
+  subsets: ['latin'],
+  style: 'normal',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-rajdhani'
+})
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  style: 'normal',
+  weight: ['100', '300', '400', '500', '700', '900'],
+  variable: '--font-roboto'
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={clsx(rajdhani.className, roboto.className)}>{children}</body>
     </html>
   )
 }
