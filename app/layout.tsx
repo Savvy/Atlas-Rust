@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx(rajdhani.className, roboto.className)}>{children}</body>
+      <body className={clsx(rajdhani.className/* , roboto.className */)}>{children}</body>
     </html>
   )
 }
