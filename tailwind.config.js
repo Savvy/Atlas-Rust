@@ -35,8 +35,8 @@ module.exports = {
           foreground: "var(--secondary-foreground))",
         },
         'secondary-accent': {
-          DEFAULT: "var(--secondary-accent)",
-          foreground: "var(--secondary-accent-foreground)"
+          DEFAULT: "hsl(var(--secondary-accent))",
+          foreground: "jvar(--secondary-accent-foreground)"
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -77,6 +77,10 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      backgroundImage: {
+        'hero': "url('/images/hero.png')",
+        'grids': "url('/images/grids.png')"
       },
     },
   },

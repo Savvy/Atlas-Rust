@@ -16,12 +16,12 @@ export default function Footer() {
                         src={'/atlas.svg'}
                         width={100}
                         height={100}
-                        className="h-8 w-auto"
+                        className="h-8 w-auto opacity-50 hover:opacity-100 transition-opacity duration-300 ease-in-out cursor-pointer"
                         alt="Atlas Logo"
                     />
                     <div className="flex gap-3">
                         <a href="/" className={clsx(
-                            "bg-secondary-accent hover:bg-secondary-accent-foreground",
+                            "bg-secondary-accent hover:bg-secondary-accent/80",
                             "p-3 rounded-full",
                             "transition-colors duration-300 ease-in-out"
                         )}>
@@ -31,7 +31,7 @@ export default function Footer() {
                             />
                         </a>
                         <a href="/" className={clsx(
-                            "bg-secondary-accent hover:bg-secondary-accent-foreground",
+                            "bg-secondary-accent hover:bg-secondary-accent/80",
                             "p-3 rounded-full",
                             "transition-colors duration-300 ease-in-out"
                         )}>
@@ -41,7 +41,7 @@ export default function Footer() {
                             />
                         </a>
                         <a href="/" className={clsx(
-                            "bg-secondary-accent hover:bg-secondary-accent-foreground",
+                            "bg-secondary-accent hover:bg-secondary-accent/80",
                             "p-3 rounded-full",
                             "transition-colors duration-300 ease-in-out"
                         )}>
@@ -51,7 +51,7 @@ export default function Footer() {
                             />
                         </a>
                         <a href="/" className={clsx(
-                            "bg-secondary-accent hover:bg-secondary-accent-foreground",
+                            "bg-secondary-accent hover:bg-secondary-accent/80",
                             "p-3 rounded-full",
                             "transition-colors duration-300 ease-in-out"
                         )}>
@@ -63,7 +63,7 @@ export default function Footer() {
                     </div>
                     <Button
                         size={"default"}
-                        className="bg-secondary-accent hover:bg-secondary-accent-foreground"
+                        className="bg-secondary-accent hover:bg-secondary-accent/80"
                     >
                         <Icon path={mdiAccountOutline}
                             size={0.8}
@@ -76,14 +76,18 @@ export default function Footer() {
                 <hr className="my-5 border-[#212121]" />
                 <div className="flex items-center justify-between uppercase font-rajdhani font-[700]">
                     <div className="opacity-60">Atlas Rust - All Rights Reserved.</div>
-                    <a href="#" className="flex items-center gap-2">
-                        <div className="bg-secondary-accent hover:bg-secondary-accent-foreground p-3 rounded-full">
+                    <a href="#" className={clsx(
+                        "flex items-center gap-2",
+                        "opacity-60 hover:opacity-100",
+                        "transition-opacity duration-300 ease-in-out"
+                    )}>
+                        <div className="bg-secondary-accent hover:bg-secondary-accent/80 p-3 rounded-full transition-colors duration-300 ease-in-out">
                             <Icon path={mdiArrowUp}
                                 size={0.6}
                                 color="white"
                             />
                         </div>
-                        <span className="opacity-60">Back To The Top</span>
+                        <span className="">Back To The Top</span>
                     </a>
                 </div>
             </div>
