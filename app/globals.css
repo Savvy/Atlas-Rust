@@ -7,7 +7,9 @@
     --background: #0E1419;
     --foreground: #ffffff;
 
-    --muted: 210 40% 96.1%;
+    --dark-gray: 0 0% 5%;
+
+    --muted: 230 5% 58%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --popover: 0 0% 100%;

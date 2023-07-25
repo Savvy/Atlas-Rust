@@ -3,6 +3,7 @@ import { mdiTwitter, mdiYoutube, mdiInstagram, mdiArrowUp, mdiAccountOutline, md
 import Icon from "@mdi/react";
 import Footer from '@/components/layout/footer'
 import Link from 'next/link';
+import Server from '@/components/shared/Server';
 
 export default function Home() {
   return (
@@ -47,8 +48,15 @@ export default function Home() {
       </header>
       <section className='container mt-24'>
         <div className="flex justify-between mb-8">
-          <h3 className="text-lg">Our main servers</h3>
-          <Link href={'/'}>see more</Link>
+          <h3 className="text-lg text-muted">Our main servers</h3>
+          <Link href={'/'} className='text-primary'>see more</Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Server />
+          <Server />
+          <Server />
+          <Server />
+          <Server />
         </div>
       </section>
     </main>
