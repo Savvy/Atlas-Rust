@@ -25,7 +25,7 @@ export function MainNav({ items, children }: MainNavProps) {
     const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
 
     return (
-        <div className="flex flex-grow gap-6 md:gap-10">
+        <div className="flex flex-grow gap-6 md:gap-10 font-roboto">
             <Link href="/" className="hidden items-center space-x-2 md:flex">
                 <Image
                     src={'/atlas.svg'}

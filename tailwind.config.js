@@ -18,7 +18,8 @@ module.exports = {
     extend: {
       fontFamily: {
         "rajdhani": "var(--font-rajdhani)",
-        "roboto": "var(--font-roboto)"
+        "roboto": "var(--font-roboto)",
+        "poppins": "var(--font-poppins)"
       },
       colors: {
         border: "hsl(var(--border))",

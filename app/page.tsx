@@ -7,12 +7,12 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <main className="w-full">
-      <header className="relative bg-hero pt-28 bg-no-repeat bg-cover bg-center overflow-hidden">
+      <header className="relative bg-hero pt-28 bg-no-repeat bg-cover bg-center overflow-hidden font-rajdhani">
         <div className="container">
           <div className="relative z-10 flex flex-col gap-4 pt-48">
             <h1 className='text-5xl font-bold'>Venture into great battles in<br />search of your continent.</h1>
             <h5 className="text-xl font-normal">Come play on Atlas Rust, the biggest Rust server<br />you&apos;ve ever seen.</h5>
-            <div className="flex gap-4">
+            <div className="flex gap-4 font-poppins">
               <Button
                 size={"default"}
                 className=""
@@ -27,7 +27,7 @@ export default function Home() {
               <Button
                 size={"default"}
                 variant={'secondary'}
-                className=""
+                className="font-poppins"
               >
                 <Icon path={mdiCartOutline}
                   size={0.8}
@@ -39,7 +39,7 @@ export default function Home() {
             </div>
           </div>
           <div className="relative z-10 pb-48 flex justify-end">
-            <span className="text-white uppercase">Watch Trailer</span>
+            <span className="text-white uppercase font-poppins">Watch Trailer</span>
           </div>
           <div className="bg-grids bg-cover bg-center absolute left-0 top-28 h-full w-full z-[3]"></div>
         </div>

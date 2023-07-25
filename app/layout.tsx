@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import './globals.css'
 import type { Metadata } from 'next'
-import { Rajdhani, Roboto } from 'next/font/google'
+import { Rajdhani, Roboto, Poppins } from 'next/font/google'
 import { MainNav } from '@/components/layout/main-nav'
 import Footer from '@/components/layout/footer'
 import { Button } from '@/components/ui/button'
@@ -20,6 +20,13 @@ const roboto = Roboto({
   style: 'normal',
   weight: ['100', '300', '400', '500', '700', '900'],
   variable: '--font-roboto'
+})
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  style: 'normal',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-poppins'
 })
 
 export const metadata: Metadata = {
@@ -66,7 +73,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx(rajdhani.className,/* , roboto.className */)}>
+      <body className={clsx(rajdhani.variable, roboto.variable, poppins.variable)}>
         <div className="absolute z-20 w-full border-b border-white/10">
           <div className="container h-28 flex items-center justify-between">
             <MainNav items={mainNav} />
@@ -77,7 +84,7 @@ export default function RootLayout({
               <Icon path={mdiAccountOutline}
                 size={0.8}
                 color="white"
-                className="mr-1"
+                className="mr-1 font-poppins"
               />
               Login
             </Button>
