@@ -13,8 +13,10 @@ export default function Server() {
                 <div className="font-rajdhani">
                     <div className="flex justify-between items-center">
                         <div className="font-semibold text-lg">Atlas Rust | US Main</div>
-                        <div className="relative uppercase text-sm">
-                            {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span> */}
+                        <div className="uppercase text-sm flex justify-center items-center gap-1">
+                            <div className="relative h-2 w-2 bg-success rounded-full">
+                            <span className="animate-ping absolute grid place-items-center h-full w-full rounded-full bg-success opacity-75"></span>
+                            </div>
                             Servers NA
                         </div>
                     </div>
