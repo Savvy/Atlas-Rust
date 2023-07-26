@@ -15,6 +15,8 @@ import Server from "@/components/shared/Server";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 
+import Atlas from "@/components/icons/atlas";
+
 export default function Home() {
 	return (
 		<main className="w-full">
@@ -104,20 +106,14 @@ export default function Home() {
 			</div>
 			<section className="container mt-24 py-4">
 				<div className="flex flex-col gap-3 justify-center items-center mb-20">
-          <h3 className="text-3xl">The most competitive servers in Rust.</h3>
-          <h5 className="text-xl text-muted">See the most played places.</h5>
+					<h3 className="text-3xl">The most competitive servers in Rust.</h3>
+					<h5 className="text-xl text-muted">See the most played places.</h5>
 				</div>
-        <div className="w-full">
-          <AspectRatio ratio={16 / 9}>
-            <Image
-              src="./images/map.svg"
-              alt=""
-              height={1920}
-              width={1080}
-              className="rounded-md mx-auto object-cover"
-            />
-          </AspectRatio>
-        </div>
+				<div className="w-full">
+					<AspectRatio ratio={16 / 9} className="grid place-items-center">
+						<Atlas />
+					</AspectRatio>
+				</div>
 			</section>
 		</main>
 	);

@@ -4,6 +4,7 @@ import Atlas from '../icons/atlas.svg';
 import Image from "next/image";
 import { mdiTwitter, mdiYoutube, mdiInstagram, mdiArrowUp, mdiAccountOutline } from '@mdi/js';
 import Icon from "@mdi/react";
+import ScrollToTop from "./scroll-to-top";
 
 export default function Footer() {
     return (
@@ -76,7 +77,7 @@ export default function Footer() {
                 <hr className="my-5 border-[#212121]" />
                 <div className="flex items-center justify-between uppercase font-rajdhani font-[700]">
                     <div className="opacity-60">Atlas Rust - All Rights Reserved.</div>
-                    <a href="#" className={clsx(
+                    {/* <a href="#" className={clsx(
                         "flex items-center gap-2",
                         "opacity-60 hover:opacity-100",
                         "transition-opacity duration-300 ease-in-out"
@@ -88,7 +89,8 @@ export default function Footer() {
                             />
                         </div>
                         <span>Back To The Top</span>
-                    </a>
+                    </a> */}
+                    <ScrollToTop />
                 </div>
             </div>
         </div>

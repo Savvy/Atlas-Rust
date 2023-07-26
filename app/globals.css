@@ -84,3 +84,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  scroll-behavior: smooth;
+}
+
+.map path:hover {
+  stroke: #fff;
+  cursor: pointer;
+}
