@@ -25,7 +25,7 @@ export default function Server() {
                         <div className="absolute top-0 flex items-center justify-center h-full w-full">296 / 300 (7) Players</div>
                     </div>
                 </div>
-                <div className="flex gap-4 uppercase font-poppins">
+                <div className="flex flex-col md:flex-row gap-4 uppercase font-poppins">
                     <Button
                         variant={'outline'}
                         className="bg-transparent flex-grow"

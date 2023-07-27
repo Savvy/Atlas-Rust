@@ -1,21 +1,15 @@
 import { Button } from "@/components/ui/button";
 import {
-	mdiTwitter,
-	mdiYoutube,
-	mdiInstagram,
-	mdiArrowUp,
 	mdiAccountOutline,
-	mdiCart,
 	mdiCartOutline,
 } from "@mdi/js";
 import Icon from "@mdi/react";
-import Footer from "@/components/layout/footer";
 import Link from "next/link";
 import Server from "@/components/shared/Server";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Image from "next/image";
 
 import Atlas from "@/components/icons/atlas";
+import Leaderboard from "@/components/shared/Leaderboard";
 
 export default function Home() {
 	return (
@@ -102,9 +96,10 @@ export default function Home() {
 							see more
 						</Link>
 					</div>
+					<Leaderboard />
 				</section>
 			</div>
-			<section className="container mt-24 py-4">
+			<section className="hidden md:block container mt-24 py-4">
 				<div className="flex flex-col gap-3 justify-center items-center mb-20">
 					<h3 className="text-3xl">The most competitive servers in Rust.</h3>
 					<h5 className="text-xl text-muted">See the most played places.</h5>
@@ -114,6 +109,9 @@ export default function Home() {
 						<Atlas />
 					</AspectRatio>
 				</div>
+			</section>
+			<section className="container text-center py-4">
+				<h5 className="text-lg md:hidden">Map not visible on mobile.</h5>
 			</section>
 		</main>
 	);

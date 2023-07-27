@@ -7,7 +7,11 @@
     --background: #0E1419;
     --foreground: #ffffff;
 
+    --background-dark: 220 12% 9%;
+
     --dark-gray: 0 0% 5%;
+
+    --table-hl: 0 0% 26%;
 
     --muted: 230 5% 58%;
     --muted-foreground: 215.4 16.3% 46.9%;
