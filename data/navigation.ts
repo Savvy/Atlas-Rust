@@ -6,11 +6,12 @@ export const mainNav = [
     {
         title: "Servers",
         href: "/servers",
+        disabled: false,
     },
     {
-        title: "Leaderboards",
-        href: "/leaderboards",
-        disabled: true,
+        title: "Leaderboard",
+        href: "/leaderboard",
+        disabled: false,
     },
     {
         title: "Clans",
