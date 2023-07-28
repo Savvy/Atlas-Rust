@@ -52,7 +52,7 @@ const tabs = [
 export default function Leaderboard() {
     return (
         <Tabs defaultValue={tabs[0].key} className="w-full">
-            <TabsList>
+            <TabsList className="flex-wrap">
                 {!!tabs && tabs.map((tab) => {
                     return <TabsTrigger value={tab.key} key={tab.key}>{tab.keyTitle}</TabsTrigger>
                 })}
