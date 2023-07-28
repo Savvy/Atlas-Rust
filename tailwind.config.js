@@ -33,6 +33,9 @@ module.exports = {
         'table-hl': "hsl(var(--table-hl))",
 
         success: "hsl(var(--success))",
+        europe: "hsl(var(--europe))",
+        australia: "hsl(var(--australia))",
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

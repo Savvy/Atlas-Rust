@@ -10,6 +10,8 @@ import Server from "@/components/shared/Server";
 import Leaderboard from "@/components/shared/Leaderboard";
 import Map from "@/components/shared/AtlasMap";
 
+import servers from '@/data/servers.json';
+
 export default function Home() {
 	return (
 		<main className="w-full">
@@ -80,11 +82,13 @@ export default function Home() {
 					</Link>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-					<Server />
-					<Server />
-					<Server />
-					<Server />
-					<Server />
+					{!!servers && servers.map((server) =>
+						<Server key={server.serverid} serverId={server.serverid} region={server.region} shopUrl={server.shopUrl} />
+					)}
+					{/* <Server serverId="16772881" />
+					<Server serverId="16772881" />
+					<Server serverId="16772881" />
+					<Server serverId="16772881" /> */}
 				</div>
 			</section>
 			<div className="bg-secondary">

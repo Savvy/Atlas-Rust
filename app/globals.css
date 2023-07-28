@@ -25,7 +25,9 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
 
-    --success: 126, 100%, 62%, 1;
+    --success: 126 100% 62%;
+    --europe: 241 100% 61%;
+    --australia: 90 84% 71%;
 
     --primary: 207 100% 50%;
     --primary-foreground: 210 40% 98%;
