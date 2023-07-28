@@ -82,7 +82,7 @@ export default function Home() {
 					</Link>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-					{!!servers && servers.map((server) =>
+					{!!servers && servers.slice(0, 6).map((server) =>
 						<Server key={server.serverid} serverId={server.serverid} region={server.region} shopUrl={server.shopUrl} />
 					)}
 				</div>
