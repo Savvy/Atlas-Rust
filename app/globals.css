@@ -5,7 +5,7 @@
 @layer base {
   :root {
     --background: #0E1419;
-    --foreground: #ffffff;
+    --foreground: 0 0% 100%;
 
     --background-dark: 220 12% 9%;
 

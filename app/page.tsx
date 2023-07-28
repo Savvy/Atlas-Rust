@@ -77,7 +77,7 @@ export default function Home() {
 			<section className="container mt-24">
 				<div className="flex justify-between mb-8">
 					<h3 className="text-lg text-muted">Our main servers</h3>
-					<Link href={"/"} className="text-primary">
+					<Link href={"/servers"} className="text-primary">
 						see more
 					</Link>
 				</div>
@@ -85,17 +85,13 @@ export default function Home() {
 					{!!servers && servers.map((server) =>
 						<Server key={server.serverid} serverId={server.serverid} region={server.region} shopUrl={server.shopUrl} />
 					)}
-					{/* <Server serverId="16772881" />
-					<Server serverId="16772881" />
-					<Server serverId="16772881" />
-					<Server serverId="16772881" /> */}
 				</div>
 			</section>
 			<div className="bg-secondary">
 				<section className="container mt-24 py-24">
 					<div className="flex justify-between mb-8">
 						<h3 className="text-lg text-muted">Leaderboard</h3>
-						<Link href={"/"} className="text-primary">
+						<Link href={"/leaderboard"} className="text-primary">
 							see more
 						</Link>
 					</div>
