@@ -487,7 +487,7 @@ export function DataTableDemo() {
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id} className="bg-table-hl hover:bg-table-hl border-none">
+            <TableRow key={headerGroup.id} className="bg-primary hover:bg-primary border-none">
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id} className="text-white">

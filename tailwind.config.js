@@ -28,6 +28,7 @@ module.exports = {
         background: "var(--background)",
         'background-dark': "hsl(var(--background-dark))",
         foreground: "hsl(var(--foreground))",
+
         'dark-gray': "hsl(var(--dark-gray))",
 
         'table-hl': "hsl(var(--table-hl))",
@@ -41,7 +42,7 @@ module.exports = {
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "var(--secondary)",
+          DEFAULT: "hsl(var(--secondary))",
           foreground: "var(--secondary-foreground))",
         },
         'secondary-accent': {
@@ -90,7 +91,8 @@ module.exports = {
       },
       backgroundImage: {
         'hero': "url('/images/hero.png')",
-        'grids': "url('/images/grids.png')"
+        'grids': "url('/images/grids.png')",
+        'pattern': "url('/images/pattern.png')"
       },
     },
   },

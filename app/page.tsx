@@ -74,21 +74,23 @@ export default function Home() {
 					}}
 				/>
 			</header>
-			<section className="container mt-24">
-				<div className="flex justify-between mb-8">
-					<h3 className="text-lg text-muted">Our main servers</h3>
-					<Link href={"/servers"} className="text-primary">
-						see more
-					</Link>
-				</div>
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-					{!!servers && servers.slice(0, 6).map((server) =>
-						<Server key={server.serverid} serverId={server.serverid} region={server.region} shopUrl={server.shopUrl} />
-					)}
-				</div>
-			</section>
+			<div className="bg-pattern py-24">
+				<section className="container">
+					<div className="flex justify-between mb-8">
+						<h3 className="text-lg text-muted">Our main servers</h3>
+						<Link href={"/servers"} className="text-primary">
+							see more
+						</Link>
+					</div>
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+						{!!servers && servers.slice(0, 6).map((server) =>
+							<Server key={server.serverid} serverId={server.serverid} region={server.region} shopUrl={server.shopUrl} />
+						)}
+					</div>
+				</section>
+			</div>
 			<div className="bg-secondary">
-				<section className="container mt-24 py-24">
+				<section className="container py-24">
 					<div className="flex justify-between mb-8">
 						<h3 className="text-lg text-muted">Leaderboard</h3>
 						<Link href={"/leaderboard"} className="text-primary">

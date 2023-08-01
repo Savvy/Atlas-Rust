@@ -64,7 +64,7 @@ export default function Footer() {
                     </div>
                     <Button
                         size={"default"}
-                        className="bg-secondary-accent hover:bg-secondary-accent/80 font-poppins"
+                        className="bg-primary/75 hover:bg-primary font-poppins"
                     >
                         <Icon path={mdiAccountOutline}
                             size={0.8}
