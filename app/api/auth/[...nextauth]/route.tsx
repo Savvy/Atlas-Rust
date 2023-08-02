@@ -7,19 +7,8 @@ async function handler(
     res: NextApiResponse
 ) {
     // @ts-ignore
-    return await NextAuth(req, res, authOptions(req))
+    const options = authOptions(req);
+    return await NextAuth(req, res, options)
 }
 
-export {
-    handler as GET,
-    handler as POST
-}
-
-
-
-/* const handler = NextAuth(authOptions)
-
-export {
-    handler as GET,
-    handler as POST
-} */
+export { handler as GET, handler as POST }
