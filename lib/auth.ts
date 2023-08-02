@@ -6,15 +6,15 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 const prisma = new PrismaClient();
 
-export const authOptions = (req: NextRequest): NextAuthOptions => {
+export const authOptions = (req: NextRequest | undefined): NextAuthOptions => {
     return {
         adapter: PrismaAdapter(prisma),
-        providers: [
+        providers: req ? [
             SteamProvider(req, {
                 clientSecret: process.env.STEAM_SECRET!,
                 callbackUrl: 'http://localhost:3000/api/auth/callback'
             })
-        ],
+        ] : [],
         secret: process.env.NEXTAUTH_SECRET!,
         session: {
             strategy: "database",
