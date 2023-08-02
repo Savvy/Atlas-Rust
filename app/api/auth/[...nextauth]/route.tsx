@@ -8,7 +8,7 @@ async function handler(
 ) {
     // @ts-ignore
     const options = authOptions(req);
-    return await NextAuth(req, res, options)
+    return await NextAuth(options)
 }
 
 export { handler as GET, handler as POST }
