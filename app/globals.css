@@ -99,3 +99,13 @@ body {
   stroke: #fff;
   cursor: pointer;
 }
+
+.grow-c > img {
+  opacity: 0.75;
+  transition: all 0.25s ease-in-out;
+}
+
+.grow-c:hover > img {
+  opacity: 100;
+  transform: scale(1.15)
+}

@@ -6,7 +6,7 @@ import Map from "@/components/shared/AtlasMap";
 export default function Servers() {
 	return (
 		<main className="w-full">
-			<header className="relative bg-hero pt-28 bg-no-repeat bg-cover bg-center overflow-hidden font-rajdhani">
+			<header className="relative bg-hero bg-primary bg-opacity-70 pt-28 bg-no-repeat bg-cover bg-center overflow-hidden font-rajdhani">
 				<div className="container">
 					<div className="relative z-10 flex items-center flex-col gap-4 text-center pt-24 pb-48">
 						<h1 className="text-5xl font-bold">

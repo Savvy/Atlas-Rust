@@ -9,11 +9,21 @@ import Image from "next/image"
 import { MobileNav } from "./mobile-nav"
 import Close from "../icons/close"
 import Menu from "../icons/menu"
-/* import { Icons } from "@/components/icons" */
-// import { MobileNav } from "@/components/mobile-nav"
+import { SignIn } from "../shared/AuthButtons"
+import { Avatar, AvatarImage } from "../ui/avatar"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { LogOut } from "lucide-react"
+import { signOut } from "next-auth/react"
 
 interface MainNavProps {
     items?: MainNavItem[]
+    user?: any
     children?: React.ReactNode
 }
 
@@ -23,7 +33,7 @@ export type MainNavItem = {
     disabled?: boolean
 }
 
-export function MainNav({ items, children }: MainNavProps) {
+export function MainNav({ items, user, children }: MainNavProps) {
     const path = usePathname()
     const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
 
@@ -57,6 +67,32 @@ export function MainNav({ items, children }: MainNavProps) {
                     ))}
                 </nav>
             ) : null}
+            <div className="hidden md:flex">
+                {!!user ?
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="cursor-pointer" asChild>
+                            <Avatar>
+                                <AvatarImage src={user.image} />
+                            </Avatar>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-background border-background text-white w-56">
+                            <DropdownMenuLabel>Logged in as {user.name}</DropdownMenuLabel>
+                            <DropdownMenuItem
+                            onClick={() => {
+                                signOut()
+                            }}
+                            className="cursor-pointer"
+                            >
+                                <LogOut className="mr-2 h-4 w-4" />
+                                <span>Log out</span>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    :
+                    <SignIn />
+                }
+            </div>
             <button
                 className="flex items-center space-x-2 md:hidden"
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
@@ -64,9 +100,11 @@ export function MainNav({ items, children }: MainNavProps) {
                 {showMobileMenu ? <Close /> : <Menu />}
                 <span className="font-bold">Menu</span>
             </button>
-            {showMobileMenu && items && (
-                <MobileNav items={items}>{children}</MobileNav>
-            )}
-        </div>
+            {
+                showMobileMenu && items && (
+                    <MobileNav items={items}>{children}</MobileNav>
+                )
+            }
+        </div >
     )
 }

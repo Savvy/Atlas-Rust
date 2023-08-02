@@ -1,7 +1,25 @@
+'use client'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Atlas from "@/components/icons/atlas";
+import { useEffect, useState } from "react";
+
+import servers from '@/data/servers.json';
 
 export default function Map() {
+
+
+    const [onlinePlayers, setOnlinePlayers] = useState<number>(0);
+
+    useEffect(() => {
+        servers.forEach((server) => {
+            fetch(`https://api.battlemetrics.com/servers/${server.serverid}`)
+                .then((res) => res.json())
+                .then(({ data }) => {
+                    setOnlinePlayers((amt) => amt + data.attributes.players);
+                })
+        });
+    }, []);
+    
     return (
         <>
             <section className="hidden md:block container mt-24 py-4">
@@ -15,7 +33,7 @@ export default function Map() {
                     </AspectRatio>
                 </div>
                 <div className="mt-10 flex flex-row justify-between">
-                    <div className="text-2xl"><span className="font-bold">15,973</span> Players Online</div>
+                    <div className="text-2xl"><span className="font-bold">{onlinePlayers.toLocaleString()}</span> Players Online</div>
                     <div className="flex gap-8">
                         <div className="uppercase text-sm flex justify-center items-center gap-1">
                             <div className="relative h-2 w-2 bg-success rounded-full">

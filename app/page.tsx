@@ -11,17 +11,19 @@ import Leaderboard from "@/components/shared/Leaderboard";
 import Map from "@/components/shared/AtlasMap";
 
 import servers from '@/data/servers.json';
+import { getCurrentUser } from "@/lib/session";
 
-export default function Home() {
+export default async function Home() {
+	const user = await getCurrentUser();
 	return (
 		<main className="w-full">
-			<header className="relative bg-hero pt-28 bg-no-repeat bg-cover bg-center overflow-hidden font-rajdhani">
+			<header className="relative bg-hero bg-primary bg-opacity-70 pt-28 bg-no-repeat bg-cover bg-center overflow-hidden font-rajdhani">
 				<div className="container">
-					<div className="relative z-10 flex flex-col gap-4 pt-48">
+					<div className="relative z-10 flex flex-col gap-4 pt-24">
 						<h1 className="text-5xl font-bold">
 							Venture into great battles in
 							<br />
-							search of your continent.
+							search of <span className="text-primary">your continent</span>.
 						</h1>
 						<h5 className="text-xl font-normal">
 							Come play on Atlas Rust, the biggest Rust server
@@ -29,7 +31,7 @@ export default function Home() {
 							you&apos;ve ever seen.
 						</h5>
 						<div className="flex gap-4 font-poppins">
-							<Button size={"default"} className="">
+							{!!!user && <Button size={"default"} className="">
 								<Icon
 									path={mdiAccountOutline}
 									size={0.8}
@@ -37,7 +39,7 @@ export default function Home() {
 									className="mr-1"
 								/>
 								Login
-							</Button>
+							</Button>}
 							<Button
 								size={"default"}
 								variant={"secondary"}
@@ -53,10 +55,13 @@ export default function Home() {
 							</Button>
 						</div>
 					</div>
-					<div className="relative z-10 pb-48 flex justify-end">
+					<div className="relative z-10 pb-24 flex flex-col items-end gap-2">
 						<span className="text-white uppercase font-poppins">
 							Watch Trailer
 						</span>
+						<div className="w-72 h-40 relative rounded grow-c flex items-center justify-center bg-trailer bg-cover bg-no-repeat cursor-pointer">
+							<img className="" src="/images/play-btn.png" alt="Play Button" />
+						</div>
 					</div>
 					<div className="bg-grids bg-cover bg-center absolute left-0 top-28 h-full w-full z-[3]"></div>
 				</div>

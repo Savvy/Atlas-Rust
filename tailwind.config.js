@@ -92,7 +92,8 @@ module.exports = {
       backgroundImage: {
         'hero': "url('/images/hero.png')",
         'grids': "url('/images/grids.png')",
-        'pattern': "url('/images/pattern.png')"
+        'pattern': "url('/images/pattern.png')",
+        'trailer': "url('/images/trailer.png')"
       },
     },
   },
