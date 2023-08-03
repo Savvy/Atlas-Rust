@@ -66,10 +66,6 @@ export function Steam(
                 // prettier-ignore
                 const claimedIdentifier = await verifyAssertion(req.url!, realm, returnTo)
 
-                console.log(ctx.client);
-
-                console.log(req.url);
-
                 if (!claimedIdentifier) {
                     throw new Error('Unauthenticated')
                 }
@@ -104,7 +100,6 @@ export function Steam(
         },
         profile(profile: SteamProfile) {
             // next.js can't serialize the session if email is missing or null, so I specify user ID
-            console.log(profile);
             return {
                 id: profile.steamid,
                 image: profile.avatarfull,
