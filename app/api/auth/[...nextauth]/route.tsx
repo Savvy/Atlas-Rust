@@ -8,7 +8,8 @@ async function handler(
     req: NextRequest,
     res: NextRequest
 ) {
-    return await NextAuth(authOptions(req))
+    // @ts-expect-error
+    return await NextAuth(req, res, authOptions(req))
 }
 
 export { handler as GET, handler as POST }

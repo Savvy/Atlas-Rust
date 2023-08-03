@@ -7,7 +7,7 @@ import { NextApiRequest } from "next";
 
 const prisma = new PrismaClient();
 
-export const authOptions = (req: NextRequest | NextApiRequest | undefined): NextAuthOptions => {
+export const authOptions = (req: NextRequest /* | NextApiRequest | undefined */): NextAuthOptions => {
     return {
         adapter: PrismaAdapter(prisma),
         providers: req ? [
