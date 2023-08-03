@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { NextRequest } from 'next/server';
 
 async function handler(
-    req: NextApiRequest,
+    req: NextApiRequest & { url: string },
     res: NextApiResponse
 ) {
     return await NextAuth(req, res, authOptions(req))
