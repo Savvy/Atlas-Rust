@@ -1,13 +1,14 @@
-import NextAuth from 'next-auth';
+import NextAuth from 'next-auth/next'
+
 import { authOptions } from '@/lib/auth';
 import type { NextApiRequest, NextApiResponse } from "next"
 import { NextRequest } from 'next/server';
 
 async function handler(
-    req: NextApiRequest & { url: string },
-    res: NextApiResponse
+    req: NextRequest,
+    res: NextRequest
 ) {
-    return await NextAuth(req, res, authOptions(req))
+    return await NextAuth(authOptions(req))
 }
 
 export { handler as GET, handler as POST }
