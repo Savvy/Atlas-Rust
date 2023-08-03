@@ -3,10 +3,11 @@ import { NextRequest } from 'next/server';
 import SteamProvider, { PROVIDER_ID } from './provider';
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { NextApiRequest } from "next";
 
 const prisma = new PrismaClient();
 
-export const authOptions = (req: NextRequest | undefined): NextAuthOptions => {
+export const authOptions = (req: NextRequest | NextApiRequest | undefined): NextAuthOptions => {
     return {
         adapter: PrismaAdapter(prisma),
         providers: req ? [
@@ -16,9 +17,9 @@ export const authOptions = (req: NextRequest | undefined): NextAuthOptions => {
             })
         ] : [],
         secret: process.env.NEXTAUTH_SECRET!,
-        session: {
-            strategy: "database",
-        },
+        /*   session: {
+              strategy: "jwt",
+          }, */
 
         callbacks: {
             async session({ token, session }) {

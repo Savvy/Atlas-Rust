@@ -4,11 +4,10 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { NextRequest } from 'next/server';
 
 async function handler(
-    req: NextRequest
+    req: NextApiRequest,
+    res: NextApiResponse
 ) {
-    // @ts-ignore
-    const options = authOptions(req);
-    return await NextAuth(options)
+    return await NextAuth(req, res, authOptions(req))
 }
 
 export { handler as GET, handler as POST }
