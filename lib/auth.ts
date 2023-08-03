@@ -12,7 +12,7 @@ export const authOptions = (req: NextRequest | undefined): NextAuthOptions => {
         providers: req ? [
             SteamProvider(req, {
                 clientSecret: process.env.STEAM_SECRET!,
-                callbackUrl: 'http://localhost:3000/api/auth/callback'
+                callbackUrl: 'https://atlasrust.vercel.app/api/auth/callback'
             })
         ] : [],
         secret: process.env.NEXTAUTH_SECRET!,
@@ -37,8 +37,8 @@ export const authOptions = (req: NextRequest | undefined): NextAuthOptions => {
 
                 const steamAccount = prismaUser?.accounts.find(a => a.provider == "steam");
 
-                /* // @ts-expect-error
-                session.user.steamId = steamAccount?.providerAccountId; */
+                // @ts-expect-error
+                session.user.steamId = steamAccount?.providerAccountId;
                 return session;
             },
         },
