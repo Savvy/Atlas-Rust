@@ -78,10 +78,10 @@ export function MainNav({ items, user, children }: MainNavProps) {
                         <DropdownMenuContent className="bg-background border-background text-white w-56">
                             <DropdownMenuLabel>Logged in as {user.name}</DropdownMenuLabel>
                             <DropdownMenuItem
-                            onClick={() => {
-                                signOut()
-                            }}
-                            className="cursor-pointer"
+                                onClick={() => {
+                                    signOut()
+                                }}
+                                className="cursor-pointer"
                             >
                                 <LogOut className="mr-2 h-4 w-4" />
                                 <span>Log out</span>

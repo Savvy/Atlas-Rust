@@ -1,8 +1,15 @@
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './auth';
-import { NextRequest } from 'next/server';
+import { DefaultSession } from 'next-auth/core/types';
 
-export async function getCurrentUser() {
+export interface IntUserProp {
+    steamId?: string
+    discordId?: string
+}
+
+export type UserProps = DefaultSession["user"] & IntUserProp
+
+export async function getCurrentUser(): Promise<UserProps | undefined> {
     // @ts-expect-error
     const session = await getServerSession(authOptions(undefined))
 

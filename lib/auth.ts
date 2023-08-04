@@ -3,26 +3,27 @@ import { NextRequest } from 'next/server';
 import SteamProvider, { PROVIDER_ID } from './provider';
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { NextApiRequest } from "next";
+import DiscordProvider from "next-auth/providers/discord";
+
 
 const prisma = new PrismaClient();
 
-export const authOptions = (req: NextRequest /* | NextApiRequest | undefined */): NextAuthOptions => {
+export const authOptions = (req: NextRequest): NextAuthOptions => {
     return {
         adapter: PrismaAdapter(prisma),
         providers: req ? [
             SteamProvider(req, {
                 clientSecret: process.env.STEAM_SECRET!,
-                callbackUrl: 'https://atlasrust.vercel.app/api/auth/callback'
+                callbackUrl: 'http://localhost:3000/api/auth/callback' // https://atlasrust.vercel.app
+            }),
+            DiscordProvider({
+                clientId: process.env.DISCORD_CLIENT_ID || '',
+                clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
             })
         ] : [],
         secret: process.env.NEXTAUTH_SECRET!,
-        /*   session: {
-              strategy: "jwt",
-          }, */
-
         callbacks: {
-            async session({ token, session }) {
+            async session({ session }) {
                 const prismaUser = await prisma.user.findUnique({
                     where: {
                         email: session.user?.email!,
@@ -33,9 +34,16 @@ export const authOptions = (req: NextRequest /* | NextApiRequest | undefined */)
                 });
 
                 const steamAccount = prismaUser?.accounts.find(a => a.provider == "steam");
+                if (!!steamAccount) {
+                    // @ts-expect-error
+                    session.user.steamId = steamAccount?.providerAccountId;
+                }
+                const discordAccount = prismaUser?.accounts.find(a => a.provider == "discord");
+                if (!!discordAccount) {
+                    // @ts-expect-error
+                    session.user.discordId = discordAccount?.providerAccountId;
+                }
 
-                // @ts-expect-error
-                session.user.steamId = steamAccount?.providerAccountId;
                 return session;
             },
         },
