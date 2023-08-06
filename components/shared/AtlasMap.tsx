@@ -3,7 +3,9 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Atlas from "@/components/icons/atlas";
 import { useEffect, useState } from "react";
 
-import servers from '@/data/servers.json';
+import servers from '@/data/servers';
+// import Locations from "@/data/locations";
+// import clsx from "clsx";
 
 export default function Map() {
 
@@ -19,7 +21,7 @@ export default function Map() {
                 })
         });
     }, []);
-    
+
     return (
         <>
             <section className="hidden md:block container mt-24 py-4">
@@ -28,8 +30,27 @@ export default function Map() {
                     <h5 className="text-xl text-muted">See the most played places.</h5>
                 </div>
                 <div className="w-full">
-                    <AspectRatio ratio={16 / 9} className="grid place-items-center">
+                    <AspectRatio ratio={16 / 9} className="relative flex items-center justify-center">
                         <Atlas />
+                       {/*  {!!Locations && Locations.map((location, index) =>
+                            <div className={`absolute top-[${location.top}px] right-[${location.right}px] bottom-[${location.bottom}px] left-[${location.left}px]`}
+                                key={index}>
+                                <div className={clsx(
+                                    "relative h-2 w-2 rounded-full",
+                                    { 'bg-success': location.region.toLowerCase() === 'na' },
+                                    { 'bg-europe': location.region.toLowerCase() === 'eu' },
+                                    { 'bg-australia': location.region.toLowerCase() === 'au' }
+                                )}
+                                >
+                                    <span className={clsx(
+                                        "animate-ping absolute grid place-items-center h-full w-full rounded-full opacity-75",
+                                        { 'bg-success': location.region.toLowerCase() === 'na' },
+                                        { 'bg-europe': location.region.toLowerCase() === 'eu' },
+                                        { 'bg-australia': location.region.toLowerCase() === 'au' }
+                                    )}></span>
+                                </div>
+                            </div>
+                        )} */}
                     </AspectRatio>
                 </div>
                 <div className="mt-10 flex flex-row justify-between">
