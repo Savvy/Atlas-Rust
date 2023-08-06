@@ -10,7 +10,7 @@ import useAtlasStore, { Server } from "@/lib/store";
 
 export default function Server({ serverid, region, shopUrl }: Server) {
 
-    const { servers, setServers } = useAtlasStore();
+    const { servers, setServers, setOnlinePlayers } = useAtlasStore();
 
     const [server, setServer] = useState<Server>();
 
@@ -34,6 +34,7 @@ export default function Server({ serverid, region, shopUrl }: Server) {
                     
                     setServers(serversObj)
                     setServer(newObj);
+                    setOnlinePlayers(data.attributes.players)
                 })
         } else {
             setServer(servers[serverid]);

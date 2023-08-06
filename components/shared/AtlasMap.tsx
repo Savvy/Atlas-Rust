@@ -1,26 +1,23 @@
 'use client'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Atlas from "@/components/icons/atlas";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import servers from '@/data/servers';
-// import Locations from "@/data/locations";
-// import clsx from "clsx";
+import Locations from "@/data/locations";
+import clsx from "clsx";
+import { cn } from "@/lib/utils";
+import useAtlasStore from "@/lib/store";
+
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export default function Map() {
 
-
-    const [onlinePlayers, setOnlinePlayers] = useState<number>(0);
-
-    useEffect(() => {
-        servers.forEach((server) => {
-            fetch(`https://api.battlemetrics.com/servers/${server.serverid}`)
-                .then((res) => res.json())
-                .then(({ data }) => {
-                    setOnlinePlayers((amt) => amt + data.attributes.players);
-                })
-        });
-    }, []);
+    const { onlinePlayers } = useAtlasStore();
 
     return (
         <>
@@ -32,25 +29,42 @@ export default function Map() {
                 <div className="w-full">
                     <AspectRatio ratio={16 / 9} className="relative flex items-center justify-center">
                         <Atlas />
-                       {/*  {!!Locations && Locations.map((location, index) =>
-                            <div className={`absolute top-[${location.top}px] right-[${location.right}px] bottom-[${location.bottom}px] left-[${location.left}px]`}
+                        {!!Locations && Locations.map((location, index) =>
+                            <div
+                                className={cn(`absolute`)}
+                                style={{
+                                    top: location.top,
+                                    right: location.right,
+                                    bottom: location.bottom,
+                                    left: location.left,
+                                }}
                                 key={index}>
-                                <div className={clsx(
-                                    "relative h-2 w-2 rounded-full",
-                                    { 'bg-success': location.region.toLowerCase() === 'na' },
-                                    { 'bg-europe': location.region.toLowerCase() === 'eu' },
-                                    { 'bg-australia': location.region.toLowerCase() === 'au' }
-                                )}
-                                >
-                                    <span className={clsx(
-                                        "animate-ping absolute grid place-items-center h-full w-full rounded-full opacity-75",
-                                        { 'bg-success': location.region.toLowerCase() === 'na' },
-                                        { 'bg-europe': location.region.toLowerCase() === 'eu' },
-                                        { 'bg-australia': location.region.toLowerCase() === 'au' }
-                                    )}></span>
-                                </div>
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <div className={clsx(
+                                                "relative h-2 w-2 rounded-full cursor-pointer",
+                                                { 'bg-success': location.region.toLowerCase() === 'na' },
+                                                { 'bg-europe': location.region.toLowerCase() === 'eu' },
+                                                { 'bg-australia': location.region.toLowerCase() === 'au' }
+                                            )}
+                                            >
+                                                <span className={clsx(
+                                                    "animate-ping absolute grid place-items-center h-full w-full rounded-full opacity-75",
+                                                    { 'bg-success': location.region.toLowerCase() === 'na' },
+                                                    { 'bg-europe': location.region.toLowerCase() === 'eu' },
+                                                    { 'bg-australia': location.region.toLowerCase() === 'au' }
+                                                )}></span>
+                                            </div>
+                                        </TooltipTrigger>
+                                        <TooltipContent className="bg-background border-background text-white">
+                                            <div className="font-bold">{location.region}</div>
+                                            <p>Online Players: <strong>{location.onlinePlayers}</strong></p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
                             </div>
-                        )} */}
+                        )}
                     </AspectRatio>
                 </div>
                 <div className="mt-10 flex flex-row justify-between">
@@ -76,7 +90,7 @@ export default function Map() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
             <section className="container text-center py-4">
                 <h5 className="text-lg md:hidden">Map not visible on mobile.</h5>
             </section>
