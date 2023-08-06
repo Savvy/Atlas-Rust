@@ -1,4 +1,6 @@
-[
+import { Server } from "@/lib/store";
+
+const Servers: Server[] = [
     {
         "serverid": "20579205",
         "region": "NA",
@@ -29,4 +31,6 @@
         "region": "EU",
         "shopUrl": "https://store.atlasrustservers.com/"
     }
-]
+];
+
+export default Servers;

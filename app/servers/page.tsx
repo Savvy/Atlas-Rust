@@ -1,16 +1,8 @@
-import { Button } from "@/components/ui/button";
-import {
-	mdiAccountOutline,
-	mdiCartOutline,
-} from "@mdi/js";
-import Icon from "@mdi/react";
-import Link from "next/link";
 import Server from "@/components/shared/Server";
 
-import Leaderboard from "@/components/shared/Leaderboard";
 import Map from "@/components/shared/AtlasMap";
 
-import servers from '@/data/servers.json';
+import servers from '@/data/servers';
 
 export default function Servers() {
 	return (
@@ -45,7 +37,7 @@ export default function Servers() {
 			<section className="container md:-mt-24 relative z-10">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 					{!!servers && servers.map((server) =>
-						<Server key={server.serverid} serverId={server.serverid} region={server.region} shopUrl={server.shopUrl} />
+						<Server key={server.serverid} serverid={server.serverid} region={server.region} shopUrl={server.shopUrl} />
 					)}
 				</div>
 			</section>

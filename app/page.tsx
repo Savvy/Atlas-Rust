@@ -10,8 +10,20 @@ import Server from "@/components/shared/Server";
 import Leaderboard from "@/components/shared/Leaderboard";
 import Map from "@/components/shared/AtlasMap";
 
-import servers from '@/data/servers.json';
+import servers from '@/data/servers';
 import { getCurrentUser } from "@/lib/session";
+
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 export default async function Home() {
 	const user = await getCurrentUser();
@@ -59,9 +71,27 @@ export default async function Home() {
 						<span className="text-white uppercase font-poppins">
 							Watch Trailer
 						</span>
-						<div className="w-72 h-40 relative rounded grow-c flex items-center justify-center bg-trailer bg-cover bg-no-repeat cursor-pointer">
-							<img className="" src="/images/play-btn.png" alt="Play Button" />
-						</div>
+						<Dialog>
+							<DialogTrigger asChild>
+								<div className="w-72 h-40 relative rounded grow-c flex items-center justify-center bg-trailer bg-cover bg-no-repeat cursor-pointer">
+									<img className="" src="/images/play-btn.png" alt="Play Button" />
+								</div>
+							</DialogTrigger>
+							<DialogContent className="border-background bg-background md:min-w-[1330px]">
+								<DialogHeader>
+									<DialogTitle>View Trailer</DialogTitle>
+								</DialogHeader>
+								<div className="aspect-w-16 aspect-h-9">
+									<iframe
+										width="1280"
+										height="720"
+										src="https://www.youtube.com/embed/GFI9WDWd2Ns"
+										title="YouTube video player"
+										allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									/>
+								</div>
+							</DialogContent>
+						</Dialog>
 					</div>
 					<div className="bg-grids bg-cover bg-center absolute left-0 top-28 h-full w-full z-[3]"></div>
 				</div>
@@ -89,7 +119,7 @@ export default async function Home() {
 					</div>
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 						{!!servers && servers.slice(0, 6).map((server) =>
-							<Server key={server.serverid} serverId={server.serverid} region={server.region} shopUrl={server.shopUrl} />
+							<Server key={server.serverid} serverid={server.serverid} region={server.region} shopUrl={server.shopUrl} />
 						)}
 					</div>
 				</section>
