@@ -12,7 +12,7 @@ export default function Footer() {
             "bg-secondary w-full py-6",
         )}>
             <div className="container">
-                <div className="flex flex-col gap-1 md:flex-row md:gap-0 items-center justify-between">
+                <div className="flex flex-col gap-3 md:flex-row md:gap-0 items-center justify-between">
                     <Image
                         src={'/atlas.svg'}
                         width={100}
@@ -77,19 +77,6 @@ export default function Footer() {
                 <hr className="my-5 border-[#212121]" />
                 <div className="flex items-center justify-between uppercase font-rajdhani font-[700]">
                     <div className="opacity-60">Atlas Rust - All Rights Reserved.</div>
-                    {/* <a href="#" className={clsx(
-                        "flex items-center gap-2",
-                        "opacity-60 hover:opacity-100",
-                        "transition-opacity duration-300 ease-in-out"
-                    )}>
-                        <div className="bg-secondary-accent hover:bg-secondary-accent/80 p-3 rounded-full transition-colors duration-300 ease-in-out">
-                            <Icon path={mdiArrowUp}
-                                size={0.6}
-                                color="white"
-                            />
-                        </div>
-                        <span>Back To The Top</span>
-                    </a> */}
                     <ScrollToTop />
                 </div>
             </div>
