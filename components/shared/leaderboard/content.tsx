@@ -13,16 +13,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ChevronDown, ArrowUpDown } from "lucide-react"
+import { ChevronDown, ArrowUp, ArrowDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -135,15 +132,18 @@ export type Stats = {
 export const columns: ColumnDef<Stats>[] = [
   {
     accessorKey: "name",
+    enableSorting: true,
     header: ({ column }) => {
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -157,11 +157,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           KDR
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -175,11 +177,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Accuracy
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -193,11 +197,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Bullets Hit
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -211,11 +217,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Suicides
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -229,11 +237,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Deaths
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -247,11 +257,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Kills
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -265,11 +277,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Wounds
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -283,11 +297,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Headshots
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -301,11 +317,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Bullets Fired
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -319,11 +337,13 @@ export const columns: ColumnDef<Stats>[] = [
       return (
         <Button
           variant="link"
-          className={clsx("opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Hours
-          {column.getIsSorted() && <ArrowUpDown className="ml-2 h-4 w-4" />}
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
         </Button>
       )
     },
@@ -365,11 +385,8 @@ export const columns: ColumnDef<Stats>[] = [
 
 export function DataTableDemo() {
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
