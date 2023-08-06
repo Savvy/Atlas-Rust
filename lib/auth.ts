@@ -14,7 +14,7 @@ export const authOptions = (req: NextRequest): NextAuthOptions => {
         providers: req ? [
             SteamProvider(req, {
                 clientSecret: process.env.STEAM_SECRET!,
-                callbackUrl: 'http://localhost:3000/api/auth/callback' // https://atlasrust.vercel.app
+                callbackUrl: process.env.STEAM_CALLBACK || '',
             }),
             DiscordProvider({
                 clientId: process.env.DISCORD_CLIENT_ID || '',
