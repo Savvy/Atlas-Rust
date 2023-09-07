@@ -62,14 +62,14 @@ export default function Packages({ title }: { title: string }) {
                                 }}
                                 viewport={{ once: true, amount: 0.12 }}
                             >
-                                <div className='bg-dark-gray min-h-48 w-full rounded-md overflow-hidden'>
+                                <div className='group bg-dark-gray min-h-48 w-full rounded-md overflow-hidden'>
                                     <div className="bg-secondary w-full">
                                         <Image
                                             src={'/images/kits/eternalkit.png'}
                                             height={476}
                                             width={380}
                                             alt='Eternal Kit Rank'
-                                        /* className='hover:scale-105 transition-transform duration-300 ease-in-out' */
+                                        className='group-hover:scale-105 transition-transform duration-300 ease-in-out'
                                         />
                                     </div>
                                     <div className="p-3">
