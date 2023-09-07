@@ -88,7 +88,6 @@ export function MainNav({ items, user, children }: MainNavProps) {
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-
                     :
                     <SignIn />
                 }
@@ -101,9 +100,7 @@ export function MainNav({ items, user, children }: MainNavProps) {
                 <span className="font-bold">Menu</span>
             </button>
             {
-                showMobileMenu && items && (
-                    <MobileNav items={items}>{children}</MobileNav>
-                )
+                showMobileMenu && items && (<MobileNav items={items}>{children}</MobileNav>)
             }
         </div >
     )
