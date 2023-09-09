@@ -35,4 +35,11 @@ export const mainNav = [
         disabled: false,
         showCart: true,
     },
+    {
+        title: "StoreEdit",
+        href: "/store/edit",
+        disabled: false,
+        hideInNav: true,
+        showCart: true,
+    },
 ]

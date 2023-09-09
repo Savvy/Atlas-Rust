@@ -35,6 +35,7 @@ export type MainNavItem = {
     title: string
     href: string
     disabled?: boolean
+    hideInNav?: boolean
     showCart?: boolean
 }
 
@@ -62,7 +63,7 @@ export function MainNav({ items, user, children }: MainNavProps) {
             </Link>
             {items?.length ? (
                 <nav className="hidden gap-6 md:flex md:flex-grow md:justify-center">
-                    {items?.map((item, index) => (
+                    {items?.filter((item) => !item.hideInNav).map((item, index) => (
                         <Link
                             key={index}
                             href={item.disabled ? "#" : item.href}
