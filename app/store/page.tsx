@@ -1,7 +1,7 @@
 
 import Map from "@/components/shared/AtlasMap";
 
-import Packages from "./packages";
+import Category from "./category";
 import Image from "next/image";
 import {
     Select,
@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+
+import storeItems from "@/data/packages";
 
 export default function Servers() {
     return (
@@ -60,8 +62,12 @@ export default function Servers() {
                 />
             </header>
             <section className="container md:-mt-24 relative z-10">
+                {!!storeItems && storeItems.map((store, index) => (
+                    <Category title={store.title} key={index} packages={store.packages} />
+                ))
+                }{/* 
                     <Packages title="Atlas Package - NA 5X" />
-                    <Packages title="Atlas Skins" />
+                    <Packages title="Atlas Skins" /> */}
             </section>
             <Map />
         </main>

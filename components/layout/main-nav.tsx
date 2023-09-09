@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -20,6 +20,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { LogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
+import { Button } from "../ui/button"
+import Icon from "@mdi/react"
+import { mdiCartOutline, mdiChevronDown } from "@mdi/js"
+import CartNav from "./cart-nav"
 
 interface MainNavProps {
     items?: MainNavItem[]
@@ -31,11 +35,19 @@ export type MainNavItem = {
     title: string
     href: string
     disabled?: boolean
+    showCart?: boolean
 }
 
 export function MainNav({ items, user, children }: MainNavProps) {
     const path = usePathname()
-    const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
+    const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false)
+    const [showCart, setShowCart] = useState<boolean>(false);
+
+    useEffect(() => {
+        items?.forEach((item) => {
+            return setShowCart(item.href == path && (item.showCart ?? false))
+        })
+    }, [items, path]);
 
     return (
         <div className="flex flex-grow gap-6 md:gap-10 font-roboto">
@@ -67,27 +79,30 @@ export function MainNav({ items, user, children }: MainNavProps) {
                     ))}
                 </nav>
             ) : null}
-            <div className="hidden md:flex">
+            <div className="hidden md:flex gap-3">
                 {!!user ?
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="cursor-pointer" asChild>
-                            <Avatar>
-                                <AvatarImage src={user.image} />
-                            </Avatar>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="bg-background border-background text-white w-56">
-                            <DropdownMenuLabel>Logged in as {user.name}</DropdownMenuLabel>
-                            <DropdownMenuItem
-                                onClick={() => {
-                                    signOut()
-                                }}
-                                className="cursor-pointer"
-                            >
-                                <LogOut className="mr-2 h-4 w-4" />
-                                <span>Log out</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <>
+                        {showCart && <CartNav /> }
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="cursor-pointer" asChild>
+                                <Avatar>
+                                    <AvatarImage src={user.image} />
+                                </Avatar>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="bg-background border-background text-white w-56">
+                                <DropdownMenuLabel>Logged in as {user.name}</DropdownMenuLabel>
+                                <DropdownMenuItem
+                                    onClick={() => {
+                                        signOut()
+                                    }}
+                                    className="cursor-pointer"
+                                >
+                                    <LogOut className="mr-2 h-4 w-4" />
+                                    <span>Log out</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </>
                     :
                     <SignIn />
                 }
