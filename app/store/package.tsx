@@ -1,22 +1,31 @@
 import { cn } from '@/lib/utils'
 import Icon from '@mdi/react'
-import { mdiCartOutline } from '@mdi/js'
+import { mdiCartOutline, mdiLoading } from '@mdi/js'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Package as PackageType } from '@/types'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import useFromStore from '@/hooks/useFromStore'
 import { useCartStore } from '@/store/useCartStore'
 
 export default function Package({ content }: { content: PackageType }) {
 
+    const [isLoading, setLoading] = useState<boolean>(false);
     const currency = useFromStore(useCartStore, (state) => state.currency);
+
+    const addToCart = useCartStore((state) => state.addToCart);
 
     const formatter = useMemo(() => {
         if (!currency) return undefined;
         return new Intl.NumberFormat
-        (currency?.locale, { style: 'currency', currency: currency?.currency });
+            (currency?.locale, { style: 'currency', currency: currency?.currency });
     }, [currency]);
+
+    const addItemToCart = () => {
+        setLoading(true);
+        addToCart(content);
+        setLoading(false);
+    }
 
     return (
         <div className='group bg-dark-gray min-h-48 w-full rounded-md overflow-hidden'>
@@ -46,8 +55,12 @@ export default function Package({ content }: { content: PackageType }) {
                     <Button
                         variant={'outline'}
                         className={cn('bg-transparent')}
+                        onClick={addItemToCart}
                     >
-                        <Icon path={mdiCartOutline} size={0.8} className="mr-1" />
+                        {isLoading
+                            ? <Icon path={mdiLoading} size={0.8} className="mr-1 animate-spin" />
+                            : <Icon path={mdiCartOutline} size={0.8} className="mr-1" />
+                        }
                     </Button>
                     <Button
                         variant={'outline'}

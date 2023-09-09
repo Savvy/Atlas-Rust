@@ -1,6 +1,4 @@
-export interface CartItem {
-    id: number
-    price: number
+export interface CartItem extends Package {
     quantity: number
 }
 

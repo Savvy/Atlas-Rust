@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from "zustand/middleware"
-import { CartItem, StoreLocale } from '@/types';
+import { CartItem, Package, StoreLocale } from '@/types';
 import Locales from '@/data/locales';
 
 interface State {
@@ -11,7 +11,7 @@ interface State {
 }
 
 interface Actions {
-    addToCart: (item: CartItem) => void
+    addToCart: (item: Package) => void
     removeFromCart: (item: CartItem) => void
     updateCurrency: (newCurrency: StoreLocale) => void
 }
@@ -29,7 +29,7 @@ export const useCartStore = create(
         cart: INITIAL_STATE.cart,
         totalItems: INITIAL_STATE.totalItems,
         totalPrice: INITIAL_STATE.totalPrice,
-        addToCart: (cartItem: CartItem) => {
+        addToCart: (cartItem: Package) => {
             const cart = get().cart;
             const itemInCart = cart.find((item) => item.id === cartItem.id);
 
