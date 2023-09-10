@@ -32,7 +32,7 @@ export default function Category({ title, packages }: Category) {
             >
                 <h3 className="text-xl font-medium text-muted mb-5">{title}</h3>
             </motion.div>
-            <div className='w-full grid grid-cols-1 md:grid-cols-4 gap-4'>
+            <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4">
                 {
                     packages.map((item: any, i: any) => {
                         return (

@@ -8,6 +8,8 @@ import { useMemo, useState } from 'react'
 import useFromStore from '@/hooks/useFromStore'
 import { useCartStore } from '@/store/useCartStore'
 
+import { useRouter } from 'next/navigation'
+
 export default function Package({ content }: { content: PackageType }) {
 
     const [isLoading, setLoading] = useState<boolean>(false);
@@ -21,10 +23,16 @@ export default function Package({ content }: { content: PackageType }) {
             (currency?.locale, { style: 'currency', currency: currency?.currency });
     }, [currency]);
 
+    const { push } = useRouter();
+
     const addItemToCart = () => {
         setLoading(true);
         addToCart(content);
         setLoading(false);
+    }
+
+    const editPackage = () => {
+        push('/store/edit');
     }
 
     return (
@@ -47,6 +55,7 @@ export default function Package({ content }: { content: PackageType }) {
                     <Button
                         variant={'outline'}
                         className={cn('bg-transparent flex-grow')}
+                        onClick={editPackage}
                     >
                         Edit Package
                     </Button>
