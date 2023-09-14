@@ -10,8 +10,8 @@ import { HexColorPicker } from "react-colorful";
 export default function Miscellaneous() {
     const [color, setColor] = useState("#561ecb");
     return (
-        <div className="w-full grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-5 justify-between"> {/* left side */}
+        <div className="w-full grid grid-cols-12 gap-4">
+            <div className="col-span-6 flex flex-col gap-5 justify-between"> {/* left side */}
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="terms" className="font-rajdhani text-muted text-lg">Kit Cooldown</Label>
                     <Slider
@@ -77,7 +77,7 @@ export default function Miscellaneous() {
                     </div>
                 </div>
             </div>
-            <div className="w-full flex flex-col justify-between"> {/* right side */}
+            <div className="col-span-6 w-full flex flex-col justify-between"> {/* right side */}
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between space-x-2">
                         <label

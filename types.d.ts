@@ -29,5 +29,14 @@ type Package = {
         skipQueue: boolean
         skinBox: boolean
     },
-    items: any[]
+    items: Item[]
+}
+
+type Item = {
+    id: number
+    categoryId: number,
+    name: string,
+    image: string,
+    min: number,
+    max: number,
 }

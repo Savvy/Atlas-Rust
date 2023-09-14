@@ -109,3 +109,8 @@ body {
   opacity: 100;
   transform: scale(1.15)
 }
+
+.react-colorful__interactive .react-colorful__pointer {
+  height: 18px;
+  width: 18px;
+}
