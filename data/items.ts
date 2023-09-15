@@ -22,14 +22,30 @@ export const items = [
     {
         id: 1,
         categoryId: 1,
-        name: "Timber",
-        image: "timber.png",
+        name: "Wood",
+        image: "wood.png",
+        min: 0,
+        max: 100
+    },
+    {
+        id: 2,
+        categoryId: 1,
+        name: "Stone",
+        image: "stone.png",
+        min: 0,
+        max: 100
+    },
+    {
+        id: 3,
+        categoryId: 1,
+        name: "Metal Fragments",
+        image: "metalfrags.png",
         min: 0,
         max: 100
     },
 
     {
-        id: 2,
+        id: 4,
         categoryId: 2,
         name: "Assimov | AK",
         image: "assimov-ak.png",
@@ -38,7 +54,7 @@ export const items = [
     },
 
     {
-        id: 3,
+        id: 5,
         categoryId: 3,
         name: "AVS | AK",
         image: "avs-ak.png",
@@ -46,7 +62,7 @@ export const items = [
         max: 100
     },
     {
-        id: 4,
+        id: 6,
         categoryId: 3,
         name: "Rage | AK",
         image: "rage-ak.png",
@@ -54,7 +70,7 @@ export const items = [
         max: 100
     },
     {
-        id: 5,
+        id: 7,
         categoryId: 3,
         name: "Assimov | AK",
         image: "assimov-ak.png",
@@ -62,7 +78,7 @@ export const items = [
         max: 100
     },
     {
-        id: 6,
+        id: 8,
         categoryId: 3,
         name: "Eternal | AK",
         image: "eternal-ak.png",
