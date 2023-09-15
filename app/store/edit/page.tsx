@@ -37,7 +37,7 @@ export default function Servers() {
                     <EditContainer>
                         <Edit />
                     </EditContainer>
-                    <div className="col-span-3 h-96 flex flex-col gap-5">
+                    {/* <div className="col-span-3 h-96 flex flex-col gap-5">
                         <div className="bg-[#15171B] rounded-md w-full p-5 text-muted">
                             <h5 className="font-semibold font-rajdhani uppercase">Server</h5>
                             <h3 className="text-xl font-semibold font-rajdhani">Vanilla - EU Main</h3>
@@ -81,7 +81,7 @@ export default function Servers() {
                         <div className="bg-[#15171B] rounded-md w-full p-5">
                             <Subtotal />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </section>
         </main>
