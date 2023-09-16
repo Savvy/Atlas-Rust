@@ -5,7 +5,6 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import DiscordProvider from "next-auth/providers/discord";
 
-
 const prisma = new PrismaClient();
 
 export const authOptions = (req: NextRequest): NextAuthOptions => {
@@ -22,6 +21,9 @@ export const authOptions = (req: NextRequest): NextAuthOptions => {
             })
         ] : [],
         secret: process.env.NEXTAUTH_SECRET!,
+        session: {
+            maxAge: 259200 // 3 Days
+        },
         callbacks: {
             async session({ session }) {
                 const prismaUser = await prisma.user.findUnique({

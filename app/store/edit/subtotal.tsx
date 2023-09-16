@@ -3,9 +3,10 @@
 import { Button } from "@/components/ui/button";
 import useFromStore from "@/hooks/useFromStore";
 import { useCartStore } from "@/store/useCartStore";
+import { InvItem } from "@/types";
 import { useMemo } from "react";
 
-export default function Subtotal() {
+export default function Subtotal({ invItems }: { invItems: InvItem[] }) {
 
     const currency = useFromStore(useCartStore, (state) => state.currency);
     const totalPrice = useFromStore(useCartStore, (state) => state.totalPrice);
@@ -16,6 +17,12 @@ export default function Subtotal() {
             (currency?.locale, { style: 'currency', currency: currency?.currency });
     }, [currency]);
 
+    const total = useMemo(() => {
+        return invItems.reduce((acc, invItem: InvItem) => {
+            return acc + ((invItem.amount / invItem.item.step) * invItem.item.pricePerStep)
+        }, 0)
+    }, [invItems]);
+
     return (
         <>
             <h5 className="mb-3 font-rajdhani text-lg">Sub Total:</h5>
@@ -23,7 +30,7 @@ export default function Subtotal() {
                 variant={'default'}
                 size={"lg"}
                 className={"w-full font-rajdhani text-lg"}
-            >Buy | {!!formatter ? formatter.format(totalPrice || 0) : '$ 0.00'}</Button>
+            >Add To Cart | {!!formatter ? formatter.format(total || 0) : '$ 0.00'}</Button>
         </>
     )
 }

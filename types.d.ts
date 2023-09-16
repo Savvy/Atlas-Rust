@@ -37,6 +37,13 @@ type Item = {
     categoryId: number,
     name: string,
     image: string,
+    pricePerStep: number,
     min: number,
     max: number,
+    step: number
+}
+
+type InvItem = {
+    item: Item,
+    amount: number
 }

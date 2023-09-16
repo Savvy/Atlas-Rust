@@ -6,13 +6,13 @@ import { useState } from "react";
 import type { DragSourceMonitor } from 'react-dnd'
 import { useDrag } from 'react-dnd'
 
-export default function DraggableItem({ tag }: any) {
+export default function DraggableItem({ item }: any) {
 
     const [forbidDrag, setForbidDrag] = useState(false)
     const [{ isDragging }, drag] = useDrag(
         () => ({
             type: 'item',
-            item: tag,
+            item: item,
             canDrag: true,
             collect: (monitor: DragSourceMonitor) => ({
                 isDragging: !!monitor.isDragging(),
@@ -22,7 +22,7 @@ export default function DraggableItem({ tag }: any) {
     return (
         <div
             className="flex flex-col justify-start items-center gap-1 select-none"
-            key={tag.id.toString()}
+            /* key={item.id.toString()} */
             ref={drag}
         >
             <div className={cn(
@@ -30,17 +30,17 @@ export default function DraggableItem({ tag }: any) {
                 "rounded-md flex items-center justify-center",
                 "bg-transparent border border-[#434343]",
                 "text-muted")}>
-                {tag.image
+                {item.image
                     ? <Image
-                        src={`/images/store/items/${tag.image}`}
+                        src={`/images/store/items/${item.image}`}
                         width={48}
                         height={45}
-                        alt={tag.name}
+                        alt={item.name}
                     />
                     : <XIcon />
                 }
             </div>
-            <span className="text-sm opacity-75 font-rajdhani">{tag.name}</span>
+            <span className="text-sm opacity-75 font-rajdhani">{item.name}</span>
         </div>
     )
 }

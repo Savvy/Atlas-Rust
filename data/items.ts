@@ -24,24 +24,30 @@ export const items = [
         categoryId: 1,
         name: "Wood",
         image: "wood.png",
-        min: 0,
-        max: 100
+        pricePerStep: 0.35,
+        min: 1000,
+        max: 10000,
+        step: 1000
     },
     {
         id: 2,
         categoryId: 1,
         name: "Stone",
         image: "stone.png",
-        min: 0,
-        max: 100
+        pricePerStep: 0.35,
+        min: 1000,
+        max: 10000,
+        step: 1000
     },
     {
         id: 3,
         categoryId: 1,
         name: "Metal Fragments",
         image: "metalfrags.png",
-        min: 0,
-        max: 100
+        pricePerStep: 0.35,
+        min: 1000,
+        max: 10000,
+        step: 1000
     },
 
     {
@@ -49,8 +55,10 @@ export const items = [
         categoryId: 2,
         name: "Assimov | AK",
         image: "assimov-ak.png",
-        min: 0,
-        max: 100
+        pricePerStep: 0.35,
+        min: 1000,
+        max: 10000,
+        step: 1000
     },
 
     {
@@ -58,139 +66,39 @@ export const items = [
         categoryId: 3,
         name: "AVS | AK",
         image: "avs-ak.png",
-        min: 0,
-        max: 100
+        pricePerStep: 0.35,
+        min: 1000,
+        max: 10000,
+        step: 1000
     },
     {
         id: 6,
         categoryId: 3,
         name: "Rage | AK",
         image: "rage-ak.png",
-        min: 0,
-        max: 100
+        pricePerStep: 0.35,
+        min: 1000,
+        max: 10000,
+        step: 1000
     },
     {
         id: 7,
         categoryId: 3,
         name: "Assimov | AK",
         image: "assimov-ak.png",
-        min: 0,
-        max: 100
+        pricePerStep: 0.35,
+        min: 1000,
+        max: 10000,
+        step: 1000
     },
     {
         id: 8,
         categoryId: 3,
         name: "Eternal | AK",
         image: "eternal-ak.png",
-        min: 0,
-        max: 100
-    },
-]
-
-
-export const ItemsD = [
-    {
-        title: "Resources",
-        items: [
-            {
-                id: 1,
-                name: "Timber",
-                image: "timber.png",
-                min: 0,
-                max: 100
-            },
-        ]
-    },
-    {
-        title: "Components",
-        items: [
-            {
-                id: 2,
-                name: "Assimov | AK",
-                image: "assimov-ak.png",
-                min: 0,
-                max: 100
-            },
-        ]
-    },
-    {
-        title: "Weapons",
-        items: [
-            {
-                id: 3,
-                name: "AVS | AK",
-                image: "avs-ak.png",
-                min: 0,
-                max: 100
-            },
-            {
-                id: 4,
-                name: "Rage | AK",
-                image: "rage-ak.png",
-                min: 0,
-                max: 100
-            },
-            {
-                id: 5,
-                name: "Assimov | AK",
-                image: "assimov-ak.png",
-                min: 0,
-                max: 100
-            },
-            {
-                id: 6,
-                name: "Eternal | AK",
-                image: "eternal-ak.png",
-                min: 0,
-                max: 100
-            },
-            {
-                id: 7,
-                name: "Assimov | AK",
-                image: "assimov-ak.png",
-                min: 0,
-                max: 100
-            },
-        ]
-    },
-    {
-        title: "Others",
-        items: [
-            {
-                id: 8,
-                name: "Assimov | AK",
-                image: "assimov-ak.png",
-                min: 0,
-                max: 100
-            },
-            {
-                id: 9,
-                name: "Assimov | AK",
-                image: "assimov-ak.png",
-                min: 0,
-                max: 100
-            },
-            {
-                id: 10,
-                name: "Assimov | AK",
-                image: "assimov-ak.png",
-                min: 0,
-                max: 100
-            },
-            {
-                id: 11,
-                name: "Assimov | AK",
-                image: "assimov-ak.png",
-                min: 0,
-                max: 100
-            },
-            {
-                id: 12,
-                name: "Assimov | AK",
-                image: "assimov-ak.png",
-                min: 0,
-                max: 100
-            },
-        ]
+        pricePerStep: 0.35,
+        min: 1000,
+        max: 10000,
+        step: 1000
     },
 ]
