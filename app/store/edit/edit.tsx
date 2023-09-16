@@ -8,30 +8,38 @@ import { categories, items as initialItems } from "@/data/items"
 
 import { useDrop } from 'react-dnd'
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Item, InvItem } from "@/types";
 import Image from "next/image";
 import XIcon from "@/components/icons/xicon";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Slider } from "@/components/ui/slider";
 import Subtotal from "./subtotal";
 import ItemConfig from "./item-config";
 
 export default function Edit() {
 
+    // Inventory items
     const [invItems, setInvItems] = useState<InvItem[]>([]);
+
+    // All items to be sold, when added to the invItems array,
+    // they are removed from this one
     const [items, setItems] = useState<Item[]>([...initialItems]);
 
-   /*  useEffect(() => {
-        console.log(invItems)
-    }, [invItems])
- */
-    useEffect(() => {
-        console.log(items)
-    }, [items])
+    // Slider misc values
+    const [kitCooldown, setKitCooldown] = useState<number>(1);
+    const [teleportCooldown, setTeleportCooldown] = useState<number>(1);
+    const [amountOfHomes, setAmountOfHomes] = useState<number>(1);
+    const [coloredName, setColoredName] = useState<number>(1);
+
+    // Boolean misc values
+    const [autoUpgrade, setAutoUpgrade] = useState<boolean>(false);
+    const [skipQueue, setSkipQueue] = useState<boolean>(false);
+    const [skinBox, setSkinBox] = useState<boolean>(false);
+
+    // Color hex misc value
+    const [colorHex, setColorHex] = useState<string>('#0437b9');
 
     const addItemToInv = (item: Item) => {
-        console.log(item);
         setInvItems((prev) => {
             const newArray = [...prev, { item, amount: item.min }];
             return newArray
@@ -43,7 +51,7 @@ export default function Edit() {
         })
     }
 
-    const [collectedProps, drop] = useDrop(() => ({
+    const [, drop] = useDrop(() => ({
         accept: 'item',
         drop(item: Item, monitor) {
             addItemToInv(item);
@@ -68,7 +76,24 @@ export default function Edit() {
                     "rounded-md p-5"
                 )}>
                     <h3 className="text-2xl text-muted font-rajdhani font-medium mb-3">Miscellaneous</h3>
-                    <Miscellaneous />
+                    <Miscellaneous
+                        kitCooldown={kitCooldown}
+                        setKitCooldown={setKitCooldown}
+                        teleportCooldown={teleportCooldown}
+                        setTeleportCooldown={setTeleportCooldown}
+                        amountOfHomes={amountOfHomes}
+                        setAmountOfHomes={setAmountOfHomes}
+                        coloredName={coloredName}
+                        setColoredName={setColoredName}
+                        autoUpgrade={autoUpgrade}
+                        setAutoUpgrade={setAutoUpgrade}
+                        skipQueue={skipQueue}
+                        setSkipQueue={setSkipQueue}
+                        skinBox={skinBox}
+                        setSkinBox={setSkinBox}
+                        colorHex={colorHex}
+                        setColorHex={setColorHex}
+                    />
                 </div>
                 <div className={cn(
                     "bg-[#15171B] w-full",

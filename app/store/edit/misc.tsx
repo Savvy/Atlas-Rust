@@ -7,20 +7,42 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
-export default function Miscellaneous() {
-    const [color, setColor] = useState("#561ecb");
+type MiscProps = {
+    kitCooldown: number
+    teleportCooldown: number
+    amountOfHomes: number
+    coloredName: number
+    autoUpgrade: boolean
+    skipQueue: boolean
+    skinBox: boolean
+    colorHex: string
+    setKitCooldown: (value: number) => void
+    setTeleportCooldown: (value: number) => void
+    setAmountOfHomes: (value: number) => void
+    setColoredName: (value: number) => void
+    setAutoUpgrade: (value: boolean) => void
+    setSkipQueue: (value: boolean) => void
+    setSkinBox: (value: boolean) => void
+    setColorHex: (value: string) => void
+}
+
+export default function Miscellaneous(props: MiscProps) {
     return (
         <div className="w-full grid grid-cols-12 gap-4">
             <div className="col-span-6 flex flex-col gap-5 justify-between"> {/* left side */}
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="terms" className="font-rajdhani text-muted text-lg">Kit Cooldown</Label>
                     <Slider
-                        defaultValue={[1]}
+                        id="kitCooldown"
                         max={4}
                         step={1}
                         className={cn("w-full")}
+                        value={[props.kitCooldown]}
+                        onValueChange={(values) => {
+                            props.setKitCooldown(values[0])
+                        }}
                     />
-                    <div className="flex justify-between font-rajdhani text-muted font-semibold">
+                    <div className="flex justify-between font-rajdhani text-muted font-semibold select-none">
                         <span>12h</span>
                         <span>10h</span>
                         <span>8h</span>
@@ -31,12 +53,15 @@ export default function Miscellaneous() {
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="terms" className="font-rajdhani text-muted text-lg">Teleportation Cooldown</Label>
                     <Slider
-                        defaultValue={[1]}
                         max={4}
                         step={1}
                         className={cn("w-full")}
+                        value={[props.teleportCooldown]}
+                        onValueChange={(values) => {
+                            props.setTeleportCooldown(values[0])
+                        }}
                     />
-                    <div className="flex justify-between font-rajdhani text-muted font-semibold">
+                    <div className="flex justify-between font-rajdhani text-muted font-semibold select-none">
                         <span>25S</span>
                         <span>20S</span>
                         <span>15S</span>
@@ -47,12 +72,15 @@ export default function Miscellaneous() {
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="terms" className="font-rajdhani text-muted text-lg">Amount of Homes</Label>
                     <Slider
-                        defaultValue={[1]}
                         max={4}
                         step={1}
                         className={cn("w-full")}
+                        value={[props.amountOfHomes]}
+                        onValueChange={(values) => {
+                            props.setAmountOfHomes(values[0])
+                        }}
                     />
-                    <div className="flex justify-between font-rajdhani text-muted font-semibold">
+                    <div className="flex justify-between font-rajdhani text-muted font-semibold select-none">
                         <span>3</span>
                         <span>5</span>
                         <span>10</span>
@@ -63,12 +91,15 @@ export default function Miscellaneous() {
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="terms" className="font-rajdhani text-muted text-lg">Colored Name</Label>
                     <Slider
-                        defaultValue={[1]}
                         max={4}
                         step={1}
                         className={cn("w-full")}
+                        value={[props.coloredName]}
+                        onValueChange={(values) => {
+                            props.setColoredName(values[0])
+                        }}
                     />
-                    <div className="flex justify-between font-rajdhani text-muted font-semibold">
+                    <div className="flex justify-between font-rajdhani text-muted font-semibold select-none">
                         <span>Blue</span>
                         <span>Red</span>
                         <span>Yellow</span>
@@ -86,7 +117,13 @@ export default function Miscellaneous() {
                         >
                             HQM Auto Upgrade
                         </label>
-                        <Checkbox id="autoUpgrade" />
+                        <Checkbox
+                            id="autoUpgrade"
+                            checked={props.autoUpgrade}
+                            onCheckedChange={(value: boolean) => {
+                                props.setAutoUpgrade(value)
+                            }}
+                        />
                     </div>
                     <div className="flex items-center justify-between space-x-2">
                         <label
@@ -95,7 +132,13 @@ export default function Miscellaneous() {
                         >
                             Skip Queue
                         </label>
-                        <Checkbox id="skipQueue" />
+                        <Checkbox
+                            id="skipQueue"
+                            checked={props.skipQueue}
+                            onCheckedChange={(value: boolean) => {
+                                props.setSkipQueue(value)
+                            }}
+                        />
                     </div>
                     <div className="flex items-center justify-between space-x-2">
                         <label
@@ -104,18 +147,24 @@ export default function Miscellaneous() {
                         >
                             Skinbox
                         </label>
-                        <Checkbox id="skinBox" />
+                        <Checkbox
+                            id="skinBox"
+                            checked={props.skinBox}
+                            onCheckedChange={(value: boolean) => {
+                                props.setSkinBox(value)
+                            }}
+                        />
                     </div>
                 </div>
-                <div className="w-full mt-5">
+                {props.coloredName >= 4 ? <div className="w-full mt-5">
                     <HexColorPicker
-                        color={color}
-                        onChange={setColor}
+                        color={props.colorHex}
+                        onChange={props.setColorHex}
                         style={{
                             width: '100%',
                         }}
                     />
-                </div>
+                </div> : null}
             </div>
         </div>
     )
