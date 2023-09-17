@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Miscellaneous from "./misc";
 import ItemsList from "./items-list";
 
-import { categories, items as initialItems } from "@/data/items"
+import { categories, editPackage, items as initialItems } from "@/data/items"
 
 import { useDrop } from 'react-dnd'
 
@@ -15,8 +15,12 @@ import XIcon from "@/components/icons/xicon";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Subtotal from "./subtotal";
 import ItemConfig from "./item-config";
+import { useToast } from "@/components/ui/use-toast";
+import DropCell from "./drop-cell";
 
 export default function Edit() {
+
+    const { toast } = useToast()
 
     // Inventory items
     const [invItems, setInvItems] = useState<InvItem[]>([]);
@@ -26,10 +30,10 @@ export default function Edit() {
     const [items, setItems] = useState<Item[]>([...initialItems]);
 
     // Slider misc values
-    const [kitCooldown, setKitCooldown] = useState<number>(1);
-    const [teleportCooldown, setTeleportCooldown] = useState<number>(1);
-    const [amountOfHomes, setAmountOfHomes] = useState<number>(1);
-    const [coloredName, setColoredName] = useState<number>(1);
+    const [kitCooldown, setKitCooldown] = useState<number>(0);
+    const [teleportCooldown, setTeleportCooldown] = useState<number>(0);
+    const [amountOfHomes, setAmountOfHomes] = useState<number>(0);
+    const [coloredName, setColoredName] = useState<number>(0);
 
     // Boolean misc values
     const [autoUpgrade, setAutoUpgrade] = useState<boolean>(false);
@@ -39,9 +43,10 @@ export default function Edit() {
     // Color hex misc value
     const [colorHex, setColorHex] = useState<string>('#0437b9');
 
-    const addItemToInv = (item: Item) => {
+    const addItemToInv = (item: Item, index: number) => {
         setInvItems((prev) => {
-            const newArray = [...prev, { item, amount: item.min }];
+            const newArray = [...prev];
+            newArray[index] = { item, amount: item.min }
             return newArray
         });
         setItems((prev) => {
@@ -51,18 +56,29 @@ export default function Edit() {
         })
     }
 
-    const [, drop] = useDrop(() => ({
+    /* const [, drop] = useDrop(() => ({
         accept: 'item',
         drop(item: Item, monitor) {
             addItemToInv(item);
             return item
         },
-    }))
+    })) */
 
     const setItemAmount = (index: number, amount: number) => {
         const newArray = [...invItems];
         newArray[index]['amount'] = amount;
         setInvItems(newArray);
+    }
+
+    const addPackageToCart = () => {
+        if (invItems.length < editPackage.minInventoryItems) {
+            toast({
+                title: "Uh oh! You can't do this yet.",
+                description: "You need to add more items to your inventory.",
+                className: 'border-primary',
+            })
+            return;
+        }
     }
 
     return (
@@ -100,13 +116,21 @@ export default function Edit() {
                     "rounded-md p-5"
                 )}>
                     <h3 className="text-2xl text-muted font-rajdhani font-medium mb-3">Inventory - Rust</h3>
-                    <div ref={drop} className="w-full grid grid-cols-5 gap-x-1 gap-y-4">
-                        {!!invItems && invItems.map((invItem,) => (
-                            <div
+                    <div className="w-full grid grid-cols-6 gap-x-1 gap-y-5">
+                        {/* {!!invItems && invItems.map((invItem,) => ( */}
+                        {Array.from({ length: (24) }).map((_, index) => (
+                            <DropCell
+                                key={index}
+                                invItem={invItems[index]}
+                                addItemToInv={addItemToInv}
+                                index={index}
+                            />
+                        ))}
+                        {/* <div
                                 className="flex flex-col justify-start items-center gap-1 select-none"
                                 key={invItem.item.id}
                             >
-                                <div className={cn(
+                                <div classNamej ={cn(
                                     "w-full h-20",
                                     "rounded-md flex items-center justify-center",
                                     "bg-transparent border border-[#434343]",
@@ -122,16 +146,16 @@ export default function Edit() {
                                     }
                                 </div>
                                 <span className="text-sm opacity-75 font-rajdhani">{invItem.item.name}</span>
-                            </div>
-                        ))}
-                        {Array.from({ length: (30 - invItems.length) }).map((_, index) => (
+                                </div>
+                        ))} */}
+                        {/* {Array.from({ length: (30 - invItems.length) }).map((_, index) => (
                             <div key={index} className={cn(
                                 "w-full h-20",
                                 "rounded-md flex items-center justify-center",
                                 "bg-[#434343] border border-[#434343]",
                                 "text-muted")}>
                             </div>
-                        ))}
+                        ))} */}
                     </div>
                 </div>
                 <div className={cn(
@@ -162,13 +186,17 @@ export default function Edit() {
 
                 {invItems.length > 0 ? <div className="bg-[#15171B] rounded-md w-full max-h-[26rem] h-full">
                     <ScrollArea className="w-full h-full py-3 px-5">
-                        {invItems.map((item, index) => (
-                            <ItemConfig key={index} index={index} invItem={item} setAmount={setItemAmount} />
-                        ))}
+                        {invItems.map((item, index) => {
+                            return !!invItems[index]
+                                ?
+                                <ItemConfig key={index} index={index} invItem={item} setAmount={setItemAmount} />
+                                : null
+                        }
+                        )}
                     </ScrollArea>
                 </div> : null}
                 <div className="bg-[#15171B] rounded-md w-full p-5">
-                    <Subtotal invItems={invItems} />
+                    <Subtotal invItems={invItems} addPackageToCart={addPackageToCart} />
                 </div>
             </div>
         </>

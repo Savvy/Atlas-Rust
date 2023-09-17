@@ -1,8 +1,7 @@
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
-import { InvItem, Item } from "@/types";
+import { InvItem } from "@/types";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function ItemConfig({ index, invItem, setAmount }: { index: number, invItem: InvItem, setAmount: any }) {
 
@@ -20,7 +19,7 @@ export default function ItemConfig({ index, invItem, setAmount }: { index: numbe
                         height={30}
                         alt={invItem.item.name}
                     />
-                    <span className="">{invItem.item.name} | {invItem.item.max.toLocaleString()}</span>
+                    <span className="">{invItem.item.name}<br/>{invItem.amount.toLocaleString()} / {invItem.item.max.toLocaleString()}</span>
                 </div>
                 <span>$0.35 / 1,000</span>
             </div>

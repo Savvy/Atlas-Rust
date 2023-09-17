@@ -2,7 +2,7 @@
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
-import DraggableItem from "./DraggableItem";
+import DraggableItem from "./draggable-item";
 import { Item } from "@/types";
 import { useMemo } from "react";
 

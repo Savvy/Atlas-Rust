@@ -102,3 +102,7 @@ export const items = [
         step: 1000
     },
 ]
+
+export const editPackage = {
+    minInventoryItems: 3,
+}

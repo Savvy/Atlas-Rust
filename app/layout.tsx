@@ -6,6 +6,7 @@ import { MainNav } from '@/components/layout/main-nav'
 import Footer from '@/components/layout/footer'
 import { mainNav } from '@/data/navigation'
 import { getCurrentUser } from '@/lib/session'
+import { Toaster } from '@/components/ui/toaster'
 
 const rajdhani = Rajdhani({
   subsets: ['latin'],
@@ -50,6 +51,7 @@ export default async function RootLayout({
         </div>
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   )

@@ -6,7 +6,7 @@ import { useCartStore } from "@/store/useCartStore";
 import { InvItem } from "@/types";
 import { useMemo } from "react";
 
-export default function Subtotal({ invItems }: { invItems: InvItem[] }) {
+export default function Subtotal({ invItems, addPackageToCart }: { invItems: InvItem[], addPackageToCart: () => void }) {
 
     const currency = useFromStore(useCartStore, (state) => state.currency);
     const totalPrice = useFromStore(useCartStore, (state) => state.totalPrice);
@@ -19,7 +19,7 @@ export default function Subtotal({ invItems }: { invItems: InvItem[] }) {
 
     const total = useMemo(() => {
         return invItems.reduce((acc, invItem: InvItem) => {
-            return acc + ((invItem.amount / invItem.item.step) * invItem.item.pricePerStep)
+            return !!invItem ? acc + ((invItem.amount / invItem.item.step) * invItem.item.pricePerStep) : acc
         }, 0)
     }, [invItems]);
 
@@ -30,6 +30,7 @@ export default function Subtotal({ invItems }: { invItems: InvItem[] }) {
                 variant={'default'}
                 size={"lg"}
                 className={"w-full font-rajdhani text-lg"}
+                onClick={addPackageToCart}
             >Add To Cart | {!!formatter ? formatter.format(total || 0) : '$ 0.00'}</Button>
         </>
     )
