@@ -6,12 +6,8 @@ import ItemsList from "./items-list";
 
 import { categories, editPackage, items as initialItems } from "@/data/items"
 
-import { useDrop } from 'react-dnd'
-
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Item, InvItem } from "@/types";
-import Image from "next/image";
-import XIcon from "@/components/icons/xicon";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Subtotal from "./subtotal";
 import ItemConfig from "./item-config";
@@ -23,7 +19,8 @@ export default function Edit() {
     const { toast } = useToast()
 
     // Inventory items
-    const [invItems, setInvItems] = useState<InvItem[]>([]);
+    const [invItems, setInvItems] = useState<InvItem[]>(Array.from({ length: (editPackage.maxInventorySlots) }));
+    const [invAmount, setInvAmount] = useState<any>({});
 
     // All items to be sold, when added to the invItems array,
     // they are removed from this one
@@ -49,6 +46,17 @@ export default function Edit() {
             newArray[index] = { item, amount: item.min }
             return newArray
         });
+
+        setInvAmount((prev: any) => {
+
+            const newInvAmount = { ...prev };
+            newInvAmount[item.id] = {
+                amount: item.min
+            };
+
+            return newInvAmount
+        });
+
         setItems((prev) => {
             const newArray = [...prev];
             newArray.splice(prev.findIndex((obj) => obj.id === item.id), 1)
@@ -56,18 +64,73 @@ export default function Edit() {
         })
     }
 
-    /* const [, drop] = useDrop(() => ({
-        accept: 'item',
-        drop(item: Item, monitor) {
-            addItemToInv(item);
-            return item
-        },
-    })) */
+    const slotsAvailable = useMemo(() => {
+        return invItems.reduce((val, item) => (item === undefined) ? val + 1 : val, 0);
+    }, [invItems])
 
-    const setItemAmount = (index: number, amount: number) => {
-        const newArray = [...invItems];
-        newArray[index]['amount'] = amount;
-        setInvItems(newArray);
+    const setItemAmount = (id: number, amount: number) => {
+        const item = getItemById(id);
+
+        if (!item) return;
+
+        // This is how many items are currently in the inventory
+        const itemsInInv = invItems.reduce((val, item) =>
+            (item?.item && item.item.id == id) ? val + 1 : val, 0);
+
+        const currentAmount = invAmount[id].amount;
+        if (amount > currentAmount) {
+            const newAmount = Math.ceil(amount / item.item.maxPerStack)
+            if (newAmount > itemsInInv) {
+
+                const amountToAdd = newAmount - itemsInInv;
+
+                // Checks inventory size
+               /*  if (slotsAvailable == editPackage.maxInventorySlots || (slotsAvailable - amountToAdd) >= editPackage.maxInventorySlots) {
+                    console.log('can not add');
+                    return;
+                } */
+
+                setInvItems((prev) => {
+                    const newArray = [...prev];
+                    for (let x = 0; x < (amountToAdd); x++) {
+                        innerLoop:
+                        for (let i = 0; i < newArray.length; i++) {
+                            if (newArray[i] === undefined) {
+                                newArray[i] = { ...item }
+                                break innerLoop;
+                            }
+                        }
+                    }
+                    return newArray
+                });
+            }
+        } else if (amount < currentAmount) {
+            const newAmount = Math.ceil(amount / item.item.maxPerStack)
+            const amountToRemove = itemsInInv - newAmount;
+            // if (newAmount < itemsInInv && itemsInInv != 1) {
+            setInvItems((prev) => {
+                const newArray = [...prev];
+                for (let x = 0; x < (amountToRemove); x++) {
+                    for (let index = newArray.length - 1; index >= 0; index--) {
+                        const element = newArray[index];
+                        if (element && element.item && element.item.id === id) {
+                            newArray[index] = undefined
+                            break;
+                        }
+                    }
+                }
+                return newArray
+            });
+            // }
+        }
+
+        const newInvAmount = { ...invAmount };
+
+        newInvAmount[id] = {
+            amount: amount
+        };
+        setInvAmount(newInvAmount);
+        /*  setInvItems(newArray); */
     }
 
     const addPackageToCart = () => {
@@ -81,17 +144,21 @@ export default function Edit() {
         }
     }
 
+    const getItemById = (id: number) => {
+        return invItems.find((item: InvItem) => item?.item?.id === id)
+    }
+
     return (
         <>
-            <div className={cn("bg-[#15171B] col-span-4", "rounded-md max-h-[28rem]")}>
+            <div className={cn("bg-[#15171B] col-span-4", "rounded-md")}>
                 <ItemsList categories={categories} items={items} />
             </div>
-            <div className="col-span-5 flex flex-col gap-5 w-full">
+            <div className="col-span-5 flex flex-col gap-3 w-full">
                 <div className={cn(
                     "bg-[#15171B] w-full",
                     "rounded-md p-5"
                 )}>
-                    <h3 className="text-2xl text-muted font-rajdhani font-medium mb-3">Miscellaneous</h3>
+                    <h3 className="text-xl text-muted font-rajdhani font-medium mb-2">Miscellaneous</h3>
                     <Miscellaneous
                         kitCooldown={kitCooldown}
                         setKitCooldown={setKitCooldown}
@@ -115,10 +182,9 @@ export default function Edit() {
                     "bg-[#15171B] w-full",
                     "rounded-md p-5"
                 )}>
-                    <h3 className="text-2xl text-muted font-rajdhani font-medium mb-3">Inventory - Rust</h3>
-                    <div className="w-full grid grid-cols-6 gap-x-1 gap-y-5">
-                        {/* {!!invItems && invItems.map((invItem,) => ( */}
-                        {Array.from({ length: (24) }).map((_, index) => (
+                    <h3 className="text-xl text-muted font-rajdhani font-medium mb-2">Inventory - Rust</h3>
+                    <div className="w-full grid grid-cols-6 gap-x-1 gap-y-1">
+                        {Array.from({ length: (editPackage.maxInventorySlots) }).map((_, index) => (
                             <DropCell
                                 key={index}
                                 invItem={invItems[index]}
@@ -126,46 +192,17 @@ export default function Edit() {
                                 index={index}
                             />
                         ))}
-                        {/* <div
-                                className="flex flex-col justify-start items-center gap-1 select-none"
-                                key={invItem.item.id}
-                            >
-                                <div classNamej ={cn(
-                                    "w-full h-20",
-                                    "rounded-md flex items-center justify-center",
-                                    "bg-transparent border border-[#434343]",
-                                    "text-muted")}>
-                                    {invItem.item.image
-                                        ? <Image
-                                            src={`/images/store/items/${invItem.item.image}`}
-                                            width={48}
-                                            height={45}
-                                            alt={invItem.item.name}
-                                        />
-                                        : <XIcon />
-                                    }
-                                </div>
-                                <span className="text-sm opacity-75 font-rajdhani">{invItem.item.name}</span>
-                                </div>
-                        ))} */}
-                        {/* {Array.from({ length: (30 - invItems.length) }).map((_, index) => (
-                            <div key={index} className={cn(
-                                "w-full h-20",
-                                "rounded-md flex items-center justify-center",
-                                "bg-[#434343] border border-[#434343]",
-                                "text-muted")}>
-                            </div>
-                        ))} */}
                     </div>
                 </div>
                 <div className={cn(
                     "bg-[#15171B] w-full",
                     "rounded-md p-5"
                 )}>
-                    <h3 className="text-2xl text-muted font-rajdhani font-medium mb-3">Clothing</h3>
+                    <h3 className="text-xl text-muted font-rajdhani font-medium mb-2">Clothing</h3>
                     <div className="w-full grid grid-cols-8 gap-x-1 gap-y-1">
                         {Array.from({ length: 8 }).map((_, index) => (
                             <div key={index} className={cn(
+                                // "w-full h-16",
                                 "w-full h-16",
                                 "rounded-md flex items-center justify-center",
                                 "bg-[#434343] border border-[#434343]",
@@ -175,7 +212,7 @@ export default function Edit() {
                     </div>
                 </div>
             </div>
-            <div className="col-span-3 h-96 flex flex-col gap-5">
+            <div className="col-span-3 flex flex-col gap-3">
                 <div className="bg-[#15171B] rounded-md w-full p-5 text-muted">
                     <h5 className="font-semibold font-rajdhani uppercase">Server</h5>
                     <h3 className="text-xl font-semibold font-rajdhani">Vanilla - EU Main</h3>
@@ -184,20 +221,48 @@ export default function Edit() {
                     <h3 className="text-xl font-semibold font-rajdhani">Immortal</h3>
                 </div>
 
-                {invItems.length > 0 ? <div className="bg-[#15171B] rounded-md w-full max-h-[26rem] h-full">
-                    <ScrollArea className="w-full h-full py-3 px-5">
-                        {invItems.map((item, index) => {
-                            return !!invItems[index]
-                                ?
-                                <ItemConfig key={index} index={index} invItem={item} setAmount={setItemAmount} />
-                                : null
-                        }
-                        )}
+                <div className="bg-[#15171B] flex-grow flex flex-col rounded-md w-full">
+                    <ScrollArea className="w-full h-[300px] flex-grow py-3 px-5">
+                        {Object.keys(invAmount).map((itemId, index) => {
+                            const invItem = getItemById(+itemId);
+                            return !!!invItem ? null :
+                                <ItemConfig
+                                    key={index}
+                                    invItems={invItems}
+                                    invItem={invItem}
+                                    itemAmounts={invAmount}
+                                    setAmount={setItemAmount}
+                                    slotsAvailable={slotsAvailable}
+                                />
+                        })}
                     </ScrollArea>
-                </div> : null}
-                <div className="bg-[#15171B] rounded-md w-full p-5">
-                    <Subtotal invItems={invItems} addPackageToCart={addPackageToCart} />
+                    <div className="p-5">
+                        <Subtotal
+                            invItems={invItems}
+                            addPackageToCart={addPackageToCart}
+                            kitCooldown={kitCooldown}
+                            tpCooldown={teleportCooldown}
+                            amountOfHomes={amountOfHomes}
+                            coloredName={coloredName}
+                            autoUpgrade={autoUpgrade}
+                            skipQueue={skipQueue}
+                            skinBox={skinBox}
+                        />
+                    </div>
                 </div>
+                {/*  <div className="bg-[#15171B] rounded-md w-full p-5">
+                    <Subtotal
+                        invItems={invItems}
+                        addPackageToCart={addPackageToCart}
+                        kitCooldown={kitCooldown}
+                        tpCooldown={teleportCooldown}
+                        amountOfHomes={amountOfHomes}
+                        coloredName={coloredName}
+                        autoUpgrade={autoUpgrade}
+                        skipQueue={skipQueue}
+                        skinBox={skinBox}
+                    />
+                </div> */}
             </div>
         </>
     )

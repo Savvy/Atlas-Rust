@@ -29,7 +29,7 @@ type MiscProps = {
 export default function Miscellaneous(props: MiscProps) {
     return (
         <div className="w-full grid grid-cols-12 gap-4">
-            <div className="col-span-6 flex flex-col gap-5 justify-between"> {/* left side */}
+            <div className="col-span-6 flex flex-col gap-2 justify-between"> {/* left side */}
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="terms" className="font-rajdhani text-muted text-lg">Kit Cooldown</Label>
                     <Slider

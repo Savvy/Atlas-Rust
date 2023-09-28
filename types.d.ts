@@ -34,13 +34,14 @@ type Package = {
 
 type Item = {
     id: number
-    categoryId: number,
+    category: string,
     name: string,
     image: string,
     pricePerStep: number,
     min: number,
     max: number,
     step: number
+    maxPerStack: number
 }
 
 type InvItem = {
