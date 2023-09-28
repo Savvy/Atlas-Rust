@@ -6,7 +6,7 @@ import ItemsList from "./items-list";
 
 import { categories, editPackage, items as initialItems } from "@/data/items"
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Item, InvItem } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Subtotal from "./subtotal";
@@ -21,6 +21,11 @@ export default function Edit() {
     // Inventory items
     const [invItems, setInvItems] = useState<InvItem[]>(Array.from({ length: (editPackage.maxInventorySlots) }));
     const [invAmount, setInvAmount] = useState<any>({});
+
+
+    const [clothingItems, setClothingItems] = useState<InvItem[]>(Array.from({ length: (editPackage.clothingSlots) }));
+    
+    // const [invAmount, setInvAmount] = useState<any>({});
 
     // All items to be sold, when added to the invItems array,
     // they are removed from this one
@@ -40,7 +45,26 @@ export default function Edit() {
     // Color hex misc value
     const [colorHex, setColorHex] = useState<string>('#0437b9');
 
+    useEffect(() => {
+        const newArray = [...initialItems];
+        for (let index = 0; index < invItems.length; index++) {
+            const element = invItems[index];
+            if (element !== undefined) {
+                const itIndex = newArray.findIndex((obj) => obj.id === element.item.id)
+                if (itIndex !== -1)
+                    newArray.splice(itIndex, 1)
+            }
+        }
+        setItems(newArray)
+    }, [invItems]);
+
     const addItemToInv = (item: Item, index: number) => {
+        let changed = invItems[index] === undefined;
+        console.log(invItems);
+        console.log(invItems[index]);
+        console.log(changed);
+        if (!changed) return;
+        console.log('test');
         setInvItems((prev) => {
             const newArray = [...prev];
             newArray[index] = { item, amount: item.min }
@@ -57,11 +81,11 @@ export default function Edit() {
             return newInvAmount
         });
 
-        setItems((prev) => {
+        /* setItems((prev) => {
             const newArray = [...prev];
             newArray.splice(prev.findIndex((obj) => obj.id === item.id), 1)
             return newArray
-        })
+        }) */
     }
 
     const slotsAvailable = useMemo(() => {
@@ -85,10 +109,10 @@ export default function Edit() {
                 const amountToAdd = newAmount - itemsInInv;
 
                 // Checks inventory size
-               /*  if (slotsAvailable == editPackage.maxInventorySlots || (slotsAvailable - amountToAdd) >= editPackage.maxInventorySlots) {
-                    console.log('can not add');
-                    return;
-                } */
+                /*  if (slotsAvailable == editPackage.maxInventorySlots || (slotsAvailable - amountToAdd) >= editPackage.maxInventorySlots) {
+                     console.log('can not add');
+                     return;
+                 } */
 
                 setInvItems((prev) => {
                     const newArray = [...prev];
@@ -142,6 +166,7 @@ export default function Edit() {
             })
             return;
         }
+        console.log(invItems)
     }
 
     const getItemById = (id: number) => {
@@ -200,7 +225,7 @@ export default function Edit() {
                 )}>
                     <h3 className="text-xl text-muted font-rajdhani font-medium mb-2">Clothing</h3>
                     <div className="w-full grid grid-cols-8 gap-x-1 gap-y-1">
-                        {Array.from({ length: 8 }).map((_, index) => (
+                        {Array.from({ length: (editPackage.clothingSlots) }).map((_, index) => (
                             <div key={index} className={cn(
                                 // "w-full h-16",
                                 "w-full h-16",

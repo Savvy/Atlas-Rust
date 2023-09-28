@@ -13,13 +13,14 @@ import {
 type DropCellProps = {
     invItem: InvItem,
     addItemToInv: (invItem: Item, index: number) => void,
-    index: number
+    index: number,
+    /* type: 'item' | 'clothing'  */
 }
 
 export default function DropCell({ invItem, addItemToInv, index }: DropCellProps) {
 
     const [, drop] = useDrop(() => ({
-        accept: 'item',
+        accept: invItem?.item.type ?? 'item',
         drop(item: Item, monitor) {
             addItemToInv(item, index);
             return item

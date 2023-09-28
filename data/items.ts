@@ -10,6 +10,7 @@ export const items = [
     {
         id: 1,
         category: "resources",
+        type: 'item',
         name: "Wood",
         image: "wood.png",
         pricePerStep: 0.35,
@@ -21,6 +22,7 @@ export const items = [
     {
         id: 2,
         category: "resources",
+        type: 'item',
         name: "Stone",
         image: "stone.png",
         pricePerStep: 0.35,
@@ -32,6 +34,7 @@ export const items = [
     {
         id: 3,
         category: "resources",
+        type: 'item',
         name: "Metal Fragments",
         image: "metalfrags.png",
         pricePerStep: 0.35,
@@ -44,6 +47,7 @@ export const items = [
     {
         id: 4,
         category: "components",
+        type: 'item',
         name: "Assimov | AK",
         image: "assimov-ak.png",
         pricePerStep: 0.35,
@@ -56,6 +60,7 @@ export const items = [
     {
         id: 5,
         category: "weapons",
+        type: 'item',
         name: "AVS | AK",
         image: "avs-ak.png",
         pricePerStep: 0.35,
@@ -67,6 +72,7 @@ export const items = [
     {
         id: 6,
         category: "weapons",
+        type: 'item',
         name: "Rage | AK",
         image: "rage-ak.png",
         pricePerStep: 0.35,
@@ -78,6 +84,7 @@ export const items = [
     {
         id: 7,
         category: "weapons",
+        type: 'item',
         name: "Assimov | AK",
         image: "assimov-ak.png",
         pricePerStep: 0.35,
@@ -89,6 +96,7 @@ export const items = [
     {
         id: 8,
         category: "weapons",
+        type: 'item',
         name: "Eternal | AK",
         image: "eternal-ak.png",
         pricePerStep: 0.35,
@@ -196,4 +204,5 @@ export const misc = {
 export const editPackage = {
     minInventoryItems: 3,
     maxInventorySlots: 24,
+    clothingSlots: 8,
 }

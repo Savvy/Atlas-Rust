@@ -33,7 +33,8 @@ type Package = {
 }
 
 type Item = {
-    id: number
+    id: number,
+    type: string,
     category: string,
     name: string,
     image: string,
