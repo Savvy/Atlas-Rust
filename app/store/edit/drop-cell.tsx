@@ -1,6 +1,6 @@
 import XIcon from "@/components/icons/xicon";
 import { cn } from "@/lib/utils";
-import { InvItem, Item } from "@/types";
+import { Item } from "@/types";
 import Image from "next/image";
 import { useDrop } from "react-dnd";
 import {
@@ -11,16 +11,15 @@ import {
   } from "@/components/ui/tooltip"
 
 type DropCellProps = {
-    invItem: InvItem,
+    invItem: Item,
     addItemToInv: (invItem: Item, index: number) => void,
     index: number,
-    /* type: 'item' | 'clothing'  */
 }
 
 export default function DropCell({ invItem, addItemToInv, index }: DropCellProps) {
 
     const [, drop] = useDrop(() => ({
-        accept: invItem?.item.type ?? 'item',
+        accept: invItem?.type ?? 'item',
         drop(item: Item, monitor) {
             addItemToInv(item, index);
             return item
@@ -41,19 +40,19 @@ export default function DropCell({ invItem, addItemToInv, index }: DropCellProps
                                 "rounded-md flex items-center justify-center",
                                 "bg-transparent border border-[#434343]",
                                 "text-muted")}>
-                                {invItem.item.image
+                                {invItem.image
                                     ? <Image
-                                        src={`/images/store/items/${invItem.item.image}`}
+                                        src={`/images/store/items/${invItem.image}`}
                                         width={48}
                                         height={45}
-                                        alt={invItem.item.name}
+                                        alt={invItem.name}
                                     />
                                     : <XIcon />
                                 }
                             </div>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>{invItem.item.name}</p>
+                            <p>{invItem.name}</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>

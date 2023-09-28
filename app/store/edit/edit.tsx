@@ -7,7 +7,7 @@ import ItemsList from "./items-list";
 import { categories, editPackage, items as initialItems } from "@/data/items"
 
 import { useEffect, useMemo, useState } from "react";
-import { Item, InvItem } from "@/types";
+import { Item } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Subtotal from "./subtotal";
 import ItemConfig from "./item-config";
@@ -19,11 +19,11 @@ export default function Edit() {
     const { toast } = useToast()
 
     // Inventory items
-    const [invItems, setInvItems] = useState<InvItem[]>(Array.from({ length: (editPackage.maxInventorySlots) }));
+    const [invItems, setInvItems] = useState<Item[]>(Array.from({ length: (editPackage.maxInventorySlots) }));
     const [invAmount, setInvAmount] = useState<any>({});
 
 
-    const [clothingItems, setClothingItems] = useState<InvItem[]>(Array.from({ length: (editPackage.clothingSlots) }));
+    const [clothingItems, setClothingItems] = useState<Item[]>(Array.from({ length: (editPackage.clothingSlots) }));
     
     // const [invAmount, setInvAmount] = useState<any>({});
 
@@ -50,7 +50,7 @@ export default function Edit() {
         for (let index = 0; index < invItems.length; index++) {
             const element = invItems[index];
             if (element !== undefined) {
-                const itIndex = newArray.findIndex((obj) => obj.id === element.item.id)
+                const itIndex = newArray.findIndex((obj) => obj.id === element.id)
                 if (itIndex !== -1)
                     newArray.splice(itIndex, 1)
             }
@@ -67,7 +67,7 @@ export default function Edit() {
         console.log('test');
         setInvItems((prev) => {
             const newArray = [...prev];
-            newArray[index] = { item, amount: item.min }
+            newArray[index] = item
             return newArray
         });
 
@@ -99,11 +99,11 @@ export default function Edit() {
 
         // This is how many items are currently in the inventory
         const itemsInInv = invItems.reduce((val, item) =>
-            (item?.item && item.item.id == id) ? val + 1 : val, 0);
+            (item && item?.id == id) ? val + 1 : val, 0);
 
         const currentAmount = invAmount[id].amount;
         if (amount > currentAmount) {
-            const newAmount = Math.ceil(amount / item.item.maxPerStack)
+            const newAmount = Math.ceil(amount / item.maxPerStack)
             if (newAmount > itemsInInv) {
 
                 const amountToAdd = newAmount - itemsInInv;
@@ -129,7 +129,7 @@ export default function Edit() {
                 });
             }
         } else if (amount < currentAmount) {
-            const newAmount = Math.ceil(amount / item.item.maxPerStack)
+            const newAmount = Math.ceil(amount / item.maxPerStack)
             const amountToRemove = itemsInInv - newAmount;
             // if (newAmount < itemsInInv && itemsInInv != 1) {
             setInvItems((prev) => {
@@ -137,7 +137,7 @@ export default function Edit() {
                 for (let x = 0; x < (amountToRemove); x++) {
                     for (let index = newArray.length - 1; index >= 0; index--) {
                         const element = newArray[index];
-                        if (element && element.item && element.item.id === id) {
+                        if (element && element.id === id) {
                             newArray[index] = undefined
                             break;
                         }
@@ -170,7 +170,7 @@ export default function Edit() {
     }
 
     const getItemById = (id: number) => {
-        return invItems.find((item: InvItem) => item?.item?.id === id)
+        return invItems.find((item: Item) => item?.id === id)
     }
 
     return (
@@ -264,6 +264,7 @@ export default function Edit() {
                     <div className="p-5">
                         <Subtotal
                             invItems={invItems}
+                            invAmount={invAmount}
                             addPackageToCart={addPackageToCart}
                             kitCooldown={kitCooldown}
                             tpCooldown={teleportCooldown}

@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { misc } from "@/data/items";
 import useFromStore from "@/hooks/useFromStore";
 import { useCartStore } from "@/store/useCartStore";
-import { InvItem } from "@/types";
+import { Item } from "@/types";
 import { useMemo } from "react";
 
 type SubtotalProps = {
-    invItems: InvItem[],
+    invItems: Item[],
+    invAmount: any,
     addPackageToCart: () => void,
     kitCooldown: number,
     tpCooldown: number,
@@ -31,8 +32,8 @@ export default function Subtotal(props: SubtotalProps) {
 
     const total = useMemo(() => {
         let amount = 0;
-        amount += props.invItems.reduce((acc, invItem: InvItem) => {
-            return !!invItem ? acc + ((invItem.amount / invItem.item.step) * invItem.item.pricePerStep) : acc
+        amount += props.invItems.reduce((acc, invItem: Item) => {
+            return !!invItem ? acc + ((props.invAmount[invItem.id].amount / invItem.step) * invItem.pricePerStep) : acc
         }, 0);
 
         if (props.autoUpgrade) {

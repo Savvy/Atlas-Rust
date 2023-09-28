@@ -45,7 +45,7 @@ type Item = {
     maxPerStack: number
 }
 
-type InvItem = {
+/* type InvItem = {
     item: Item,
     amount: number
-}
+} */
