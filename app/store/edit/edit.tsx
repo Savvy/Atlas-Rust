@@ -24,7 +24,7 @@ export default function Edit() {
 
 
     const [clothingItems, setClothingItems] = useState<Item[]>(Array.from({ length: (editPackage.clothingSlots) }));
-    
+
     // const [invAmount, setInvAmount] = useState<any>({});
 
     // All items to be sold, when added to the invItems array,
@@ -45,6 +45,7 @@ export default function Edit() {
     // Color hex misc value
     const [colorHex, setColorHex] = useState<string>('#0437b9');
 
+    // this keeps the list of items up to date
     useEffect(() => {
         const newArray = [...initialItems];
         for (let index = 0; index < invItems.length; index++) {
@@ -58,13 +59,16 @@ export default function Edit() {
         setItems(newArray)
     }, [invItems]);
 
+    // this ensures that the amount matches the inventory items
+    useEffect(() => {
+        for (let index = 0; index < invItems.length; index++) {
+            const item = invItems[index];
+            if (item)
+                adjustAmount(item);
+        }
+    }, [invItems])
+
     const addItemToInv = (item: Item, index: number) => {
-        let changed = invItems[index] === undefined;
-        console.log(invItems);
-        console.log(invItems[index]);
-        console.log(changed);
-        if (!changed) return;
-        console.log('test');
         setInvItems((prev) => {
             const newArray = [...prev];
             newArray[index] = item
@@ -80,12 +84,25 @@ export default function Edit() {
 
             return newInvAmount
         });
+    }
 
-        /* setItems((prev) => {
-            const newArray = [...prev];
-            newArray.splice(prev.findIndex((obj) => obj.id === item.id), 1)
-            return newArray
-        }) */
+    const adjustAmount = (item: Item) => {
+        const itemsInInv = invItems.reduce((val, invItem) =>
+            (invItem && invItem.id === item.id) ? val + 1 : val, 0);
+
+        const amountInInv = invAmount[item.id].amount;
+        const countInInv = Math.ceil(amountInInv / item.maxPerStack);
+        if (countInInv === itemsInInv) return;
+        if (itemsInInv < countInInv) {
+            // We need to adjust the amountInInv because it doesn't match
+            const newInvAmount = { ...invAmount };
+
+            newInvAmount[item.id] = {
+                amount: itemsInInv * item.maxPerStack
+            };
+            setInvAmount(newInvAmount);
+            return;
+        }
     }
 
     const slotsAvailable = useMemo(() => {
@@ -138,7 +155,7 @@ export default function Edit() {
                     for (let index = newArray.length - 1; index >= 0; index--) {
                         const element = newArray[index];
                         if (element && element.id === id) {
-                            newArray[index] = undefined
+                            newArray[index] = undefined!;
                             break;
                         }
                     }
@@ -172,7 +189,6 @@ export default function Edit() {
     const getItemById = (id: number) => {
         return invItems.find((item: Item) => item?.id === id)
     }
-
     return (
         <>
             <div className={cn("bg-[#15171B] col-span-4", "rounded-md")}>

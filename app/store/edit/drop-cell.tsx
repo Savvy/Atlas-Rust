@@ -8,7 +8,7 @@ import {
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-  } from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip"
 
 type DropCellProps = {
     invItem: Item,
@@ -32,31 +32,26 @@ export default function DropCell({ invItem, addItemToInv, index }: DropCellProps
                 className="relative flex flex-col justify-start items-center select-none"
                 ref={drop}
             >
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <div className={cn(
-                                "w-full h-16 cursor-pointer",
-                                "rounded-md flex items-center justify-center",
-                                "bg-transparent border border-[#434343]",
-                                "text-muted")}>
-                                {invItem.image
-                                    ? <Image
-                                        src={`/images/store/items/${invItem.image}`}
-                                        width={48}
-                                        height={45}
-                                        alt={invItem.name}
-                                    />
-                                    : <XIcon />
-                                }
-                            </div>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>{invItem.name}</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-                {/* <span className="absolute -bottom-[19px] text-sm opacity-75 font-rajdhani">{invItem.item.name}</span> */}
+                <div className={cn(
+                    "w-full h-16 text-muted relative",
+                    "rounded-md flex flex-col items-center justify-center",
+                    "bg-transparent border border-[#434343]"
+                )}>
+                    {invItem.image
+                        ? <Image
+                            src={`/images/store/items/${invItem.image}`}
+                            width={38}
+                            height={35}
+                            alt={invItem.name}
+                        />
+                        : <XIcon />
+                    }{/* opacity-30  */}
+                    <div className="text-white font-semibold cursor-pointer opacity-20 hover:opacity-50 text-xs absolute top-1 right-1.5">
+                        {/* &#x2715; */}
+                        X
+                    </div>
+                    <span className="text-sm font-semibold font-rajdhani">{invItem.name}</span>
+                </div>
             </div>
             :
             <div
