@@ -197,6 +197,15 @@ export default function Edit() {
     const getItemById = (id: number) => {
         return invItems.find((item: Item) => item?.id === id)
     }
+
+    const removeItem = (item: Item, slot: number) => {
+        // const amount = invAmount[item.id].amount;
+        setInvItems((prev) => {
+            const newArray = [...prev];
+            newArray[slot] = undefined!;
+            return newArray
+        });
+    }
     return (
         <>
             <div className={cn("bg-[#15171B] col-span-4", "rounded-md")}>
@@ -238,6 +247,7 @@ export default function Edit() {
                                 key={index}
                                 invItem={invItems[index]}
                                 addItemToInv={addItemToInv}
+                                removeItem={removeItem}
                                 index={index}
                             />
                         ))}

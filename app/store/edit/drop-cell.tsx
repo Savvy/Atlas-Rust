@@ -14,9 +14,10 @@ type DropCellProps = {
     invItem: Item,
     addItemToInv: (invItem: Item, index: number) => void,
     index: number,
+    removeItem: (item: Item, slot: number, ) => void
 }
 
-export default function DropCell({ invItem, addItemToInv, index }: DropCellProps) {
+export default function DropCell({ invItem, addItemToInv, index, removeItem }: DropCellProps) {
 
     const [, drop] = useDrop(() => ({
         accept: invItem?.type ?? 'item',
@@ -47,12 +48,17 @@ export default function DropCell({ invItem, addItemToInv, index }: DropCellProps
                         />
                         : <XIcon />
                     }{/* opacity-30  */}
-                    <div className="text-white font-semibold cursor-pointer opacity-20 hover:opacity-50 text-xs absolute top-1 right-1.5">
+                    <div
+                        className="text-white font-semibold cursor-pointer opacity-20 hover:opacity-50 text-xs absolute top-1 right-1.5"
+                        onClick={() => {
+                            removeItem(invItem, index)
+                        }}
+                    >
                         {/* &#x2715; */}
                         X
                     </div>
                     <div className="w-[95%] whitespace-nowrap overflow-hidden overflow-ellipsis text-center">
-                    <span className="text-sm font-semibold font-rajdhani">{invItem.name}</span>
+                        <span className="text-sm font-semibold font-rajdhani">{invItem.name}</span>
                     </div>
                 </div>
             </div>
