@@ -114,11 +114,14 @@ export default function Edit() {
 
         if (!item) return;
 
+        const currentAmount = invAmount[id].amount;
+
+        /* if (amount < item.min) return; */
+
         // This is how many items are currently in the inventory
         const itemsInInv = invItems.reduce((val, item) =>
             (item && item?.id == id) ? val + 1 : val, 0);
 
-        const currentAmount = invAmount[id].amount;
         if (amount > currentAmount) {
             const newAmount = Math.ceil(amount / item.maxPerStack)
             if (newAmount > itemsInInv) {
@@ -146,23 +149,28 @@ export default function Edit() {
                 });
             }
         } else if (amount < currentAmount) {
+            /*  if ((amount - currentAmount) < item.min) {
+                 return;
+             } */
+
             const newAmount = Math.ceil(amount / item.maxPerStack)
             const amountToRemove = itemsInInv - newAmount;
-            // if (newAmount < itemsInInv && itemsInInv != 1) {
-            setInvItems((prev) => {
-                const newArray = [...prev];
-                for (let x = 0; x < (amountToRemove); x++) {
-                    for (let index = newArray.length - 1; index >= 0; index--) {
-                        const element = newArray[index];
-                        if (element && element.id === id) {
-                            newArray[index] = undefined!;
-                            break;
+
+            if (amountToRemove > 0) {
+                setInvItems((prev) => {
+                    const newArray = [...prev];
+                    for (let x = 0; x < amountToRemove; x++) {
+                        for (let index = newArray.length - 1; index >= 0; index--) {
+                            const element = newArray[index];
+                            if (element && element.id === id) {
+                                newArray[index] = undefined!;
+                                break;
+                            }
                         }
                     }
-                }
-                return newArray
-            });
-            // }
+                    return newArray
+                });
+            }
         }
 
         const newInvAmount = { ...invAmount };

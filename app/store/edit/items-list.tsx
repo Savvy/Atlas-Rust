@@ -12,11 +12,6 @@ type ItemsListType = {
 }
 
 export default function ItemsList({ categories, items }: ItemsListType) {
-
-    /* const items = useMemo(() => {
-        return itemData.items.filter((item) => !invItems.some((invItem) => invItem.id === item.id))
-    }, [itemData, invItems]) */
-
     return (
         <ScrollArea className="w-full h-full rounded-md">
             <div className="py-4 px-5">

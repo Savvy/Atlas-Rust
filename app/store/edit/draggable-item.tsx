@@ -7,8 +7,6 @@ import type { DragSourceMonitor } from 'react-dnd'
 import { DragPreviewImage, useDrag } from 'react-dnd'
 
 export default function DraggableItem({ item }: any) {
-
-    const [forbidDrag, setForbidDrag] = useState(false)
     const [{ isDragging }, drag, preview] = useDrag(
         () => ({
             type: 'item',
@@ -44,7 +42,9 @@ export default function DraggableItem({ item }: any) {
                         : <XIcon />
                     }
                 </div>
-                <span className="text-sm opacity-75 font-rajdhani">{item.name}</span>
+                <div className="w-full whitespace-nowrap overflow-hidden overflow-ellipsis text-center">
+                    <span className="text-sm opacity-75 font-rajdhani">{item.name}</span>
+                </div>
             </div>
         </>
     )

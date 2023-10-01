@@ -35,7 +35,8 @@ export default function DropCell({ invItem, addItemToInv, index }: DropCellProps
                 <div className={cn(
                     "w-full h-16 text-muted relative",
                     "rounded-md flex flex-col items-center justify-center",
-                    "bg-transparent border border-[#434343]"
+                    "bg-transparent border border-[#434343]",
+                    ""
                 )}>
                     {invItem.image
                         ? <Image
@@ -50,7 +51,9 @@ export default function DropCell({ invItem, addItemToInv, index }: DropCellProps
                         {/* &#x2715; */}
                         X
                     </div>
+                    <div className="w-[95%] whitespace-nowrap overflow-hidden overflow-ellipsis text-center">
                     <span className="text-sm font-semibold font-rajdhani">{invItem.name}</span>
+                    </div>
                 </div>
             </div>
             :
