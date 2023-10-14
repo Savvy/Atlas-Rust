@@ -18,9 +18,9 @@ export default function ItemsList({ categories, items }: ItemsListType) {
                 {categories.map((category: string, index: number) => (
                     <div className={cn({ "py-4": index !== 0 })} key={index}>
                         <h3 className="text-xl text-muted font-medium font-rajdhani mb-2">{category}</h3>
-                        <div className="grid grid-cols-4 gap-x-2 gap-y-8">
+                        <div className="w-full flex flex-wrap gap-x-1 gap-y-2"> {/* grid grid-cols-3 md:grid-cols-5 */}
                             {items.filter((item: Item) => item.category.toLowerCase() === category.toLowerCase()).map((item: Item, i: number) => (
-                                <DraggableItem item={item} key={item.id} />
+                                <DraggableItem item={item} key={item.id} type={item.type} />
                             ))}
                         </div>
                     </div>

@@ -3,6 +3,7 @@ export const categories = [
     'Resources',
     'Components',
     'Weapons',
+    'Clothing',
     'Others',
 ];
 
@@ -100,6 +101,18 @@ export const items = [
         name: "Eternal | AK",
         image: "eternal-ak.png",
         pricePerStep: 0.35,
+        min: 1,
+        max: 10,
+        step: 1,
+        maxPerStack: 1
+    },
+    {
+        id: 9,
+        category: "clothing",
+        type: 'clothing-body1',
+        name: "Blue Jumpsuit",
+        image: "jumpsuit.suit.blue.png",
+        pricePerStep: 2.35,
         min: 1,
         max: 10,
         step: 1,
@@ -203,6 +216,15 @@ export const misc = {
 
 export const editPackage = {
     minInventoryItems: 3,
-    maxInventorySlots: 24,
-    clothingSlots: 8,
+    maxInventorySlots: 30,
+    clothingSlots: [
+        'clothing-backpack',
+        'clothing-head1',
+        'clothing-head2',
+        'clothing-body1',
+        'clothing-body2',
+        'clothing-legs',
+        'clothing-hands',
+        'clothing-feet',
+    ],
 }

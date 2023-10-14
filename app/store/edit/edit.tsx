@@ -13,17 +13,19 @@ import Subtotal from "./subtotal";
 import ItemConfig from "./item-config";
 import { useToast } from "@/components/ui/use-toast";
 import DropCell from "./drop-cell";
+import { useCartStore } from "@/store/useCartStore";
 
 export default function Edit() {
 
     const { toast } = useToast()
 
+    const [price, setPrice] = useState<number>(0);
+
     // Inventory items
     const [invItems, setInvItems] = useState<Item[]>(Array.from({ length: (editPackage.maxInventorySlots) }));
     const [invAmount, setInvAmount] = useState<any>({});
 
-
-    const [clothingItems, setClothingItems] = useState<Item[]>(Array.from({ length: (editPackage.clothingSlots) }));
+    const [clothingItems, setClothingItems] = useState<Item[]>(Array.from({ length: (editPackage.clothingSlots.length) }));
 
     // const [invAmount, setInvAmount] = useState<any>({});
 
@@ -44,6 +46,8 @@ export default function Edit() {
 
     // Color hex misc value
     const [colorHex, setColorHex] = useState<string>('#0437b9');
+
+    const addToCart = useCartStore((state) => state.addToCart);
 
     // this keeps the list of items up to date
     useEffect(() => {
@@ -83,6 +87,14 @@ export default function Edit() {
             };
 
             return newInvAmount
+        });
+    }
+
+    const addItemToClothing = (item: Item, index: number) => {
+        setClothingItems((prev) => {
+            const newArray = [...prev];
+            newArray[index] = item
+            return newArray
         });
     }
 
@@ -192,6 +204,26 @@ export default function Edit() {
             return;
         }
         console.log(invItems)
+        addToCart({
+            id: "",
+            name: "",
+
+            price: price,
+            server: "",
+            misc: {
+                cooldown: kitCooldown,
+                tpCooldown: teleportCooldown,
+                homes: amountOfHomes,
+                coloredName,
+                autoUpgrade,
+                skipQueue,
+                skinBox,
+            },
+
+            items: invItems,
+            invAmount: invAmount,
+            clothingItems: clothingItems
+        })
     }
 
     const getItemById = (id: number) => {
@@ -201,6 +233,15 @@ export default function Edit() {
     const removeItem = (item: Item, slot: number) => {
         // const amount = invAmount[item.id].amount;
         setInvItems((prev) => {
+            const newArray = [...prev];
+            newArray[slot] = undefined!;
+            return newArray
+        });
+    }
+
+    const removeItemFromClothing = (item: Item, slot: number) => {
+        // const amount = invAmount[item.id].amount;
+        setClothingItems((prev) => {
             const newArray = [...prev];
             newArray[slot] = undefined!;
             return newArray
@@ -241,7 +282,7 @@ export default function Edit() {
                     "rounded-md p-5"
                 )}>
                     <h3 className="text-xl text-muted font-rajdhani font-medium mb-2">Inventory - Rust</h3>
-                    <div className="w-full grid grid-cols-6 gap-x-1 gap-y-1">
+                    <div className="w-full flex flex-wrap gap-x-1 gap-y-1"> {/* grid grid-cols-3 md:grid-cols-6 */}
                         {Array.from({ length: (editPackage.maxInventorySlots) }).map((_, index) => (
                             <DropCell
                                 key={index}
@@ -249,6 +290,7 @@ export default function Edit() {
                                 addItemToInv={addItemToInv}
                                 removeItem={removeItem}
                                 index={index}
+                                type={'item'}
                             />
                         ))}
                     </div>
@@ -258,14 +300,17 @@ export default function Edit() {
                     "rounded-md p-5"
                 )}>
                     <h3 className="text-xl text-muted font-rajdhani font-medium mb-2">Clothing</h3>
-                    <div className="w-full grid grid-cols-8 gap-x-1 gap-y-1">
-                        {Array.from({ length: (editPackage.clothingSlots) }).map((_, index) => (
-                            <div key={index} className={cn(
-                                // "w-full h-16",
-                                "w-full h-16",
-                                "rounded-md flex items-center justify-center",
-                                "bg-[#434343] border border-[#434343]",
-                                "text-muted")}>
+                    <div className="w-full flex flex-wrap gap-x-1 gap-y-1"> {/* grid grid-cols-8 */}
+                        {Array.from({ length: (editPackage.clothingSlots.length) }).map((_, index) => (
+                            <div key={index} className="aspect-square w-[11.5%] h-[11.5%]">
+                                <DropCell
+                                    key={index}
+                                    invItem={clothingItems[index]}
+                                    addItemToInv={addItemToClothing}
+                                    removeItem={removeItemFromClothing}
+                                    index={index}
+                                    type={editPackage.clothingSlots[index]}
+                                />
                             </div>
                         ))}
                     </div>
@@ -299,6 +344,7 @@ export default function Edit() {
                         <Subtotal
                             invItems={invItems}
                             invAmount={invAmount}
+                            clothingItems={clothingItems}
                             addPackageToCart={addPackageToCart}
                             kitCooldown={kitCooldown}
                             tpCooldown={teleportCooldown}
@@ -307,22 +353,10 @@ export default function Edit() {
                             autoUpgrade={autoUpgrade}
                             skipQueue={skipQueue}
                             skinBox={skinBox}
+                            setPrice={setPrice}
                         />
                     </div>
                 </div>
-                {/*  <div className="bg-[#15171B] rounded-md w-full p-5">
-                    <Subtotal
-                        invItems={invItems}
-                        addPackageToCart={addPackageToCart}
-                        kitCooldown={kitCooldown}
-                        tpCooldown={teleportCooldown}
-                        amountOfHomes={amountOfHomes}
-                        coloredName={coloredName}
-                        autoUpgrade={autoUpgrade}
-                        skipQueue={skipQueue}
-                        skinBox={skinBox}
-                    />
-                </div> */}
             </div>
         </>
     )

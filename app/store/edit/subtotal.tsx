@@ -9,6 +9,7 @@ import { useMemo } from "react";
 
 type SubtotalProps = {
     invItems: Item[],
+    clothingItems: Item[],
     invAmount: any,
     addPackageToCart: () => void,
     kitCooldown: number,
@@ -19,6 +20,7 @@ type SubtotalProps = {
     autoUpgrade: boolean,
     skipQueue: boolean,
     skinBox: boolean,
+    setPrice: any
 }
 
 export default function Subtotal(props: SubtotalProps) {
@@ -34,6 +36,10 @@ export default function Subtotal(props: SubtotalProps) {
         let amount = 0;
         amount += props.invItems.reduce((acc, invItem: Item) => {
             return !!invItem ? acc + ((props.invAmount[invItem.id].amount / invItem.step) * invItem.pricePerStep) : acc
+        }, 0);
+
+        amount += props.clothingItems.reduce((acc, invItem: Item) => {
+            return !!invItem ? acc + invItem.pricePerStep : acc
         }, 0);
 
         if (props.autoUpgrade) {
@@ -52,7 +58,7 @@ export default function Subtotal(props: SubtotalProps) {
         amount += misc.tpCooldown[props.tpCooldown].price
         amount += misc.amountOfHomes[props.amountOfHomes].price
         amount += misc.coloredName[props.coloredName].price
-
+        props.setPrice(amount);
         return amount;
     }, [props]);
 

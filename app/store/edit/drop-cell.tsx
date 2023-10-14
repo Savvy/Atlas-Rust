@@ -3,24 +3,19 @@ import { cn } from "@/lib/utils";
 import { Item } from "@/types";
 import Image from "next/image";
 import { useDrop } from "react-dnd";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
 
 type DropCellProps = {
     invItem: Item,
     addItemToInv: (invItem: Item, index: number) => void,
     index: number,
-    removeItem: (item: Item, slot: number, ) => void
+    removeItem: (item: Item, slot: number,) => void,
+    type: string
 }
 
-export default function DropCell({ invItem, addItemToInv, index, removeItem }: DropCellProps) {
+export default function DropCell({ invItem, addItemToInv, index, removeItem, type }: DropCellProps) {
 
     const [, drop] = useDrop(() => ({
-        accept: invItem?.type ?? 'item',
+        accept: type,
         drop(item: Item, monitor) {
             addItemToInv(item, index);
             return item
@@ -30,14 +25,16 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem }: D
     return (
         invItem ?
             <div
-                className="relative flex flex-col justify-start items-center select-none"
+                className="relative flex flex-col justify-start items-center select-none group"
                 ref={drop}
             >
                 <div className={cn(
-                    "w-full h-16 text-muted relative",
+                    {"w-full h-full": type.toLowerCase().startsWith("clothing-")},
+                    {"w-20 h-20": !type.toLowerCase().startsWith("clothing-")},
+                    "text-muted relative",
                     "rounded-md flex flex-col items-center justify-center",
                     "bg-transparent border border-[#434343]",
-                    ""
+                    "group-hover:scale-105 transition-transform duration-75 ease-in-out"
                 )}>
                     {invItem.image
                         ? <Image
@@ -47,14 +44,13 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem }: D
                             alt={invItem.name}
                         />
                         : <XIcon />
-                    }{/* opacity-30  */}
+                    }
                     <div
                         className="text-white font-semibold cursor-pointer opacity-20 hover:opacity-50 text-xs absolute top-1 right-1.5"
                         onClick={() => {
                             removeItem(invItem, index)
                         }}
                     >
-                        {/* &#x2715; */}
                         X
                     </div>
                     <div className="w-[95%] whitespace-nowrap overflow-hidden overflow-ellipsis text-center">
@@ -66,10 +62,22 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem }: D
             <div
                 ref={drop}
                 className={cn(
-                    "w-full h-16",
+                    {"w-full h-full": type.toLowerCase().startsWith("clothing-")},
+                    {"w-20 h-20": !type.toLowerCase().startsWith("clothing-")},
                     "rounded-md flex items-center justify-center",
                     "bg-[#434343] border border-[#434343]",
-                    "text-muted")}>
+                    "text-muted",
+                    "hover:scale-105 transition-transform duration-75 ease-in-out")}>
+                {type.toLowerCase().startsWith("clothing-") ?
+                    <Image
+                        src={`/images/store/${type}.png`}
+                        width={28}
+                        height={25}
+                        alt={type}
+                    />
+                    :
+                    null
+                }
             </div>
     )
 }

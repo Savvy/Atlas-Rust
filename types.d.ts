@@ -16,10 +16,10 @@ type Category = {
 type Package = {
     id: string
     name: string
-    image: string
+    image?: string
     price: number
     server: string
-    editable: boolean
+    editable?: boolean
     misc: {
         cooldown: number
         tpCooldown: number
@@ -30,6 +30,8 @@ type Package = {
         skinBox: boolean
     },
     items: Item[]
+    invAmount: any
+    clothingItems: Item[] 
 }
 
 type Item = {
