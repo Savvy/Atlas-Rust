@@ -36,9 +36,8 @@ const formSchema = z.object({
 export default function CheckoutForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            username: "",
-        },
+        /* defaultValues: {
+        }, */
     });
     function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
