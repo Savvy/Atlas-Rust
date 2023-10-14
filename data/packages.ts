@@ -18,9 +18,89 @@ const storeItems = [
                     skipQueue: false,
                     skinBox: false,
                 },
-                items: [],
+                items: [
+                    {
+                        id: 1,
+                        category: "resources",
+                        type: 'item',
+                        name: "Wood",
+                        image: "wood.png",
+                        pricePerStep: 0.35,
+                        min: 5, // 1000,
+                        max: 40, // 200000,
+                        step: 5, // 1000,
+                        maxPerStack: 10 // 50000
+                    },
+                    {
+                        id: 1,
+                        category: "resources",
+                        type: 'item',
+                        name: "Wood",
+                        image: "wood.png",
+                        pricePerStep: 0.35,
+                        min: 5, // 1000,
+                        max: 40, // 200000,
+                        step: 5, // 1000,
+                        maxPerStack: 10 // 50000
+                    },
+                    {
+                        id: 1,
+                        category: "resources",
+                        type: 'item',
+                        name: "Wood",
+                        image: "wood.png",
+                        pricePerStep: 0.35,
+                        min: 5, // 1000,
+                        max: 40, // 200000,
+                        step: 5, // 1000,
+                        maxPerStack: 10 // 50000
+                    },
+                    {
+                        id: 1,
+                        category: "resources",
+                        type: 'item',
+                        name: "Wood",
+                        image: "wood.png",
+                        pricePerStep: 0.35,
+                        min: 5, // 1000,
+                        max: 40, // 200000,
+                        step: 5, // 1000,
+                        maxPerStack: 10 // 50000
+                    },
+                    {
+                        id: 2,
+                        category: "resources",
+                        type: 'item',
+                        name: "Stone",
+                        image: "stone.png",
+                        pricePerStep: 0.35,
+                        min: 5,
+                        max: 40,
+                        step: 5,
+                        maxPerStack: 10
+                    },
+                    {
+                        id: 2,
+                        category: "resources",
+                        type: 'item',
+                        name: "Stone",
+                        image: "stone.png",
+                        pricePerStep: 0.35,
+                        min: 5,
+                        max: 40,
+                        step: 5,
+                        maxPerStack: 10
+                    },
+                ],
                 clothingItems: [],
-                invAmount: {},
+                invAmount: {
+                    1: {
+                        amount: 40
+                    },
+                    2: {
+                        amount: 20
+                    }
+                },
             },
             {
                 id: "immortal-rank",

@@ -4,26 +4,40 @@ import { cn } from "@/lib/utils";
 import Miscellaneous from "./misc";
 import ItemsList from "./items-list";
 
-import { categories, editPackage, items as initialItems } from "@/data/items"
+import { categories, editPackage, items as initialItems, misc } from "@/data/items"
 
 import { useEffect, useMemo, useState } from "react";
-import { Item } from "@/types";
+import { Item, Package } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Subtotal from "./subtotal";
 import ItemConfig from "./item-config";
 import { useToast } from "@/components/ui/use-toast";
 import DropCell from "./drop-cell";
 import { useCartStore } from "@/store/useCartStore";
+import useFromStore from "@/hooks/useFromStore";
 
-export default function Edit() {
+type EditProps = {
+    defaultItems: Item[],
+    defaultInvAmount: any,
+    packageContent: Package | undefined
+}
+export default function Edit({ defaultItems, defaultInvAmount, packageContent }: EditProps) {
 
     const { toast } = useToast()
 
     const [price, setPrice] = useState<number>(0);
 
+    const currency = useFromStore(useCartStore, (state) => state.currency);
+
+    const formatter = useMemo(() => {
+        if (!currency) return undefined;
+        return new Intl.NumberFormat
+            (currency?.locale, { style: 'currency', currency: currency?.currency });
+    }, [currency]);
+
     // Inventory items
-    const [invItems, setInvItems] = useState<Item[]>(Array.from({ length: (editPackage.maxInventorySlots) }));
-    const [invAmount, setInvAmount] = useState<any>({});
+    const [invItems, setInvItems] = useState<Item[]>(defaultItems);
+    const [invAmount, setInvAmount] = useState<any>(defaultInvAmount);
 
     const [clothingItems, setClothingItems] = useState<Item[]>(Array.from({ length: (editPackage.clothingSlots.length) }));
 
@@ -108,7 +122,6 @@ export default function Edit() {
         if (itemsInInv < countInInv) {
             // We need to adjust the amountInInv because it doesn't match
             const newInvAmount = { ...invAmount };
-
             newInvAmount[item.id] = {
                 amount: itemsInInv * item.maxPerStack
             };
@@ -139,12 +152,6 @@ export default function Edit() {
             if (newAmount > itemsInInv) {
 
                 const amountToAdd = newAmount - itemsInInv;
-
-                // Checks inventory size
-                /*  if (slotsAvailable == editPackage.maxInventorySlots || (slotsAvailable - amountToAdd) >= editPackage.maxInventorySlots) {
-                     console.log('can not add');
-                     return;
-                 } */
 
                 setInvItems((prev) => {
                     const newArray = [...prev];
@@ -195,20 +202,20 @@ export default function Edit() {
     }
 
     const addPackageToCart = () => {
-        if (invItems.length < editPackage.minInventoryItems) {
+        /* if (invItems.length < editPackage.minInventoryItems) {
             toast({
                 title: "Uh oh! You can't do this yet.",
                 description: "You need to add more items to your inventory.",
                 className: 'border-primary',
             })
             return;
-        }
+        } */
         addToCart({
-            id: "",
-            name: "",
+            id: packageContent?.id ?? "custom",
+            name: packageContent?.name ?? "Custom Package",
 
-            price: price,
-            server: "",
+            price: total,
+            server: packageContent?.server ?? "N/A",
             misc: {
                 cooldown: kitCooldown,
                 tpCooldown: teleportCooldown,
@@ -246,6 +253,37 @@ export default function Edit() {
             return newArray
         });
     }
+
+    const total = useMemo(() => {
+        let amount = 0;
+        amount += invItems.reduce((acc, invItem: Item) => {
+            return !!invItem ? acc + ((invAmount[invItem.id].amount / invItem.step) * invItem.pricePerStep) : acc
+        }, 0);
+
+        amount += clothingItems.reduce((acc, invItem: Item) => {
+            return !!invItem ? acc + invItem.pricePerStep : acc
+        }, 0);
+
+        if (autoUpgrade) {
+            amount += misc.autoUpgrade
+        }
+
+        if (skipQueue) {
+            amount += misc.skipQueue
+        }
+
+        if (skinBox) {
+            amount += misc.skinBox
+        }
+
+        amount += misc.kitCooldown[kitCooldown].price
+        amount += misc.tpCooldown[teleportCooldown].price
+        amount += misc.amountOfHomes[amountOfHomes].price
+        amount += misc.coloredName[coloredName].price
+        /* props.setPrice(amount); */
+        return amount;
+    }, [amountOfHomes, autoUpgrade, clothingItems, coloredName,
+        invAmount, invItems, kitCooldown, skinBox, skipQueue, teleportCooldown]);
     return (
         <>
             <div className={cn("bg-[#15171B] col-span-4", "rounded-md")}>
@@ -318,17 +356,17 @@ export default function Edit() {
             <div className="col-span-3 flex flex-col gap-3">
                 <div className="bg-[#15171B] rounded-md w-full p-5 text-muted">
                     <h5 className="font-semibold font-rajdhani uppercase">Server</h5>
-                    <h3 className="text-xl font-semibold font-rajdhani">Vanilla - EU Main</h3>
+                    <h3 className="text-xl font-semibold font-rajdhani">{packageContent?.server ?? "N/A"}</h3>
                     <hr className="border-muted my-5 opacity-50" />
                     <h5 className="font-semibold font-rajdhani uppercase">Kit</h5>
-                    <h3 className="text-xl font-semibold font-rajdhani">Immortal</h3>
+                    <h3 className="text-xl font-semibold font-rajdhani">{packageContent?.name ?? "Custom Package"}</h3>
                 </div>
 
                 <div className="bg-[#15171B] flex-grow flex flex-col rounded-md w-full">
                     <ScrollArea className="w-full h-[300px] flex-grow py-3 px-5">
                         {Object.keys(invAmount).map((itemId, index) => {
                             const invItem = getItemById(+itemId);
-                            return !!!invItem ? null :
+                            return !!invItem ?
                                 <ItemConfig
                                     key={index}
                                     invItems={invItems}
@@ -337,22 +375,24 @@ export default function Edit() {
                                     setAmount={setItemAmount}
                                     slotsAvailable={slotsAvailable}
                                 />
+                                : null
                         })}
                     </ScrollArea>
                     <div className="p-5">
                         <Subtotal
-                            invItems={invItems}
-                            invAmount={invAmount}
-                            clothingItems={clothingItems}
                             addPackageToCart={addPackageToCart}
-                            kitCooldown={kitCooldown}
-                            tpCooldown={teleportCooldown}
-                            amountOfHomes={amountOfHomes}
-                            coloredName={coloredName}
-                            autoUpgrade={autoUpgrade}
-                            skipQueue={skipQueue}
-                            skinBox={skinBox}
-                            setPrice={setPrice}
+                            price={formatter?.format(total || 0) || '$0.00'}
+                        /* invItems={invItems}
+                        invAmount={invAmount}
+                        clothingItems={clothingItems}
+                        kitCooldown={kitCooldown}
+                        tpCooldown={teleportCooldown}
+                        amountOfHomes={amountOfHomes}
+                        coloredName={coloredName}
+                        autoUpgrade={autoUpgrade}
+                        skipQueue={skipQueue}
+                        skinBox={skinBox}
+                        setPrice={setPrice} */
                         />
                     </div>
                 </div>

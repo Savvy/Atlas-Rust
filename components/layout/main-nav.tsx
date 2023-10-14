@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useParams } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import Image from "next/image"
@@ -41,12 +41,16 @@ export type MainNavItem = {
 
 export function MainNav({ items, user, children }: MainNavProps) {
     const path = usePathname()
+    const params = useParams();
     const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false)
     const [showCart, setShowCart] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log(path)
-        const navItem = items?.find((item) => item.href === path);
+        const navItem = items?.find((item) => {
+            let pathToCheck = item.href;
+            if (params?.slug) pathToCheck = `${pathToCheck}/${params.slug}`;
+            return pathToCheck === path
+        });
         setShowCart(navItem && navItem?.showCart || false)
         /* 
         items?.forEach((item) => {
@@ -87,7 +91,7 @@ export function MainNav({ items, user, children }: MainNavProps) {
             <div className="hidden md:flex gap-3">
                 {!!user ?
                     <>
-                        {showCart && <CartNav /> }
+                        {showCart && <CartNav />}
                         <DropdownMenu>
                             <DropdownMenuTrigger className="cursor-pointer" asChild>
                                 <Avatar>

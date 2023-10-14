@@ -32,7 +32,7 @@ export default function Package({ content }: { content: PackageType }) {
     }
 
     const editPackage = () => {
-        push('/store/edit');
+        push(`/store/edit/${content.id}`);
     }
 
     return (
