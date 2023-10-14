@@ -18,7 +18,9 @@ const storeItems = [
                     skipQueue: false,
                     skinBox: false,
                 },
-                items: []
+                items: [],
+                clothingItems: [],
+                invAmount: {},
             },
             {
                 id: "immortal-rank",
@@ -36,7 +38,9 @@ const storeItems = [
                     skipQueue: false,
                     skinBox: false,
                 },
-                items: []
+                items: [],
+                clothingItems: [],
+                invAmount: {},
             },
             {
                 id: "supreme-rank",
@@ -54,7 +58,9 @@ const storeItems = [
                     skipQueue: false,
                     skinBox: false,
                 },
-                items: []
+                items: [],
+                clothingItems: [],
+                invAmount: {},
             },
         ]
     }
