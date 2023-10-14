@@ -45,9 +45,13 @@ export function MainNav({ items, user, children }: MainNavProps) {
     const [showCart, setShowCart] = useState<boolean>(false);
 
     useEffect(() => {
+        console.log(path)
+        const navItem = items?.find((item) => item.href === path);
+        setShowCart(navItem && navItem?.showCart || false)
+        /* 
         items?.forEach((item) => {
             return setShowCart(item.href == path && (item.showCart ?? false))
-        })
+        }) */
     }, [items, path]);
 
     return (

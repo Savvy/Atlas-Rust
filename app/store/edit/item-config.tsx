@@ -42,20 +42,11 @@ export default function ItemConfig({ invItems, invItem, itemAmounts, setAmount, 
                     className={cn("w-full")}
                     value={[val]}
                     onValueChange={(value) => {
-                       /*  if (value[0] < val) {
-                            console.log(val);
-                            console.log(value[0]);
-                            console.log(val - value[0])
-                            if ((val - value[0]) < invItem.min) {
-                                return;
-                            }
-                        } */
                         const newAmount = Math.ceil(value[0] / invItem.maxPerStack);
                         const amountToAdd = newAmount - itemsInInv;
                         if ((slotsAvailable == 0 && value[0] > val) || amountToAdd > slotsAvailable) {
                             return;
                         }
-                        console.log(value[0])
                         setVal(value[0]);
                         setAmount(invItem.id, value[0]);
                     }}

@@ -203,7 +203,6 @@ export default function Edit() {
             })
             return;
         }
-        console.log(invItems)
         addToCart({
             id: "",
             name: "",

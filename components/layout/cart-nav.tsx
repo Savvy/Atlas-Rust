@@ -13,6 +13,7 @@ import {
 import useFromStore from "@/hooks/useFromStore"
 import { useMemo } from "react"
 import Locales from "@/data/locales";
+import Link from "next/link";
 
 export default function CartNav() {
 
@@ -24,7 +25,7 @@ export default function CartNav() {
     const formatter = useMemo(() => {
         if (!currency) return undefined;
         return new Intl.NumberFormat
-        (currency?.locale, { style: 'currency', currency: currency?.currency });
+            (currency?.locale, { style: 'currency', currency: currency?.currency });
     }, [currency]);
 
     const changeCurrency = (value: string) => {
@@ -48,7 +49,7 @@ export default function CartNav() {
                                 key={entry[1].locale}
                                 className="font-medium"
                                 defaultChecked={true}
-                                
+
                             >
                                 {entry[1].symbol} {entry[1].currency}
                             </SelectItem>
@@ -56,10 +57,12 @@ export default function CartNav() {
                     </SelectGroup>
                 </SelectContent>
             </Select>
-            <Button variant={'secondary'}>
-                <Icon path={mdiCartOutline} size={0.8} className="mr-1" />
-                {totalItems} items for {!!formatter ? formatter.format(totalPrice || 0) : '$ 0.00'}
-            </Button>
+            <Link href={'/store/checkout'}>
+                <Button variant={'secondary'}>
+                    <Icon path={mdiCartOutline} size={0.8} className="mr-1" />
+                    {totalItems} items for {!!formatter ? formatter.format(totalPrice || 0) : '$ 0.00'}
+                </Button>
+            </Link>
         </>
     )
 } ``

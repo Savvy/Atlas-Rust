@@ -42,4 +42,11 @@ export const mainNav = [
         hideInNav: true,
         showCart: true,
     },
+    {
+        title: "StoreCheckout",
+        href: "/store/checkout",
+        disabled: false,
+        hideInNav: true,
+        showCart: true,
+    },
 ]
