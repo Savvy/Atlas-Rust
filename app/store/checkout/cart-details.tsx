@@ -14,7 +14,7 @@ import { useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
-import { CartItem } from '@/types';
+import { CartItem, Item } from '@/types';
 
 export default function CartDetails() {
     const cart = useFromStore(useCartStore, (state) => state.cart)
@@ -30,8 +30,8 @@ export default function CartDetails() {
     useEffect(() => {
     }, [cart]);
 
-    const filteredItems = (cartItems: CartItem) => {
-        return cartItems.items.filter((value, index, self) =>
+    const filteredItems = (items: Item[]) => {
+        return items.filter((value, index, self) =>
             value !== undefined && value !== null &&
             index === self.findIndex((item) => (
                 item !== undefined && item.id === value.id
@@ -53,17 +53,22 @@ export default function CartDetails() {
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className='text[#8F9199] space-y-2'>
-                                {/*  {cartItem.items.filter((item) => item !== undefined && item !== null)
-                                    .map((item, innerIndex) => ( */}
-                                {filteredItems(cartItem).map((item, innerIndex) =>
+                                {filteredItems(cartItem.items).map((item, innerIndex) =>
                                     <div key={innerIndex}>
                                         <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
                                             <span>{item.name}: {(+cartItem.invAmount[item.id].amount).toLocaleString()}</span>
                                             <span>{formatter?.format(cartItem.invAmount[item?.id].amount * item?.pricePerStep)}</span>
                                         </h5>
                                     </div>
-                                )
-                                }
+                                )}
+                                {filteredItems(cartItem.clothingItems).map((item, innerIndex) =>
+                                    <div key={innerIndex}>
+                                        <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
+                                            <span>{item.name}: {(+cartItem.invAmount[item.id].amount).toLocaleString()}</span>
+                                            <span>{formatter?.format(cartItem.invAmount[item?.id].amount * item?.pricePerStep)}</span>
+                                        </h5>
+                                    </div>
+                                )}
                             </div>
                         </AccordionContent>
                     </AccordionItem>

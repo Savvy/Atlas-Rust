@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 import storeItems from "@/data/packages";
+import Link from "next/link";
 
 export default function Servers() {
     return (
@@ -21,13 +22,15 @@ export default function Servers() {
             <header className="relative bg-hero bg-primary bg-opacity-70 pt-28 bg-no-repeat bg-cover bg-center overflow-hidden font-rajdhani">
                 <div className="container">
                     <div className="relative z-10 flex items-center flex-col gap-4 text-center pt-24 pb-48">
-                        <Image
-                            src={'/images/create-kit-banner.png'}
-                            height={170}
-                            width={1312}
-                            alt="Create your own kit"
-                            className="mb-5 w-full"
-                        />
+                        <Link href={'/store/edit/'} className="mb-5 w-full group overflow-hidden rounded-xl">
+                            <Image
+                                src={'/images/create-kit-banner.png'}
+                                height={170}
+                                width={1312}
+                                alt="Create your own kit"
+                                className="w-full group-hover:scale-105 transition-transform duration-300 ease-in-out"
+                            />
+                        </Link>
                         <div className="w-full justify-start items-center flex flex-row gap-6">
                             <Input
                                 className={cn("w-1/4 border-transparent")}
