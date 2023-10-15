@@ -25,7 +25,7 @@ export default function ShippingForm({ form }: any) {
                     name="firstName"
                     render={({ field }) => (
                         <FormItem className="flex-1 relative">
-                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] p-1">First Name</FormLabel>
+                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] px-2 py-1">First Name</FormLabel>
                             <FormControl>
                                 <Input className="border-[#8F9099] bg-transparent" {...field} />
                             </FormControl>
@@ -41,7 +41,7 @@ export default function ShippingForm({ form }: any) {
                     name="lastName"
                     render={({ field }) => (
                         <FormItem className="flex-1 relative">
-                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] p-1">Last Name</FormLabel>
+                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] px-2 py-1">Last Name</FormLabel>
                             <FormControl>
                                 <Input className="border-[#8F9099] bg-transparent" {...field} />
                             </FormControl>
@@ -56,7 +56,7 @@ export default function ShippingForm({ form }: any) {
                     name="email"
                     render={({ field }) => (
                         <FormItem className="flex-1 relative">
-                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] p-1">Email Address</FormLabel>
+                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] px-2 py-1">Email Address</FormLabel>
                             <FormControl>
                                 <Input className="border-[#8F9099] bg-transparent" {...field} />
                             </FormControl>
@@ -69,7 +69,7 @@ export default function ShippingForm({ form }: any) {
                     name="streetAddress"
                     render={({ field }) => (
                         <FormItem className="flex-1 relative">
-                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] p-1">Street Address</FormLabel>
+                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] px-2 py-1">Street Address</FormLabel>
                             <FormControl>
                                 <Input className="border-[#8F9099] bg-transparent" {...field} />
                             </FormControl>
@@ -84,7 +84,7 @@ export default function ShippingForm({ form }: any) {
                     name="stateProvince"
                     render={({ field }) => (
                         <FormItem className="flex-1 relative">
-                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] p-1">State/Province</FormLabel>
+                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] px-2 py-1">State/Province</FormLabel>
                             <FormControl>
                                 <Input className="border-[#8F9099] bg-transparent" {...field} />
                             </FormControl>
@@ -97,7 +97,7 @@ export default function ShippingForm({ form }: any) {
                     name="city"
                     render={({ field }) => (
                         <FormItem className="flex-1 relative">
-                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] p-1">City</FormLabel>
+                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] px-2 py-1">City</FormLabel>
                             <FormControl>
                                 <Input className="border-[#8F9099] bg-transparent" {...field} />
                             </FormControl>
@@ -112,7 +112,7 @@ export default function ShippingForm({ form }: any) {
                     name="zipPostal"
                     render={({ field }) => (
                         <FormItem className="flex-1 relative">
-                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] p-1">Zip/Postal Code</FormLabel>
+                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] px-2 py-1">Zip/Postal Code</FormLabel>
                             <FormControl>
                                 <Input className="border-[#8F9099] bg-transparent" {...field} />
                             </FormControl>
@@ -125,7 +125,7 @@ export default function ShippingForm({ form }: any) {
                     name="phone"
                     render={({ field }) => (
                         <FormItem className="flex-1 relative">
-                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] p-1">Phone</FormLabel>
+                            <FormLabel className="text-[#8F9199] text-xs absolute -top-1 left-2 bg-[#15171B] px-2 py-1">Phone</FormLabel>
                             <FormControl>
                                 <Input className="border-[#8F9099] bg-transparent" {...field} />
                             </FormControl>

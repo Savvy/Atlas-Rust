@@ -14,6 +14,7 @@ import { useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
+import { CartItem } from '@/types';
 
 export default function CartDetails() {
     const cart = useFromStore(useCartStore, (state) => state.cart)
@@ -27,9 +28,16 @@ export default function CartDetails() {
     }, [currency]);
 
     useEffect(() => {
-        if (cart)
-            console.log(cart[0].invAmount);
     }, [cart]);
+
+    const filteredItems = (cartItems: CartItem) => {
+        return cartItems.items.filter((value, index, self) =>
+            value !== undefined && value !== null &&
+            index === self.findIndex((item) => (
+                item !== undefined && item.id === value.id
+            ))
+        )
+    }
 
     return (
         <div className="h-full flex flex-col justify-between">
@@ -45,15 +53,16 @@ export default function CartDetails() {
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className='text[#8F9199] space-y-2'>
-                                {cartItem.items.filter((item) => item !== undefined && item !== null)
-                                    .map((item, innerIndex) => (
-                                        <div key={innerIndex}>
-                                            <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
-                                                <span>{item.name}: {(+cartItem.invAmount[item.id].amount).toLocaleString()}</span>
-                                                <span>{formatter?.format(cartItem.invAmount[item?.id].amount * item?.pricePerStep)}</span>
-                                            </h5>
-                                        </div>
-                                    ))
+                                {/*  {cartItem.items.filter((item) => item !== undefined && item !== null)
+                                    .map((item, innerIndex) => ( */}
+                                {filteredItems(cartItem).map((item, innerIndex) =>
+                                    <div key={innerIndex}>
+                                        <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
+                                            <span>{item.name}: {(+cartItem.invAmount[item.id].amount).toLocaleString()}</span>
+                                            <span>{formatter?.format(cartItem.invAmount[item?.id].amount * item?.pricePerStep)}</span>
+                                        </h5>
+                                    </div>
+                                )
                                 }
                             </div>
                         </AccordionContent>
@@ -69,11 +78,23 @@ export default function CartDetails() {
                             </div>
                         </AccordionTrigger>
                         <AccordionContent>
-                            Here is the billing summary
+                            <div className="space-y-3">
+                                <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
+                                    <span>Sub Total:</span>
+                                    <span>{formatter?.format(totalPrice || 0)}</span>
+                                </h5>
+                                <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
+                                    <span>Tax:</span>
+                                    <span>{formatter?.format(totalPrice || 0)}</span>
+                                </h5>
+                            </div>
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
-                <h3 className='text-lg font-medium'>Grand Total</h3>
+                <h3 className='w-full flex justify-between text-white font-semibold'>
+                    <span className='text-lg font-medium'>Grand Total</span>
+                    <span className='text-lg font-medium'>{formatter?.format(totalPrice || 0)}</span>
+                    </h3>
                 <hr className='border-[#24272E]' />
                 <div className="flex items-center space-x-2 my-3">
                     <Checkbox id="terms" className='rounded-full' />

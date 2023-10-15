@@ -48,10 +48,10 @@ export default function CheckoutForm() {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="">
                 <div className="grid grid-cols-2 gap-6 w-full">
-                    <div className="bg-[#15171B] h-fit rounded-md w-full min-h-16 p-5 space-y-6">
+                    <div className="bg-[#15171B] h-fit rounded-md w-full p-5 space-y-6">
                         <ShippingForm form={form} />
                     </div>
-                    <div className="bg-[#15171B] rounded-md w-full min-h-16 p-5">
+                    <div className="bg-[#15171B] h-fit rounded-md w-full p-5">
                         <CartDetails />
                     </div>
                 </div>
