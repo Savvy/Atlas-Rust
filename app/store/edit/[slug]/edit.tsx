@@ -25,8 +25,6 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
 
     const { toast } = useToast()
 
-    const [price, setPrice] = useState<number>(0);
-
     const currency = useFromStore(useCartStore, (state) => state.currency);
 
     const formatter = useMemo(() => {
@@ -37,11 +35,10 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
 
     // Inventory items
     const [invItems, setInvItems] = useState<Item[]>(defaultItems);
+
     const [invAmount, setInvAmount] = useState<any>(defaultInvAmount);
 
     const [clothingItems, setClothingItems] = useState<Item[]>(Array.from({ length: (editPackage.clothingSlots.length) }));
-
-    // const [invAmount, setInvAmount] = useState<any>({});
 
     // All items to be sold, when added to the invItems array,
     // they are removed from this one
@@ -66,8 +63,9 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
     // this keeps the list of items up to date
     useEffect(() => {
         const newArray = [...initialItems];
-        for (let index = 0; index < invItems.length; index++) {
-            const element = invItems[index];
+        const concat = invItems/* .concat(beltItems) */;
+        for (let index = 0; index < concat.length; index++) {
+            const element = concat[index];
             if (element !== undefined) {
                 const itIndex = newArray.findIndex((obj) => obj.id === element.id)
                 if (itIndex !== -1)
@@ -84,17 +82,31 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
             if (item)
                 adjustAmount(item);
         }
-    }, [invItems])
+        /*  for (let index = 0; index < beltItems.length; index++) {
+             const item = beltItems[index];
+             if (item)
+                 adjustAmount(item);
+         } */
+    }, [invItems, /* beltItems */])
 
-    const addItemToInv = (item: Item, index: number) => {
+    const addItemToInv = (item: Item, index: number, currentSlot: number | undefined) => {
         setInvItems((prev) => {
             const newArray = [...prev];
-            newArray[index] = item
+            if (currentSlot !== undefined) {
+                const newItem = JSON.parse(JSON.stringify(prev[currentSlot]))
+                newArray[index] = newItem
+                newArray[currentSlot] = undefined!;
+            } else {
+                newArray[index] = item
+            }
             return newArray
         });
 
-        setInvAmount((prev: any) => {
+        if (currentSlot !== undefined) {
+            return;
+        }
 
+        setInvAmount((prev: any) => {
             const newInvAmount = { ...prev };
             newInvAmount[item.id] = {
                 amount: item.min
@@ -202,14 +214,14 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
     }
 
     const addPackageToCart = () => {
-        /* if (invItems.length < editPackage.minInventoryItems) {
+        if (Object.keys(invAmount).length < editPackage.minInventoryItems) {
             toast({
                 title: "Uh oh! You can't do this yet.",
                 description: "You need to add more items to your inventory.",
                 className: 'border-primary',
             })
             return;
-        } */
+        }
         addToCart({
             id: packageContent?.id ?? "custom",
             name: packageContent?.name ?? "Custom Package",
@@ -327,6 +339,7 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
                                 addItemToInv={addItemToInv}
                                 removeItem={removeItem}
                                 index={index}
+                                mtTop={index >= (editPackage.maxInventorySlots - editPackage.maxBeltSlots)}
                                 type={'item'}
                             />
                         ))}

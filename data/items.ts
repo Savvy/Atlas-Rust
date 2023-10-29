@@ -217,6 +217,7 @@ export const misc = {
 export const editPackage = {
     minInventoryItems: 3,
     maxInventorySlots: 30,
+    maxBeltSlots: 6,
     clothingSlots: [
         'clothing-backpack',
         'clothing-head1',

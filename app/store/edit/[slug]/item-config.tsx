@@ -2,7 +2,7 @@ import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 import { Item } from "@/types";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type ItemConfigProps = {
     index?: number,
@@ -15,6 +15,10 @@ type ItemConfigProps = {
 
 export default function ItemConfig({ invItems, invItem, itemAmounts, setAmount, slotsAvailable }: ItemConfigProps) {
     const [val, setVal] = useState(itemAmounts[invItem.id].amount);
+
+    useEffect(() => {
+        setVal(itemAmounts[invItem.id].amount)
+    }, [itemAmounts])
 
     const itemsInInv = useMemo(() => invItems.reduce((val, item) =>
         (item?.id == invItem.id) ? val + 1 : val, 0), [invItems, invItem])

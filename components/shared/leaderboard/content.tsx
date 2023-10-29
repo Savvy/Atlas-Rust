@@ -151,6 +151,27 @@ export const columns: ColumnDef<Stats>[] = [
       <div className="capitalize">{row.getValue("name")}</div>
     ),
   },
+  /* {
+    accessorKey: "name",
+    enableSorting: true,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="link"
+          className={clsx("relative opacity-75 text-white p-0", { 'opacity-100': column.getIsSorted() })}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          {column.getIsSorted() &&
+            (column.getIsSorted() === "asc" ? <ArrowUp className="absolute -right-5 ml-2 h-4 w-4" /> : <ArrowDown className="absolute -right-5 ml-2 h-4 w-4" />)
+          }
+        </Button>
+      )
+    },
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("name")}</div>
+    ),
+  },
   {
     accessorKey: "kdr",
     header: ({ column }) => {
@@ -350,7 +371,7 @@ export const columns: ColumnDef<Stats>[] = [
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("hours")}</div>
     ),
-  },
+  }, */
 ]
 
 export function DataTableDemo() {

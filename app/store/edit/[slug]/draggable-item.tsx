@@ -10,7 +10,7 @@ export default function DraggableItem({ item, type }: any) {
     const [{ isDragging }, drag, preview] = useDrag(
         () => ({
             type: type,
-            item: item,
+            item: { currentSlot: undefined, invItem: item },
             canDrag: true,
             collect: (monitor: DragSourceMonitor) => ({
                 isDragging: !!monitor.isDragging(),
