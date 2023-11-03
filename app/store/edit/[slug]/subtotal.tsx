@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { misc } from "@/data/items";
-import useFromStore from "@/hooks/useFromStore";
+import useFromStore from "@/hooks/use-from-store";
 import { useCartStore } from "@/store/useCartStore";
 import { Item } from "@/types";
 import { useMemo } from "react";

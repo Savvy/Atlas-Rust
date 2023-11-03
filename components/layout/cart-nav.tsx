@@ -10,7 +10,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import useFromStore from "@/hooks/useFromStore"
+import useFromStore from "@/hooks/use-from-store"
 import { useMemo } from "react"
 import Locales from "@/data/locales";
 import Link from "next/link";

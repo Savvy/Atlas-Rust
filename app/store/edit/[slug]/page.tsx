@@ -7,7 +7,7 @@ import EditContainer from "./edit-container";
 import { useEffect, useMemo } from "react";
 import { editPackage } from "@/data/items";
 import storeItems from "@/data/packages";
-import { Item, Package } from "@/types";
+import { InvItem, Item, Package } from "@/types";
 
 export default function Page(props: any) {
 
@@ -68,7 +68,7 @@ export default function Page(props: any) {
                     <EditContainer>
                         <Edit
                             packageContent={findPackageById(props.params.slug) as Package | undefined}
-                            defaultItems={defaultItems as Item[]}
+                            defaultItems={defaultItems as InvItem[]}
                             defaultInvAmount={defaultInvAmount}
                         />
                     </EditContainer>

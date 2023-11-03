@@ -124,23 +124,23 @@ export const misc = {
     kitCooldown: [
         {
             label: '12h',
-            price: 5.00,
-        },
-        {
-            label: '10h',
-            price: 4.00,
-        },
-        {
-            label: '8h',
             price: 3.00,
         },
         {
+            label: '10h',
+            price: 6.00,
+        },
+        {
+            label: '8h',
+            price: 9.00,
+        },
+        {
             label: '6h',
-            price: 2.50,
+            price: 12.00,
         },
         {
             label: '4h',
-            price: 2.00,
+            price: 15.00,
         },
     ],
     tpCooldown: [

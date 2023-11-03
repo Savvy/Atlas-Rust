@@ -1,14 +1,15 @@
 import XIcon from "@/components/icons/xicon";
 import { cn } from "@/lib/utils";
-import { Item } from "@/types";
+import { InvItem, Item } from "@/types";
 import Image from "next/image";
+import { useEffect } from "react";
 import { DragPreviewImage, DragSourceMonitor, useDrag, useDrop } from "react-dnd";
 
 type DropCellProps = {
-    invItem: Item,
+    invItem: InvItem,
     addItemToInv: (invItem: Item, index: number, currentSlot: number | undefined) => void,
     index: number,
-    removeItem: (item: Item, slot: number) => void,
+    removeItem: (slot: number) => void,
     type: string
     mtTop?: boolean
 }
@@ -33,6 +34,10 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
         }),
     }))
 
+    useEffect(() => {
+        console.log('=>', invItem)
+    }, [invItem]);
+
     return (
         <div className={cn(
             { "mt-2": mtTop },
@@ -41,7 +46,7 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
         )}
             ref={drop}
         >
-            {invItem ?
+            {!!invItem ?
                 <div
                     className={cn(
                         "relative flex flex-col justify-start items-center select-none group",
@@ -51,7 +56,7 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
                 >
                     <DragPreviewImage
                         connect={preview}
-                        src={`/images/store/items/${invItem.image}`}
+                        src={`/images/store/items/${invItem.item.image}`}
                     />
                     <div className={cn(
                         "w-full h-full",
@@ -60,25 +65,26 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
                         "bg-transparent border border-[#434343]",
                         "group-hover:scale-105 transition-transform duration-75 ease-in-out"
                     )}>
-                        {invItem.image
+                        {invItem.item.image
                             ? <Image
-                                src={`/images/store/items/${invItem.image}`}
+                                src={`/images/store/items/${invItem.item.image}`}
                                 width={38}
                                 height={35}
-                                alt={invItem.name}
+                                alt={invItem.item.name}
                             />
                             : <XIcon />
                         }
                         <div
                             className="text-white font-semibold cursor-pointer opacity-20 hover:opacity-50 text-xs absolute top-1 right-1.5"
                             onClick={() => {
-                                removeItem(invItem, index)
+                                removeItem(index)
                             }}
                         >
                             X
                         </div>
-                        <div className="w-[95%] whitespace-nowrap overflow-hidden overflow-ellipsis text-center">
-                            <span className="text-sm font-semibold font-rajdhani">{invItem.name}</span>
+                        <div className="w-[95%] px-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-center flex justify-between">
+                            <span className="text-sm font-semibold font-rajdhani">{invItem.item.name}</span>
+                            <span className="text-sm font-semibold font-rajdhani">{invItem.amount}</span>
                         </div>
                     </div>
                 </div>

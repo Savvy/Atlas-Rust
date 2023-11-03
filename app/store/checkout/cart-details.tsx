@@ -9,7 +9,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import useFromStore from '@/hooks/useFromStore';
+import useFromStore from '@/hooks/use-from-store';
 import { useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';

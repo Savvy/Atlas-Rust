@@ -1,27 +1,30 @@
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
-import { Item } from "@/types";
+import { InvItem, Item } from "@/types";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 type ItemConfigProps = {
-    index?: number,
-    invItems: Item[],
+    index: number,
+    invItems: InvItem[],
     invItem: Item,
-    itemAmounts: any,
-    setAmount: any,
-    slotsAvailable: number
+    /* itemAmounts: any, */
+    setItemAmount: any,
+    slotsAvailable: number,
 }
 
-export default function ItemConfig({ invItems, invItem, itemAmounts, setAmount, slotsAvailable }: ItemConfigProps) {
-    const [val, setVal] = useState(itemAmounts[invItem.id].amount);
+export default function ItemConfig({ invItems, invItem, setItemAmount, index, slotsAvailable }: ItemConfigProps) {
+    /* const [val, setVal] = useState(itemAmounts[invItem.id].amount);
 
     useEffect(() => {
         setVal(itemAmounts[invItem.id].amount)
-    }, [itemAmounts])
+    }, [itemAmounts]) */
 
     const itemsInInv = useMemo(() => invItems.reduce((val, item) =>
-        (item?.id == invItem.id) ? val + 1 : val, 0), [invItems, invItem])
+        (item?.item.id == invItem.id) ? val + 1 : val, 0), [invItems, invItem])
+
+    const currentAmount = useMemo(() => invItems.reduce((val, item) =>
+        (item && item.item.id === invItem.id) ? val + item.amount : val, 0), [invItems, invItem]);
 
     return (
         <div className="w-full text-muted py-2 font-rajdhani font-medium">
@@ -33,7 +36,7 @@ export default function ItemConfig({ invItems, invItem, itemAmounts, setAmount, 
                         height={30}
                         alt={invItem.name}
                     />
-                    <span className="">{invItem.name}<br />{itemAmounts[invItem.id].amount.toLocaleString()} / {invItem.max.toLocaleString()}</span>
+                    <span className="">{invItem.name}<br />{currentAmount.toLocaleString()} / {invItem.max.toLocaleString()}</span>
                 </div>
                 <span>$0.35 / 1,000</span>
             </div>
@@ -42,21 +45,23 @@ export default function ItemConfig({ invItems, invItem, itemAmounts, setAmount, 
                     min={invItem.min}
                     max={invItem.max}
                     step={invItem.step}
-                    
+
                     className={cn("w-full")}
-                    value={[val]}
+                    value={[currentAmount]}
                     onValueChange={(value) => {
-                        const newAmount = Math.ceil(value[0] / invItem.maxPerStack);
+                        // console.log(value[0])
+                        /* const newAmount = Math.ceil(value[0] / invItem.item.maxPerStack);
                         const amountToAdd = newAmount - itemsInInv;
-                        if ((slotsAvailable == 0 && value[0] > val) || amountToAdd > slotsAvailable) {
+                        if ((slotsAvailable == 0 && value[0] > invItem.amount) || amountToAdd > slotsAvailable) {
                             return;
-                        }
-                        setVal(value[0]);
-                        setAmount(invItem.id, value[0]);
+                        } */
+                        /* setVal(value[0]); */
+
+                        setItemAmount(invItem, value[0]);
                     }}
-                    /* onValueCommit={(value) => {
-                        console.log(value);
-                    }} */
+                /* onValueCommit={(value) => {
+                    console.log(value);
+                }} */
                 />
                 <div className="flex justify-between font-rajdhani text-muted font-semibold mt-2">
                     <span>Min</span>
