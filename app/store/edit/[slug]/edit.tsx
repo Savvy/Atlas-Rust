@@ -19,10 +19,10 @@ import { useInventory } from "@/hooks/use-inventory";
 
 type EditProps = {
     defaultItems: InvItem[],
-    defaultInvAmount: any,
+    /* defaultInvAmount: any, */
     packageContent: Package
 }
-export default function Edit({ defaultItems, defaultInvAmount, packageContent }: EditProps) {
+export default function Edit({ defaultItems, packageContent }: EditProps) {
 
     const { toast } = useToast()
 

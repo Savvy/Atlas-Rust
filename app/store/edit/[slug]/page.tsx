@@ -40,7 +40,7 @@ export default function Page(props: any) {
         return invItems;
     }, [props.params]);
 
-    const defaultInvAmount = useMemo(() => findPackageById(props.params.slug)?.invAmount || {}, [props.params]);
+    /* const defaultInvAmount = useMemo(() => findPackageById(props.params.slug)?.invAmount || {}, [props.params]); */
 
     return (
         <main className="w-full">
@@ -67,9 +67,9 @@ export default function Page(props: any) {
                 <div className={cn("w-full grid grid-cols-12 gap-4 mb-24 auto-rows-[910px]")}>
                     <EditContainer>
                         <Edit
-                            packageContent={findPackageById(props.params.slug) as Package | undefined}
+                            packageContent={findPackageById(props.params.slug) as Package}
                             defaultItems={defaultItems as InvItem[]}
-                            defaultInvAmount={defaultInvAmount}
+                            /* defaultInvAmount={defaultInvAmount} */
                         />
                     </EditContainer>
                 </div>
