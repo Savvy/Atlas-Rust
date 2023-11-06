@@ -28,10 +28,10 @@ type Package = {
         autoUpgrade: boolean
         skipQueue: boolean
         skinBox: boolean
+        customColor?: string
     },
-    items: Item[]
-    invAmount: any
-    clothingItems: Item[] 
+    items: InvItem[]
+    clothingItems: InvItem[] 
 }
 
 type Item = {

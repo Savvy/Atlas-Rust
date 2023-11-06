@@ -20,7 +20,7 @@ import { useInventory } from "@/hooks/use-inventory";
 type EditProps = {
     defaultItems: InvItem[],
     defaultInvAmount: any,
-    packageContent: Package | undefined
+    packageContent: Package
 }
 export default function Edit({ defaultItems, defaultInvAmount, packageContent }: EditProps) {
 
@@ -34,7 +34,7 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
             (currency?.locale, { style: 'currency', currency: currency?.currency });
     }, [currency]);
 
-    const inventory = useInventory({ defaultItems });
+    const inventory = useInventory({ defaultItems, packageContent });
 
     // Inventory items
     // const [invItems, setInvItems] = useState<InvItem[]>(defaultItems);
@@ -52,6 +52,10 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
     const configItems = useMemo(() => [...initialItems].filter((item) =>
         inventory.invItems.findIndex((invItem) =>
             item.id === invItem?.item.id) !== -1), [inventory.invItems]);
+
+    const clothingConfigItems = useMemo(() => [...initialItems].filter((item) =>
+        inventory.clothingItems.findIndex((invItem) =>
+            item.id === invItem?.item.id) !== -1), [inventory.invItems, inventory.clothingItems]);
 
     /* Misc Values
     // Slider misc values
@@ -264,14 +268,14 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
                     <div className="w-full flex flex-wrap gap-x-1 gap-y-1"> {/* grid grid-cols-8 */}
                         {Array.from({ length: (editPackage.clothingSlots.length) }).map((_, index) => (
                             <div key={index} className="aspect-square w-[11.5%] h-[11.5%]">
-                                {/* <DropCell
+                                <DropCell
                                     key={index}
-                                    invItem={clothingItems[index]}
-                                    addItemToInv={addItemToClothing}
-                                    removeItem={removeItemFromClothing}
+                                    invItem={inventory.clothingItems[index]}
+                                    addItemToInv={inventory.addItemToClothing}
+                                    removeItem={inventory.removeItemFromClothing}
                                     index={index}
                                     type={editPackage.clothingSlots[index]}
-                                /> */}
+                                />
                             </div>
                         ))}
                     </div>
@@ -289,16 +293,21 @@ export default function Edit({ defaultItems, defaultInvAmount, packageContent }:
                 <div className="bg-[#15171B] flex-grow flex flex-col rounded-md w-full">
                     <ScrollArea className="w-full h-[300px] flex-grow py-3 px-5">
                         {configItems.map((invItem, index) => {
-                            /* const invItem = getItemById(+itemId); */
                             return !!invItem ?
                                 <ItemConfig
                                     key={index}
                                     invItems={inventory.invItems}
                                     invItem={invItem}
-                                    /* itemAmounts={invAmount} */
-                                    index={index}
                                     setItemAmount={inventory.setItemAmount}
-                                    slotsAvailable={inventory.slotsAvailable}
+                                />
+                                : null
+                        })}
+                        {clothingConfigItems.map((invItem, index) => {
+                            return !!invItem ?
+                                <ItemConfig
+                                    key={index}
+                                    invItems={inventory.clothingItems}
+                                    invItem={invItem}
                                 />
                                 : null
                         })}

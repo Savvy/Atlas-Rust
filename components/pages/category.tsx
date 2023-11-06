@@ -1,12 +1,20 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Package from './package'
-import { Category } from '@/types'
+import Package from '../../app/store/package'
+import { Category as CategoryProps } from '@/types'
+import { useMemo } from 'react'
 
-export default function Category({ title, packages }: Category) {
+type Props = CategoryProps & {
+    searchQuery: string
+}
+export default function Category({ title, packages, searchQuery }: Props) {
 
     // const [packages, setPackages] = useState<any>(Array.from({ length: 14 }, (_, i) => { }))
+
+    const filteredPackages = useMemo(() => packages.filter((storePackage) =>
+        storePackage.name.toLowerCase() === searchQuery.toLowerCase()
+        || storePackage.name.toLowerCase().includes(searchQuery.toLowerCase())), [searchQuery, packages])
 
     return (
         <div className='mb-16'>
@@ -34,7 +42,7 @@ export default function Category({ title, packages }: Category) {
             </motion.div>
             <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4">
                 {
-                    packages.map((item: any, i: any) => {
+                    filteredPackages.map((item: any, i: any) => {
                         return (
                             <motion.div
                                 key={i}

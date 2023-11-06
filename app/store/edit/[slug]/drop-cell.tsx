@@ -19,7 +19,6 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
     const [collectedProps, drop] = useDrop(() => ({
         accept: type,
         drop(item: { currentSlot: number, invItem: Item }, monitor) {
-            console.log(item);
             addItemToInv(item.invItem, index, item.currentSlot);
             return item
         },
@@ -33,10 +32,6 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
             isDragging: !!monitor.isDragging(),
         }),
     }))
-
-    useEffect(() => {
-        console.log('=>', invItem)
-    }, [invItem]);
 
     return (
         <div className={cn(

@@ -1,5 +1,5 @@
 'use client';
-import { UserProps, getCurrentUser } from "@/lib/session";
+import { UserProps } from "@/lib/session";
 import DiscordIcon from "@/components/icons/discord";
 import clsx from "clsx";
 

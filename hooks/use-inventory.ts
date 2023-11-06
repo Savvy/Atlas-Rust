@@ -1,33 +1,34 @@
 import { editPackage, misc } from "@/data/items";
-import { InvItem, Item } from "@/types";
+import { InvItem, Item, Package } from "@/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type InventoryProps = {
     defaultItems: InvItem[],
+    packageContent: Package
     /* gotoPage: (updater: number | ((pageIndex: number) => number)) => void;
     length: number;
     pageSize: number; */
 }
 
-const INVENTORY_SLOTS = editPackage.maxInventorySlots + editPackage.maxBeltSlots;
+const INVENTORY_SLOTS = editPackage.maxInventorySlots/*  + editPackage.maxBeltSlots */;
 
-export const useInventory = ({ defaultItems }: InventoryProps) => {
+export const useInventory = ({ defaultItems, packageContent }: InventoryProps) => {
     const [invItems, setInvItems] = useState<InvItem[]>(defaultItems);
-    const [clothingItems, setClothingItems] = useState<Item[]>(Array.from({ length: (editPackage.clothingSlots.length) }));
+    const [clothingItems, setClothingItems] = useState<InvItem[]>(Array.from({ length: (editPackage.clothingSlots.length) }));
 
     // Slider misc values
-    const [kitCooldown, setKitCooldown] = useState<number>(0);
-    const [teleportCooldown, setTeleportCooldown] = useState<number>(0);
-    const [amountOfHomes, setAmountOfHomes] = useState<number>(0);
-    const [coloredName, setColoredName] = useState<number>(0);
+    const [kitCooldown, setKitCooldown] = useState<number>(packageContent.misc.cooldown);
+    const [teleportCooldown, setTeleportCooldown] = useState<number>(packageContent.misc.tpCooldown);
+    const [amountOfHomes, setAmountOfHomes] = useState<number>(packageContent.misc.homes);
+    const [coloredName, setColoredName] = useState<number>(packageContent.misc.coloredName);
 
     // Boolean misc values
-    const [autoUpgrade, setAutoUpgrade] = useState<boolean>(false);
-    const [skipQueue, setSkipQueue] = useState<boolean>(false);
-    const [skinBox, setSkinBox] = useState<boolean>(false);
+    const [autoUpgrade, setAutoUpgrade] = useState<boolean>(packageContent.misc.autoUpgrade);
+    const [skipQueue, setSkipQueue] = useState<boolean>(packageContent.misc.skipQueue);
+    const [skinBox, setSkinBox] = useState<boolean>(packageContent.misc.skinBox);
 
     // Color hex misc value
-    const [colorHex, setColorHex] = useState<string>('#0437b9');
+    const [colorHex, setColorHex] = useState<string>(packageContent.misc.customColor || "#0437b9");
 
     /* const totalPages = useMemo<number>(() => {
         return Math.ceil(length / pageSize);
@@ -65,12 +66,10 @@ export const useInventory = ({ defaultItems }: InventoryProps) => {
             const newArray = [...prev];
             if (currentSlot !== undefined) {
                 const newItem = JSON.parse(JSON.stringify(prev[currentSlot]))
-                console.log(item);
                 newArray[index] = newItem
                 newArray[currentSlot] = undefined!;
             } else {
                 newArray[index] = { item, amount: item.min }
-                console.log(newArray[index])
             }
             return newArray
         });
@@ -109,17 +108,20 @@ export const useInventory = ({ defaultItems }: InventoryProps) => {
 
             if (amount > currentAmount) { // Here we are adding items
                 const amountToAdd = itemsShouldHave - itemsInInv;
-                for (let x = 0; x < amountToAdd; x++) {
-                    innerLoop:
-                    for (let i = 0; i < INVENTORY_SLOTS; i++) {
-                        if (newArray[i] === undefined) {
-                            newArray[i] = {
-                                amount: amount,
-                                item: {
-                                    ...item
+                console.log(slotsAvailable)
+                if (slotsAvailable > 0) {
+                    for (let x = 0; x < (slotsAvailable > amountToAdd ? amountToAdd : slotsAvailable); x++) {
+                        innerLoop:
+                        for (let i = 0; i < INVENTORY_SLOTS; i++) {
+                            if (newArray[i] === undefined) {
+                                newArray[i] = {
+                                    amount: amount,
+                                    item: {
+                                        ...item
+                                    }
                                 }
+                                break innerLoop;
                             }
-                            break innerLoop;
                         }
                     }
                 }
@@ -151,8 +153,27 @@ export const useInventory = ({ defaultItems }: InventoryProps) => {
         })
     }
 
+    const addItemToClothing = (item: Item, index: number) => {
+        setClothingItems((prev) => {
+            const newArray = [...prev];
+            newArray[index] = { item, amount: item.min }
+            return newArray
+        });
+    }
+
+    const removeItemFromClothing = (slot: number) => {
+        // const amount = invAmount[item.id].amount;
+        setClothingItems((prev) => {
+            const newArray = [...prev];
+            newArray[slot] = undefined!;
+            return newArray
+        });
+    }
+
     const slotsAvailable = useMemo(() => {
-        return invItems.reduce((val, item) => (item === undefined) ? val + 1 : val, 0);
+        console.log(invItems)
+        console.log(INVENTORY_SLOTS, invItems.length)
+        return /* invItems.reduce((val, item) => (item === undefined) ? val + 1 : val, 0); */  INVENTORY_SLOTS - invItems.reduce((val, item) => (item === undefined) ? val + 1 : val, 0);
     }, [invItems])
 
     const totalPrice = useMemo(() => {
@@ -161,9 +182,9 @@ export const useInventory = ({ defaultItems }: InventoryProps) => {
             return !!invItem ? acc + ((invItem.amount / invItem.item.step) * invItem.item.pricePerStep) : acc
         }, 0);
 
-        /* amount += clothingItems.reduce((acc, invItem: Item) => {
-            return !!invItem ? acc + invItem.pricePerStep : acc
-        }, 0); */
+        amount += clothingItems.reduce((acc, invItem: InvItem) => {
+            return !!invItem ? acc + ((invItem.amount / invItem.item.step) * invItem.item.pricePerStep) : acc
+        }, 0);
 
         if (autoUpgrade) {
             amount += misc.autoUpgrade
@@ -204,6 +225,9 @@ export const useInventory = ({ defaultItems }: InventoryProps) => {
         addItemToInv,
         removeItem,
         setItemAmount,
+
+        removeItemFromClothing,
+        addItemToClothing,
 
         setKitCooldown,
         setTeleportCooldown,

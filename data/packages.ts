@@ -1,6 +1,6 @@
 const storeItems = [
     {
-        title: 'Atlas Package - NA 5X',
+        title: 'us-5x',
         packages: [
             {
                 id: "eternal-rank",
@@ -17,90 +17,101 @@ const storeItems = [
                     autoUpgrade: true,
                     skipQueue: false,
                     skinBox: false,
+                    customColor: '#0437b9'
                 },
                 items: [
                     {
-                        id: 1,
-                        category: "resources",
-                        type: 'item',
-                        name: "Wood",
-                        image: "wood.png",
-                        pricePerStep: 0.35,
-                        min: 5, // 1000,
-                        max: 40, // 200000,
-                        step: 5, // 1000,
-                        maxPerStack: 10 // 50000
+                        amount: 10,
+                        item: {
+                            id: 1,
+                            category: "resources",
+                            type: 'item',
+                            name: "Wood",
+                            image: "wood.png",
+                            pricePerStep: 0.35,
+                            min: 5, // 1000,
+                            max: 40, // 200000,
+                            step: 5, // 1000,
+                            maxPerStack: 10 // 50000
+                        },
                     },
                     {
-                        id: 1,
-                        category: "resources",
-                        type: 'item',
-                        name: "Wood",
-                        image: "wood.png",
-                        pricePerStep: 0.35,
-                        min: 5, // 1000,
-                        max: 40, // 200000,
-                        step: 5, // 1000,
-                        maxPerStack: 10 // 50000
+                        amount: 10,
+                        item: {
+                            id: 1,
+                            category: "resources",
+                            type: 'item',
+                            name: "Wood",
+                            image: "wood.png",
+                            pricePerStep: 0.35,
+                            min: 5, // 1000,
+                            max: 40, // 200000,
+                            step: 5, // 1000,
+                            maxPerStack: 10 // 50000
+                        },
                     },
                     {
-                        id: 1,
-                        category: "resources",
-                        type: 'item',
-                        name: "Wood",
-                        image: "wood.png",
-                        pricePerStep: 0.35,
-                        min: 5, // 1000,
-                        max: 40, // 200000,
-                        step: 5, // 1000,
-                        maxPerStack: 10 // 50000
+                        amount: 10,
+                        item: {
+                            id: 1,
+                            category: "resources",
+                            type: 'item',
+                            name: "Wood",
+                            image: "wood.png",
+                            pricePerStep: 0.35,
+                            min: 5, // 1000,
+                            max: 40, // 200000,
+                            step: 5, // 1000,
+                            maxPerStack: 10 // 50000
+                        },
                     },
                     {
-                        id: 1,
-                        category: "resources",
-                        type: 'item',
-                        name: "Wood",
-                        image: "wood.png",
-                        pricePerStep: 0.35,
-                        min: 5, // 1000,
-                        max: 40, // 200000,
-                        step: 5, // 1000,
-                        maxPerStack: 10 // 50000
+                        amount: 5,
+                        item: {
+                            id: 1,
+                            category: "resources",
+                            type: 'item',
+                            name: "Wood",
+                            image: "wood.png",
+                            pricePerStep: 0.35,
+                            min: 5, // 1000,
+                            max: 40, // 200000,
+                            step: 5, // 1000,
+                            maxPerStack: 10 // 50000
+                        },
                     },
                     {
-                        id: 2,
-                        category: "resources",
-                        type: 'item',
-                        name: "Stone",
-                        image: "stone.png",
-                        pricePerStep: 0.35,
-                        min: 5,
-                        max: 40,
-                        step: 5,
-                        maxPerStack: 10
+                        amount: 10,
+                        item: {
+                            id: 2,
+                            category: "resources",
+                            type: 'item',
+                            name: "Stone",
+                            image: "stone.png",
+                            pricePerStep: 0.35,
+                            min: 5,
+                            max: 40,
+                            step: 5,
+                            maxPerStack: 10
+                        },
                     },
                     {
-                        id: 2,
-                        category: "resources",
-                        type: 'item',
-                        name: "Stone",
-                        image: "stone.png",
-                        pricePerStep: 0.35,
-                        min: 5,
-                        max: 40,
-                        step: 5,
-                        maxPerStack: 10
+                        amount: 5,
+                        item: {
+                            id: 2,
+                            category: "resources",
+                            type: 'item',
+                            name: "Stone",
+                            image: "stone.png",
+                            pricePerStep: 0.35,
+                            min: 5,
+                            max: 40,
+                            step: 5,
+                            maxPerStack: 10
+                        },
                     },
                 ],
                 clothingItems: [],
-                invAmount: {
-                    1: {
-                        amount: 40
-                    },
-                    2: {
-                        amount: 20
-                    }
-                },
             },
             {
                 id: "immortal-rank",
@@ -117,6 +128,7 @@ const storeItems = [
                     autoUpgrade: true,
                     skipQueue: false,
                     skinBox: false,
+                    customColor: '#0437b9'
                 },
                 items: [],
                 clothingItems: [],
@@ -137,6 +149,7 @@ const storeItems = [
                     autoUpgrade: true,
                     skipQueue: false,
                     skinBox: false,
+                    customColor: '#0437b9'
                 },
                 items: [],
                 clothingItems: [],

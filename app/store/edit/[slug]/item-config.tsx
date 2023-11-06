@@ -5,15 +5,13 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 type ItemConfigProps = {
-    index: number,
     invItems: InvItem[],
     invItem: Item,
     /* itemAmounts: any, */
-    setItemAmount: any,
-    slotsAvailable: number,
+    setItemAmount?: any
 }
 
-export default function ItemConfig({ invItems, invItem, setItemAmount, index, slotsAvailable }: ItemConfigProps) {
+export default function ItemConfig({ invItems, invItem, setItemAmount }: ItemConfigProps) {
     /* const [val, setVal] = useState(itemAmounts[invItem.id].amount);
 
     useEffect(() => {
@@ -38,30 +36,19 @@ export default function ItemConfig({ invItems, invItem, setItemAmount, index, sl
                     />
                     <span className="">{invItem.name}<br />{currentAmount.toLocaleString()} / {invItem.max.toLocaleString()}</span>
                 </div>
-                <span>$0.35 / 1,000</span>
+                <span>${invItem.pricePerStep.toLocaleString()} / {invItem.step.toLocaleString()}</span>
             </div>
             <div className="">
                 <Slider
-                    min={invItem.min}
+                    min={invItem.min === invItem.max ? 2 : invItem.min}
                     max={invItem.max}
                     step={invItem.step}
-
                     className={cn("w-full")}
                     value={[currentAmount]}
                     onValueChange={(value) => {
-                        // console.log(value[0])
-                        /* const newAmount = Math.ceil(value[0] / invItem.item.maxPerStack);
-                        const amountToAdd = newAmount - itemsInInv;
-                        if ((slotsAvailable == 0 && value[0] > invItem.amount) || amountToAdd > slotsAvailable) {
-                            return;
-                        } */
-                        /* setVal(value[0]); */
-
-                        setItemAmount(invItem, value[0]);
+                        if (setItemAmount)
+                            setItemAmount(invItem, value[0]);
                     }}
-                /* onValueCommit={(value) => {
-                    console.log(value);
-                }} */
                 />
                 <div className="flex justify-between font-rajdhani text-muted font-semibold mt-2">
                     <span>Min</span>

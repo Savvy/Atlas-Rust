@@ -7,6 +7,7 @@ import Footer from '@/components/layout/footer'
 import { mainNav } from '@/data/navigation'
 import { getCurrentUser } from '@/lib/session'
 import { Toaster } from '@/components/ui/toaster'
+import Providers from './providers'
 
 const rajdhani = Rajdhani({
   subsets: ['latin'],
@@ -44,14 +45,16 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(rajdhani.variable, roboto.variable, poppins.variable)}>
-        <div className="absolute z-20 w-full border-b border-white/10">
-          <div className="container h-28 flex items-center justify-center">
-            <MainNav items={mainNav} user={user} />
+        <Providers>
+          <div className="absolute z-20 w-full border-b border-white/10">
+            <div className="container h-28 flex items-center justify-center">
+              <MainNav items={mainNav} user={user} />
+            </div>
           </div>
-        </div>
-        {children}
-        <Footer />
-        <Toaster />
+          {children}
+          <Footer />
+          <Toaster />
+        </Providers>
       </body>
     </html>
   )

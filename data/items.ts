@@ -114,7 +114,7 @@ export const items = [
         image: "jumpsuit.suit.blue.png",
         pricePerStep: 2.35,
         min: 1,
-        max: 10,
+        max: 1,
         step: 1,
         maxPerStack: 1
     },
