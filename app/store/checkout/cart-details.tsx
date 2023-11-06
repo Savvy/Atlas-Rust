@@ -14,7 +14,7 @@ import { useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
-import { CartItem, Item } from '@/types';
+import { CartItem, InvItem, Item } from '@/types';
 
 export default function CartDetails() {
     const cart = useFromStore(useCartStore, (state) => state.cart)
@@ -30,11 +30,11 @@ export default function CartDetails() {
     useEffect(() => {
     }, [cart]);
 
-    const filteredItems = (items: Item[]) => {
+    const filteredItems = (items: InvItem[]) => {
         return items.filter((value, index, self) =>
             value !== undefined && value !== null &&
             index === self.findIndex((item) => (
-                item !== undefined && item.id === value.id
+                item !== undefined && item.item.id === value.item.id
             ))
         )
     }
@@ -56,16 +56,16 @@ export default function CartDetails() {
                                 {filteredItems(cartItem.items).map((item, innerIndex) =>
                                     <div key={innerIndex}>
                                         <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
-                                            <span>{item.name}: {(+cartItem.invAmount[item.id].amount).toLocaleString()}</span>
-                                            <span>{formatter?.format(cartItem.invAmount[item?.id].amount * item?.pricePerStep)}</span>
+                                            <span>{item.item.name}: {(+item.amount).toLocaleString()}</span>
+                                            <span>{formatter?.format(item.amount * item?.item.pricePerStep)}</span>
                                         </h5>
                                     </div>
                                 )}
                                 {filteredItems(cartItem.clothingItems).map((item, innerIndex) =>
                                     <div key={innerIndex}>
                                         <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
-                                            <span>{item.name}: {(+cartItem.invAmount[item.id].amount).toLocaleString()}</span>
-                                            <span>{formatter?.format(cartItem.invAmount[item?.id].amount * item?.pricePerStep)}</span>
+                                            <span>{item.item.name}: {(+item.amount).toLocaleString()}</span>
+                                            <span>{formatter?.format(item.amount * item?.item.pricePerStep)}</span>
                                         </h5>
                                     </div>
                                 )}
