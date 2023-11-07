@@ -55,7 +55,7 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
 
     const clothingConfigItems = useMemo(() => [...initialItems].filter((item) =>
         inventory.clothingItems.findIndex((invItem) =>
-            item.id === invItem?.item.id) !== -1), [inventory.invItems, inventory.clothingItems]);
+            item.id === invItem?.item.id) !== -1), [inventory.clothingItems]);
 
     /* Misc Values
     // Slider misc values

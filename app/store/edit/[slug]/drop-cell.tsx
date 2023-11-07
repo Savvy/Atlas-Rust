@@ -56,30 +56,33 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
                     <div className={cn(
                         "w-full h-full",
                         "text-muted relative",
-                        "rounded-md flex flex-col items-center justify-center",
-                        "bg-transparent border border-[#434343]",
+                        "rounded-md flex flex-col items-center justify-end",
+                        "bg-[#434343] border border-[#434343] group-hover:border-primary",
                         "group-hover:scale-105 transition-transform duration-75 ease-in-out"
                     )}>
                         {invItem.item.image
                             ? <Image
                                 src={`/images/store/items/${invItem.item.image}`}
-                                width={38}
-                                height={35}
+                                width={48}
+                                height={45}
                                 alt={invItem.item.name}
+                                /* className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10" */
                             />
                             : <XIcon />
                         }
                         <div
-                            className="text-white font-semibold cursor-pointer opacity-20 hover:opacity-50 text-xs absolute top-1 right-1.5"
+                            className="text-white font-semibold cursor-pointer opacity-50 hover:opacity-100 text-xs absolute top-1 right-1.5"
                             onClick={() => {
                                 removeItem(index)
                             }}
                         >
                             X
                         </div>
-                        <div className="w-[95%] px-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-center flex justify-between">
-                            <span className="text-sm font-semibold font-rajdhani">{invItem.item.name}</span>
-                            <span className="text-sm font-semibold font-rajdhani">{invItem.amount}</span>
+                        <div className={cn(
+                            "w-[100%] px-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-center flex justify-between",
+                        )}>
+                            <span className="text-sm font-semibold font-rajdhani w-16 whitespace-nowrap overflow-hidden overflow-ellipsis text-center">{invItem.item.name}</span>
+                            <span className="text-sm font-semibold font-rajdhani">{invItem.amount.toLocaleString()}</span>
                         </div>
                     </div>
                 </div>

@@ -67,7 +67,11 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
             if (currentSlot !== undefined) {
                 const newItem = JSON.parse(JSON.stringify(prev[currentSlot]))
                 newArray[index] = newItem
-                newArray[currentSlot] = undefined!;
+                if (prev[index] === undefined) {
+                    newArray[currentSlot] = undefined!;
+                } else {
+                newArray[currentSlot] = JSON.parse(JSON.stringify(prev[index]));
+                }
             } else {
                 newArray[index] = { item, amount: item.min }
             }
@@ -108,7 +112,6 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
 
             if (amount > currentAmount) { // Here we are adding items
                 const amountToAdd = itemsShouldHave - itemsInInv;
-                console.log(slotsAvailable)
                 if (slotsAvailable > 0) {
                     for (let x = 0; x < (slotsAvailable > amountToAdd ? amountToAdd : slotsAvailable); x++) {
                         innerLoop:
@@ -171,19 +174,17 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
     }
 
     const slotsAvailable = useMemo(() => {
-        console.log(invItems)
-        console.log(INVENTORY_SLOTS, invItems.length)
-        return /* invItems.reduce((val, item) => (item === undefined) ? val + 1 : val, 0); */  INVENTORY_SLOTS - invItems.reduce((val, item) => (item === undefined) ? val + 1 : val, 0);
+        return INVENTORY_SLOTS - invItems.reduce((val, item) => (item === undefined) ? val + 1 : val, 0);
     }, [invItems])
 
     const totalPrice = useMemo(() => {
-        let amount = 0;
+        let amount = packageContent.price;
         amount += invItems.reduce((acc, invItem: InvItem) => {
-            return !!invItem ? acc + ((invItem.amount / invItem.item.step) * invItem.item.pricePerStep) : acc
+            return !!invItem ? acc + (invItem.amount * invItem.item.pricePerStep) : acc
         }, 0);
 
         amount += clothingItems.reduce((acc, invItem: InvItem) => {
-            return !!invItem ? acc + ((invItem.amount / invItem.item.step) * invItem.item.pricePerStep) : acc
+            return !!invItem ? acc + (invItem.amount * invItem.item.pricePerStep) : acc
         }, 0);
 
         if (autoUpgrade) {

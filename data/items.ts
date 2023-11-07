@@ -14,11 +14,11 @@ export const items = [
         type: 'item',
         name: "Wood",
         image: "wood.png",
-        pricePerStep: 0.35,
-        min: 5, // 1000,
-        max: 40, // 200000,
-        step: 5, // 1000,
-        maxPerStack: 10 // 50000
+        pricePerStep: 1000,
+        min: 1000, // 1000,
+        max: 1000000, // 200000,
+        step: 1000, // 1000,
+        maxPerStack: 100000 // 50000
     },
     {
         id: 2,
@@ -26,11 +26,11 @@ export const items = [
         type: 'item',
         name: "Stone",
         image: "stone.png",
-        pricePerStep: 0.35,
-        min: 5,
-        max: 40,
-        step: 5,
-        maxPerStack: 10
+        pricePerStep: 1000,
+        min: 1000,
+        max: 1000000,
+        step: 1000,
+        maxPerStack: 100000
     },
     {
         id: 3,
