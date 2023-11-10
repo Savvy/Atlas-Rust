@@ -159,34 +159,33 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
      } */
 
     const addPackageToCart = () => {
-        /*   if (Object.keys(invAmount).length < editPackage.minInventoryItems) {
-              toast({
-                  title: "Uh oh! You can't do this yet.",
-                  description: "You need to add more items to your inventory.",
-                  className: 'border-primary',
-              })
-              return;
-          }
-          addToCart({
-              id: packageContent?.id ?? "custom",
-              name: packageContent?.name ?? "Custom Package",
-     
-              price: total,
-              server: packageContent?.server ?? "N/A",
-              misc: {
-                  cooldown: kitCooldown,
-                  tpCooldown: teleportCooldown,
-                  homes: amountOfHomes,
-                  coloredName,
-                  autoUpgrade,
-                  skipQueue,
-                  skinBox,
-              },
-     
-              items: invItems,
-              invAmount: invAmount,
-              clothingItems: clothingItems
-          }) */
+        /* if (Object.keys(invAmount).length < editPackage.minInventoryItems) {
+            toast({
+                title: "Uh oh! You can't do this yet.",
+                description: "You need to add more items to your inventory.",
+                className: 'border-primary',
+            })
+            return;
+        } */
+        addToCart({
+            id: packageContent?.id ?? "custom",
+            name: packageContent?.name ?? "Custom Package",
+
+            price: inventory.totalPrice,
+            server: packageContent?.server ?? "N/A",
+            misc: {
+                cooldown: inventory.kitCooldown,
+                tpCooldown: inventory.teleportCooldown,
+                homes: inventory.amountOfHomes,
+                coloredName: inventory.coloredName,
+                autoUpgrade: inventory.autoUpgrade,
+                skipQueue: inventory.skipQueue,
+                skinBox: inventory.skinBox,
+            },
+
+            items: inventory.invItems,
+            clothingItems: inventory.clothingItems
+        })
     }
 
     const getItemById = (id: number) => {

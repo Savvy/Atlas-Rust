@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/accordion";
 
 import useFromStore from '@/hooks/use-from-store';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
-import { CartItem, InvItem, Item } from '@/types';
+import { InvItem } from '@/types';
+import CartItem from './cart-item';
 
 export default function CartDetails() {
     const cart = useFromStore(useCartStore, (state) => state.cart)
@@ -39,6 +40,9 @@ export default function CartDetails() {
         )
     }
 
+    /* const currentAmount = useMemo(() => invItems.reduce((val, item) => */
+    /*     (item && item.item.id === invItem.id) ? val + item.amount : val, 0), [invItems, invItem]); */
+
     return (
         <div className="h-full flex flex-col justify-between">
             <Accordion type="multiple" className="w-full flex-grow">
@@ -53,14 +57,15 @@ export default function CartDetails() {
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className='text[#8F9199] space-y-2'>
-                                {filteredItems(cartItem.items).map((item, innerIndex) =>
-                                    <div key={innerIndex}>
-                                        <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
-                                            <span>{item.item.name}: {(+item.amount).toLocaleString()}</span>
-                                            <span>{formatter?.format(item.amount * item?.item.pricePerStep)}</span>
-                                        </h5>
-                                    </div>
-                                )}
+                                {filteredItems(cartItem.items).map((item, innerIndex, arr) => (
+                                    <CartItem
+                                        invItems={cartItem.items}
+                                        invItem={item}
+                                        formatter={formatter}
+                                        key={innerIndex}
+                                    />
+                                ))}
+
                                 {filteredItems(cartItem.clothingItems).map((item, innerIndex) =>
                                     <div key={innerIndex}>
                                         <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
@@ -99,7 +104,7 @@ export default function CartDetails() {
                 <h3 className='w-full flex justify-between text-white font-semibold'>
                     <span className='text-lg font-medium'>Grand Total</span>
                     <span className='text-lg font-medium'>{formatter?.format(totalPrice || 0)}</span>
-                    </h3>
+                </h3>
                 <hr className='border-[#24272E]' />
                 <div className="flex items-center space-x-2 my-3">
                     <Checkbox id="terms" className='rounded-full' />
