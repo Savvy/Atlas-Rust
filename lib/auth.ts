@@ -15,10 +15,10 @@ export const authOptions = (req: NextRequest): NextAuthOptions => {
                 clientSecret: process.env.STEAM_SECRET!,
                 callbackUrl: process.env.STEAM_CALLBACK || '',
             }),
-            /* DiscordProvider({
+            DiscordProvider({
                 clientId: process.env.DISCORD_CLIENT_ID || '',
                 clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
-            }) */
+            })
         ] : [],
         secret: process.env.NEXTAUTH_SECRET!,
         session: {
@@ -40,11 +40,11 @@ export const authOptions = (req: NextRequest): NextAuthOptions => {
                     // @ts-expect-error
                     session.user.steamId = steamAccount?.providerAccountId;
                 }
-                /* const discordAccount = prismaUser?.accounts.find(a => a.provider == "discord");
+                const discordAccount = prismaUser?.accounts.find(a => a.provider == "discord");
                 if (!!discordAccount) {
                     // @ts-expect-error
                     session.user.discordId = discordAccount?.providerAccountId;
-                } */
+                }
 
                 return session;
             },
