@@ -4,10 +4,10 @@ import { cn } from "@/lib/utils";
 import Miscellaneous from "./misc";
 import ItemsList from "./items-list";
 
-import { categories, editPackage, items as initialItems, misc } from "@/data/items"
+import { categories, editPackage, items as initialItems } from "@/data/items"
 
-import { useEffect, useMemo, useState } from "react";
-import { InvItem, Item, Package } from "@/types";
+import { useMemo } from "react";
+import { InvItem, Package } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Subtotal from "./subtotal";
 import ItemConfig from "./item-config";

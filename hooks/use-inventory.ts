@@ -5,9 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 type InventoryProps = {
     defaultItems: InvItem[],
     packageContent: Package
-    /* gotoPage: (updater: number | ((pageIndex: number) => number)) => void;
-    length: number;
-    pageSize: number; */
 }
 
 const INVENTORY_SLOTS = editPackage.maxInventorySlots/*  + editPackage.maxBeltSlots */;
@@ -30,37 +27,6 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
     // Color hex misc value
     const [colorHex, setColorHex] = useState<string>(packageContent.misc.customColor || "#0437b9");
 
-    /* const totalPages = useMemo<number>(() => {
-        return Math.ceil(length / pageSize);
-    }, [length, pageSize]); */
-
-    // this ensures that the amount matches the inventory items
-    /*  useEffect(() => {
-         for (let index = 0; index < invItems.length; index++) {
-             const item = invItems[index];
-             if (item)
-                 adjustAmount(item);
-         }
-     }, [invItems]) */
-
-    /* const adjustAmount = useCallback((item: Item) => {
-        const itemsInInv = invItems.reduce((val, invItem) =>
-            (invItem && invItem.id === item.id) ? val + 1 : val, 0);
-
-        const amountInInv = invAmount[item.id].amount;
-        const countInInv = Math.ceil(amountInInv / item.maxPerStack);
-        if (countInInv === itemsInInv) return;
-        if (itemsInInv < countInInv) {
-            // We need to adjust the amountInInv because it doesn't match
-            const newInvAmount = { ...invAmount };
-            newInvAmount[item.id] = {
-                amount: itemsInInv * item.maxPerStack
-            };
-            setInvAmount(newInvAmount);
-            return;
-        }
-    }, [invItems]); */
-
     const addItemToInv = (item: Item, index: number, currentSlot: number | undefined) => {
         setInvItems((prev) => {
             const newArray = [...prev];
@@ -70,7 +36,7 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
                 if (prev[index] === undefined) {
                     newArray[currentSlot] = undefined!;
                 } else {
-                newArray[currentSlot] = JSON.parse(JSON.stringify(prev[index]));
+                    newArray[currentSlot] = JSON.parse(JSON.stringify(prev[index]));
                 }
             } else {
                 newArray[index] = { item, amount: item.min }
@@ -81,15 +47,6 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
         if (currentSlot !== undefined) {
             return;
         }
-
-        /* setInvAmount((prev: any) => {
-            const newInvAmount = { ...prev };
-            newInvAmount[item.id] = {
-                amount: item.min
-            };
-
-            return newInvAmount
-        }); */
     }
 
     const removeItem = (slot: number) => {
@@ -108,17 +65,43 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
                 (invItem && invItem.item.id === item.id) ? val + 1 : val, 0);
             const currentAmount = newArray.reduce((val, invItem) =>
                 (invItem && invItem.item.id === item.id) ? val + invItem.amount : val, 0);
+
             const itemsShouldHave = Math.ceil(amount / item.maxPerStack);
 
             if (amount > currentAmount) { // Here we are adding items
-                const amountToAdd = itemsShouldHave - itemsInInv;
+                let amountToAdd = amount;
+                for (let index = 0; index < newArray.length; index++) {
+                    const invItem = newArray[index];
+                    if (!invItem || !invItem.item || item.id !== invItem.item.id) continue;
+                    amountToAdd -= invItem.amount;
+                }
+                for (let index = 0; index < newArray.length; index++) {
+                    const invItem = newArray[index];
+                    if (!invItem || !invItem.item || item.id !== invItem.item.id) continue;
+                    if (invItem.amount === item.maxPerStack) continue;
+                    let amountCanAdd = (item.maxPerStack - invItem.amount);
+                    if (amountCanAdd > amountToAdd) {
+                        amountCanAdd = amountToAdd;
+                    }
+                    invItem.amount = invItem.amount + amountCanAdd;
+                    amountToAdd -= amountCanAdd;
+                }
+                const slotsToAdd = itemsShouldHave - itemsInInv;
                 if (slotsAvailable > 0) {
-                    for (let x = 0; x < (slotsAvailable > amountToAdd ? amountToAdd : slotsAvailable); x++) {
+                    for (let x = 0; x < (slotsAvailable > slotsToAdd ? slotsToAdd : slotsAvailable); x++) {
                         innerLoop:
                         for (let i = 0; i < INVENTORY_SLOTS; i++) {
                             if (newArray[i] === undefined) {
+                                let am = 0;
+                                if (amountToAdd > item.maxPerStack) {
+                                    am = item.maxPerStack;
+                                    amountToAdd -= item.maxPerStack;
+                                } else {
+                                    am = amountToAdd
+                                    amountToAdd = 0;
+                                }
                                 newArray[i] = {
-                                    amount: amount,
+                                    amount: am,
                                     item: {
                                         ...item
                                     }
@@ -129,29 +112,21 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
                     }
                 }
             } else if (amount < currentAmount) { // We are removing items
-                const itemsShouldHave = Math.ceil((amount < item.min ? item.min : amount) / item.maxPerStack);
-                const amountToRemove = itemsInInv - itemsShouldHave;
-                for (let x = 0; x < amountToRemove; x++) {
-                    innerLoop:
-                    for (let index = newArray.length - 1; index >= 0; index--) {
-                        const element = newArray[index];
-                        if (element && element.item.id === item.id) {
-                            newArray[index] = undefined!;
-                            break innerLoop;
-                        }
+                const amountShouldBe = amount;
+                let adjustedAmount = currentAmount - amountShouldBe;
+                for (let index = newArray.length - 1; index >= 0; index--) {
+                    if (adjustedAmount === 0) break;
+                    const invItem = newArray[index];
+                    if (!invItem || invItem.item.id !== item.id) continue;
+                    if (invItem.amount - adjustedAmount <= 0) {
+                        adjustedAmount -= invItem.amount
+                        newArray[index] = undefined!;
+                        continue;
                     }
+                    invItem.amount = invItem.amount - adjustedAmount;
+                    adjustedAmount = 0;
                 }
             }
-
-            // This may not be necessary 
-            // if (itemsShouldHave === itemsInInv) {
-            let amountToAdd = amount;
-            newArray.forEach((invItem: InvItem, index: number) => {
-                if (invItem && invItem.item.id === item.id) {
-                    invItem.amount = amountToAdd > item.maxPerStack ? item.maxPerStack : amountToAdd
-                    amountToAdd -= invItem.amount
-                }
-            });
             return newArray
         })
     }

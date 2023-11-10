@@ -1,5 +1,5 @@
 import XIcon from "@/components/icons/xicon";
-import { cn } from "@/lib/utils";
+import { abbrNum, cn } from "@/lib/utils";
 import { InvItem, Item } from "@/types";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -31,6 +31,11 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
         collect: (monitor: DragSourceMonitor) => ({
             isDragging: !!monitor.isDragging(),
         }),
+        end: (item, monitor) => {
+            if (!monitor.didDrop()) {
+                removeItem(index)
+            }
+        }
     }))
 
     return (
@@ -81,8 +86,8 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
                         <div className={cn(
                             "w-[100%] px-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-center flex justify-between",
                         )}>
-                            <span className="text-sm font-semibold font-rajdhani w-16 whitespace-nowrap overflow-hidden overflow-ellipsis text-center">{invItem.item.name}</span>
-                            <span className="text-sm font-semibold font-rajdhani">{invItem.amount.toLocaleString()}</span>
+                            <span className="text-sm font-semibold font-rajdhani w-16 whitespace-nowrap overflow-hidden overflow-ellipsis text-left">{invItem.item.name}</span>
+                            <span className="text-sm font-semibold font-rajdhani">{abbrNum(invItem.amount, 0)}</span>
                         </div>
                     </div>
                 </div>
