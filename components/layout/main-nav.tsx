@@ -45,18 +45,14 @@ export function MainNav({ items, user, children }: MainNavProps) {
     const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false)
     const [showCart, setShowCart] = useState<boolean>(false);
 
-    useEffect(() => {
+   /*  useEffect(() => {
         const navItem = items?.find((item) => {
             let pathToCheck = item.href;
             if (params?.slug) pathToCheck = `${pathToCheck}/${params.slug}`;
             return pathToCheck === path
         });
         setShowCart(navItem && navItem?.showCart || false)
-        /* 
-        items?.forEach((item) => {
-            return setShowCart(item.href == path && (item.showCart ?? false))
-        }) */
-    }, [items, path]);
+    }, [items, path]); */
 
     return (
         <div className="flex flex-grow gap-6 md:gap-10 font-roboto">
@@ -89,9 +85,9 @@ export function MainNav({ items, user, children }: MainNavProps) {
                 </nav>
             ) : null}
             <div className="hidden md:flex gap-3">
+                <CartNav />
                 {!!user ?
                     <>
-                        {showCart && <CartNav />}
                         <DropdownMenu>
                             <DropdownMenuTrigger className="cursor-pointer" asChild>
                                 <Avatar>

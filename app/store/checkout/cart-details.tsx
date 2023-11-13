@@ -43,6 +43,10 @@ export default function CartDetails() {
     /* const currentAmount = useMemo(() => invItems.reduce((val, item) => */
     /*     (item && item.item.id === invItem.id) ? val + item.amount : val, 0), [invItems, invItem]); */
 
+    useEffect(() => {
+        console.log(cart);
+    }, [cart])
+
     return (
         <div className="h-full flex flex-col justify-between">
             <Accordion type="multiple" className="w-full flex-grow">
@@ -56,7 +60,7 @@ export default function CartDetails() {
                             </div>
                         </AccordionTrigger>
                         <AccordionContent>
-                            <div className='text[#8F9199] space-y-2'>
+                            <div className='text-[#8F9199] space-y-2'>
                                 {filteredItems(cartItem.items).map((item, innerIndex, arr) => (
                                     <CartItem
                                         invItems={cartItem.items}

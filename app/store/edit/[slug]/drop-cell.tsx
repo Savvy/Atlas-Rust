@@ -63,7 +63,8 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
                         "text-muted relative",
                         "rounded-md flex flex-col items-center justify-end",
                         "bg-[#434343] border border-[#434343] group-hover:border-primary",
-                        "group-hover:scale-105 transition-transform duration-75 ease-in-out"
+                        "group-hover:scale-105 transition-transform duration-75 ease-in-out",
+                        {"justify-center": type.toLowerCase().startsWith("clothing-")}
                     )}>
                         {invItem.item.image
                             ? <Image
@@ -83,12 +84,12 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
                         >
                             X
                         </div>
-                        <div className={cn(
+                        {!type.toLowerCase().startsWith("clothing-") ? <div className={cn(
                             "w-[100%] px-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-center flex justify-between",
                         )}>
                             <span className="text-sm font-semibold font-rajdhani w-16 whitespace-nowrap overflow-hidden overflow-ellipsis text-left">{invItem.item.name}</span>
                             <span className="text-sm font-semibold font-rajdhani">{abbrNum(invItem.amount, 0)}</span>
-                        </div>
+                        </div> : null}
                     </div>
                 </div>
                 :

@@ -12,14 +12,6 @@ type ItemConfigProps = {
 }
 
 export default function ItemConfig({ invItems, invItem, setItemAmount }: ItemConfigProps) {
-    /* const [val, setVal] = useState(itemAmounts[invItem.id].amount);
-
-    useEffect(() => {
-        setVal(itemAmounts[invItem.id].amount)
-    }, [itemAmounts]) */
-
-    const itemsInInv = useMemo(() => invItems.reduce((val, item) =>
-        (item?.item.id == invItem.id) ? val + 1 : val, 0), [invItems, invItem])
 
     const currentAmount = useMemo(() => invItems.reduce((val, item) =>
         (item && item.item.id === invItem.id) ? val + item.amount : val, 0), [invItems, invItem]);

@@ -38,7 +38,7 @@ export default function CartNav() {
     return (
         <>
             <Select onValueChange={changeCurrency}>
-                <SelectTrigger className="w-[90px] bg-transparent border-transparent focus:outline-none focus:shadow-none">
+                <SelectTrigger className="w-[90px] bg-[#434343] border-transparent focus:outline-none focus:shadow-none">
                     <SelectValue placeholder={`${currency?.symbol} ${currency?.currency}`} className="text-sm font-medium" />
                 </SelectTrigger>
                 <SelectContent>
@@ -58,7 +58,7 @@ export default function CartNav() {
                 </SelectContent>
             </Select>
             <Link href={'/store/checkout'}>
-                <Button variant={'secondary'}>
+                <Button variant={'default'}>
                     <Icon path={mdiCartOutline} size={0.8} className="mr-1" />
                     {totalItems} items for {!!formatter ? formatter.format(totalPrice || 0) : '$ 0.00'}
                 </Button>
