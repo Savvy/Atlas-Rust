@@ -16,7 +16,8 @@ import type { NextRequest } from 'next/server'
 // prettier-ignore
 export interface SteamProviderOptions extends Partial<OAuthUserConfig<SteamProfile>> {
     /** @example 'https://example.com/api/auth/callback' */
-    callbackUrl: string | URL
+    callbackUrl: string | URL;
+    clientSecret: string;
 }
 
 export function Steam(
@@ -29,7 +30,6 @@ export function Steam(
     // https://example.com/api/auth/callback/steam
     const realm = callbackUrl.origin
     const returnTo = `${callbackUrl.href}/${PROVIDER_ID}`
-
     return {
         // @ts-expect-error
         options,
@@ -61,7 +61,7 @@ export function Steam(
             }
         },
         token: {
-            async request(ctx) {
+            async request() {
                 // May throw an error, dunno should I handle it or no
                 // prettier-ignore
                 const claimedIdentifier = await verifyAssertion(req.url!, realm, returnTo)
@@ -83,11 +83,10 @@ export function Steam(
                         id_token: randomUUID(),
                         access_token: randomUUID(),
                         providerAccountId: matches[1]
-                    }),
+                    })
                 }
             }
         },
-
         userinfo: {
             async request(ctx) {
                 const response = await fetch(
@@ -124,7 +123,7 @@ async function verifyAssertion(
         authenticated: boolean
         claimedIdentifier?: string | undefined
     } = await new Promise((resolve, reject) => {
-        party.verifyAssertion(url, (error: any, result: any) => {
+        party.verifyAssertion(url, (error, result) => {
             if (error) {
                 reject(error)
             } else {

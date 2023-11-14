@@ -36,6 +36,7 @@ export const authOptions = (req: NextRequest): NextAuthOptions => {
                 });
 
                 const steamAccount = prismaUser?.accounts.find(a => a.provider == "steam");
+                console.log(steamAccount)
                 if (!!steamAccount) {
                     // @ts-expect-error
                     session.user.steamId = steamAccount?.providerAccountId;
