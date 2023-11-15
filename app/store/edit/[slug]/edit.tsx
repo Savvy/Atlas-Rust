@@ -36,15 +36,6 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
 
     const inventory = useInventory({ defaultItems, packageContent });
 
-    // Inventory items
-    // const [invItems, setInvItems] = useState<InvItem[]>(defaultItems);
-    // const [invAmount, setInvAmount] = useState<any>(defaultInvAmount);
-    // const [clothingItems, setClothingItems] = useState<Item[]>(Array.from({ length: (editPackage.clothingSlots.length) }));
-
-    // All items to be sold, when added to the invItems array,
-    // they are removed from this one
-    // const [items, setItems] = useState<Item[]>([...initialItems]);
-
     const items = useMemo(() => [...initialItems].filter((item) =>
         inventory.invItems.findIndex((invItem) =>
             item.id === invItem?.item.id) === -1), [inventory.invItems]);
@@ -57,106 +48,7 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
         inventory.clothingItems.findIndex((invItem) =>
             item.id === invItem?.item.id) !== -1), [inventory.clothingItems]);
 
-    /* Misc Values
-    // Slider misc values
-    const [kitCooldown, setKitCooldown] = useState<number>(0);
-    const [teleportCooldown, setTeleportCooldown] = useState<number>(0);
-    const [amountOfHomes, setAmountOfHomes] = useState<number>(0);
-    const [coloredName, setColoredName] = useState<number>(0);
-    
-    // Boolean misc values
-    const [autoUpgrade, setAutoUpgrade] = useState<boolean>(false);
-    const [skipQueue, setSkipQueue] = useState<boolean>(false);
-    const [skinBox, setSkinBox] = useState<boolean>(false);
-    
-    // Color hex misc value
-    const [colorHex, setColorHex] = useState<string>('#0437b9'); */
-
     const addToCart = useCartStore((state) => state.addToCart);
-
-    // this keeps the list of items up to date
-    /* useEffect(() => {
-        const newArray = [...initialItems];
-        const concat = inventory.invItems;
-        for (let index = 0; index < concat.length; index++) {
-            const element = concat[index];
-            if (element !== undefined) {
-                const itIndex = newArray.findIndex((obj) => obj.id === element.item.id)
-                if (itIndex !== -1)
-                    newArray.splice(itIndex, 1)
-            }
-        }
-        setItems(newArray)
-    }, [inventory.invItems]); */
-
-    /* Add Item To Clothing
-    const addItemToClothing = (item: Item, index: number) => {
-        setClothingItems((prev) => {
-            const newArray = [...prev];
-            newArray[index] = item
-            return newArray
-        });
-    } */
-
-    /*  const setItemAmount = (id: number, amount: number) => {
-         const item = getItemById(id);
-     
-         if (!item) return;
-     
-         const currentAmount = invAmount[id].amount;
-     
-         // This is how many items are currently in the inventory
-         const itemsInInv = invItems.reduce((val, item) =>
-             (item && item?.id == id) ? val + 1 : val, 0);
-     
-         if (amount > currentAmount) {
-             const newAmount = Math.ceil(amount / item.maxPerStack)
-             if (newAmount > itemsInInv) {
-     
-                 const amountToAdd = newAmount - itemsInInv;
-     
-                 setInvItems((prev) => {
-                     const newArray = [...prev];
-                     for (let x = 0; x < (amountToAdd); x++) {
-                         innerLoop:
-                         for (let i = 0; i < newArray.length; i++) {
-                             if (newArray[i] === undefined) {
-                                 newArray[i] = { ...item }
-                                 break innerLoop;
-                             }
-                         }
-                     }
-                     return newArray
-                 });
-             }
-         } else if (amount < currentAmount) {
-             const newAmount = Math.ceil(amount / item.maxPerStack)
-             const amountToRemove = itemsInInv - newAmount;
-     
-             if (amountToRemove > 0) {
-                 setInvItems((prev) => {
-                     const newArray = [...prev];
-                     for (let x = 0; x < amountToRemove; x++) {
-                         for (let index = newArray.length - 1; index >= 0; index--) {
-                             const element = newArray[index];
-                             if (element && element.id === id) {
-                                 newArray[index] = undefined!;
-                                 break;
-                             }
-                         }
-                     }
-                     return newArray
-                 });
-             }
-         }
-     
-         const newInvAmount = { ...invAmount };
-     
-         newInvAmount[id] = {
-             amount: amount
-         };
-         setInvAmount(newInvAmount);
-     } */
 
     const addPackageToCart = () => {
         /* if (Object.keys(invAmount).length < editPackage.minInventoryItems) {
@@ -191,24 +83,6 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
     const getItemById = (id: number) => {
         return inventory.invItems.find((item: InvItem) => item?.item.id === id)
     }
-
-    /* const removeItem = (item: Item, slot: number) => {
-        // const amount = invAmount[item.id].amount;
-        setInvItems((prev) => {
-            const newArray = [...prev];
-            newArray[slot] = undefined!;
-            return newArray
-        });
-    } */
-
-    /*  const removeItemFromClothing = (item: Item, slot: number) => {
-         // const amount = invAmount[item.id].amount;
-         setClothingItems((prev) => {
-             const newArray = [...prev];
-             newArray[slot] = undefined!;
-             return newArray
-         });
-     } */
 
     return (
         <>
@@ -298,6 +172,7 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
                                     invItems={inventory.invItems}
                                     invItem={invItem}
                                     setItemAmount={inventory.setItemAmount}
+                                    removeByType={inventory.removeByType}
                                 />
                                 : null
                         })}
@@ -307,6 +182,7 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
                                     key={index}
                                     invItems={inventory.clothingItems}
                                     invItem={invItem}
+                                    removeByType={inventory.removeByType}
                                 />
                                 : null
                         })}

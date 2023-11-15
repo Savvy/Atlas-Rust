@@ -13,6 +13,7 @@ interface State {
 interface Actions {
     addToCart: (item: Package) => void
     removeFromCart: (item: CartItem) => void
+    removeFromCartByIndex: (index: number) => void
     updateCurrency: (newCurrency: StoreLocale) => void
 }
 
@@ -31,20 +32,20 @@ export const useCartStore = create(
         totalPrice: INITIAL_STATE.totalPrice,
         addToCart: (cartItem: Package) => {
             const cart = get().cart;
-           /*  const itemInCart = cart.find((item) => item.id === cartItem.id);
-
-            if (itemInCart) {
-                const updatedCart = cart.map((item) => item.id === cartItem.id
-                    ? {
-                        ...item, quantity: (item.quantity as number) + 1
-                    } : item)
-                set((state) => ({
-                    cart: updatedCart,
-                    totalItems: state.totalItems + 1,
-                    totalPrice: state.totalPrice + cartItem.price,
-                }))
-                return;
-            } */
+            /*  const itemInCart = cart.find((item) => item.id === cartItem.id);
+ 
+             if (itemInCart) {
+                 const updatedCart = cart.map((item) => item.id === cartItem.id
+                     ? {
+                         ...item, quantity: (item.quantity as number) + 1
+                     } : item)
+                 set((state) => ({
+                     cart: updatedCart,
+                     totalItems: state.totalItems + 1,
+                     totalPrice: state.totalPrice + cartItem.price,
+                 }))
+                 return;
+             } */
             const updatedCart = [...cart, { ...cartItem, quantity: 1 }]
 
             set((state) => ({
@@ -59,6 +60,18 @@ export const useCartStore = create(
                 totalItems: state.totalItems - 1,
                 totalPrice: state.totalPrice - cartItem.price
             }))
+        },
+        removeFromCartByIndex: (index: number) => {
+            set((state) => {
+                const cartItems = [...state.cart]
+                const item = state.cart[index]
+                cartItems.splice(index, 1)
+                return ({
+                    cart: cartItems,
+                    totalItems: state.totalItems - 1,
+                    totalPrice: state.totalPrice - item.price
+                })
+            })
         },
         updateCurrency: (newCurrency: StoreLocale) => {
             if (!newCurrency) return;

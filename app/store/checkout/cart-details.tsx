@@ -16,11 +16,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
 import { InvItem } from '@/types';
 import CartItem from './cart-item';
+import { cn } from '@/lib/utils';
 
 export default function CartDetails() {
     const cart = useFromStore(useCartStore, (state) => state.cart)
     const totalPrice = useFromStore(useCartStore, (state) => state.totalPrice);
     const currency = useFromStore(useCartStore, (state) => state.currency);
+
+    const removeFromCart = useCartStore((state) => state.removeFromCartByIndex);
 
     const formatter = useMemo(() => {
         if (!currency) return undefined;
@@ -44,7 +47,7 @@ export default function CartDetails() {
     /*     (item && item.item.id === invItem.id) ? val + item.amount : val, 0), [invItems, invItem]); */
 
     useEffect(() => {
-        console.log(cart);
+        /* console.log(cart); */
     }, [cart])
 
     return (
@@ -53,10 +56,27 @@ export default function CartDetails() {
                 {!!cart ? cart.map((cartItem, index) => (
                     <AccordionItem value={`cart-${index}`} key={index} className='border-[#24272E]'>
                         <AccordionTrigger className='hover:no-underline'>
-                            <div className="flex items-center justify-center gap-3 text-[#8F9199]">
-                                <h2 className="text-lg">{cartItem.name}</h2>
-                                <span className="inline-block rounded-full bg-[#8F9199] h-1 w-1"></span>
-                                <h2 className="text-lg">{!!formatter ? formatter.format(cartItem.price || 0) : null}</h2>
+                            <div className="flex w-full justify-between pr-2">
+                                <div className="flex items-center justify-center gap-3 text-[#8F9199]">
+                                    <h2 className="text-lg">{cartItem.name}</h2>
+                                    <span className="inline-block rounded-full bg-[#8F9199] h-1 w-1"></span>
+                                    <h2 className="text-lg">{!!formatter ? formatter.format(cartItem.price || 0) : null}</h2>
+                                </div>
+                                <div className="">
+                                    <a
+                                        
+                                        className={cn(
+                                            "flex items-center justify-center h-9 rounded-md px-3 font-medium",
+                                            'border bg-transparent uppercase border-[#F94242] text-[#F94242] rounded',
+                                            'hover:bg-transparent hover:text-[#F94242] opacity-75 hover:opacity-100 transition-opacity'
+                                        )}
+                                        onClick={() => {
+                                            removeFromCart(index);
+                                        }}
+                                    >
+                                        Remove
+                                    </a>
+                                </div>
                             </div>
                         </AccordionTrigger>
                         <AccordionContent>

@@ -57,6 +57,13 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
         });
     }
 
+    const removeByType = (id: number) => {
+        setInvItems((prev) => {
+            const newArray = [...prev];
+            return newArray.filter((item) => item && item.item.id !== id)
+        })
+    }
+
     const setItemAmount = (item: Item, amount: number) => {
         setInvItems((prev) => {
             const newArray = [...prev];
@@ -200,6 +207,7 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
 
         addItemToInv,
         removeItem,
+        removeByType,
         setItemAmount,
 
         removeItemFromClothing,
