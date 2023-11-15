@@ -16,6 +16,7 @@ import DropCell from "./drop-cell";
 import { useCartStore } from "@/store/useCartStore";
 import useFromStore from "@/hooks/use-from-store";
 import { useInventory } from "@/hooks/use-inventory";
+import { useRouter } from "next/navigation";
 
 type EditProps = {
     defaultItems: InvItem[],
@@ -24,6 +25,7 @@ type EditProps = {
 }
 export default function Edit({ defaultItems, packageContent }: EditProps) {
 
+    const router = useRouter();
     const { toast } = useToast()
 
     const currency = useFromStore(useCartStore, (state) => state.currency);
@@ -78,6 +80,12 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
             items: inventory.invItems,
             clothingItems: inventory.clothingItems
         })
+        toast({
+            title: "Congratulations",
+            description: "New Item added to your cart",
+            className: 'border-primary',
+        })
+        router.push("/store/checkout");
     }
 
     const getItemById = (id: number) => {

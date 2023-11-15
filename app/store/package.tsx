@@ -9,9 +9,13 @@ import useFromStore from '@/hooks/use-from-store'
 import { useCartStore } from '@/store/useCartStore'
 
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function Package({ content }: { content: PackageType }) {
 
+    const { push } = useRouter();
+    const { toast } = useToast()
+    
     const [isLoading, setLoading] = useState<boolean>(false);
     const currency = useFromStore(useCartStore, (state) => state.currency);
 
@@ -23,16 +27,27 @@ export default function Package({ content }: { content: PackageType }) {
             (currency?.locale, { style: 'currency', currency: currency?.currency });
     }, [currency]);
 
-    const { push } = useRouter();
-
     const addItemToCart = () => {
         setLoading(true);
-        addToCart(content);
-        setLoading(false);
+        setTimeout(() => {
+            addToCart(content);
+            toast({
+                title: "Congratulations",
+                description: "New Item added to your cart",
+                className: 'border-primary',
+            })
+            setLoading(false);
+        }, 1000);
     }
 
     const editPackage = () => {
         push(`/store/edit/${content.id}`);
+    }
+
+    const buyItem = () => {
+        setLoading(true);
+        addToCart(content);
+        push(`/store/checkout`);
     }
 
     return (
@@ -74,6 +89,7 @@ export default function Package({ content }: { content: PackageType }) {
                     <Button
                         variant={'outline'}
                         className={cn('bg-transparent flex-grow')}
+                        onClick={buyItem}
                     >
                         Buy Now
                     </Button>
