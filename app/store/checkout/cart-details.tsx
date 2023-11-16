@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 
 import useFromStore from '@/hooks/use-from-store';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
@@ -23,7 +23,21 @@ export default function CartDetails() {
     const totalPrice = useFromStore(useCartStore, (state) => state.totalPrice);
     const currency = useFromStore(useCartStore, (state) => state.currency);
 
-    const removeFromCart = useCartStore((state) => state.removeFromCartByIndex);
+    const [accordion, setAccordion] = useState<string[]>([]);
+
+    const delFromcart = useCartStore((state) => state.removeFromCartByIndex);
+
+    const removeFromCart = (index: number) => {
+        const x = accordion?.indexOf(`cart-${index}`);
+        if (x !== -1) {
+            setAccordion((prev) => {
+                const newArray = [...prev];
+                newArray.splice(x, 1);
+                return newArray
+            });
+        }
+        delFromcart(index);
+    };
 
     const formatter = useMemo(() => {
         if (!currency) return undefined;
@@ -46,16 +60,16 @@ export default function CartDetails() {
     /* const currentAmount = useMemo(() => invItems.reduce((val, item) => */
     /*     (item && item.item.id === invItem.id) ? val + item.amount : val, 0), [invItems, invItem]); */
 
-    useEffect(() => {
-        /* console.log(cart); */
-    }, [cart])
+   /*  useEffect(() => {
+        console.log(accordion);
+    }, [accordion]) */
 
     return (
         <div className="h-full flex flex-col justify-between">
-            <Accordion type="multiple" className="w-full flex-grow">
+            <Accordion type="multiple" value={accordion} onValueChange={setAccordion} className="w-full flex-grow">
                 {!!cart ? cart.map((cartItem, index) => (
                     <AccordionItem value={`cart-${index}`} key={index} className='border-[#24272E]'>
-                        <AccordionTrigger className='hover:no-underline'>
+                        <AccordionTrigger className='hover:no-underline' >
                             <div className="flex w-full justify-between pr-2">
                                 <div className="flex items-center justify-center gap-3 text-[#8F9199]">
                                     <h2 className="text-lg">{cartItem.name}</h2>
@@ -64,11 +78,11 @@ export default function CartDetails() {
                                 </div>
                                 <div className="">
                                     <a
-                                        
+
                                         className={cn(
                                             "flex items-center justify-center h-9 rounded-md px-3 font-medium",
                                             'border bg-transparent uppercase border-[#F94242] text-[#F94242] rounded',
-                                            'hover:bg-transparent hover:text-[#F94242] opacity-75 hover:opacity-100 transition-opacity'
+                                            'hover:bg-transparent hover:text-[#F94242]'
                                         )}
                                         onClick={() => {
                                             removeFromCart(index);
