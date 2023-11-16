@@ -6,7 +6,7 @@ import ItemsList from "./items-list";
 
 import { categories, editPackage, items as initialItems } from "@/data/items"
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { InvItem, Package } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Subtotal from "./subtotal";
@@ -17,6 +17,7 @@ import { useCartStore } from "@/store/useCartStore";
 import useFromStore from "@/hooks/use-from-store";
 import { useInventory } from "@/hooks/use-inventory";
 import { useRouter } from "next/navigation";
+import { Slider } from "@/components/ui/slider";
 
 type EditProps = {
     defaultItems: InvItem[],
