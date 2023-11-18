@@ -93,6 +93,8 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
         return inventory.invItems.find((item: InvItem) => item?.item.id === id)
     }
 
+    const [customVal, setCustomVal] = useState<number>(100000)
+
     return (
         <>
             <div className={cn("bg-[#15171B] col-span-4", "rounded-md")}>
@@ -173,6 +175,32 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
                 </div>
 
                 <div className="bg-[#15171B] flex-grow flex flex-col rounded-md w-full">
+                    {/* <div className="py-3 px-5">
+                        {customVal}
+                        <Slider
+                            min={1000}
+                            max={1000000}
+                            step={1000}
+                            className={cn("w-full")}
+                            value={[customVal]}
+                            onValueChange={(value) => {
+                                setCustomVal(value[0])
+                            }}
+                        />
+                        <RangeSlider
+                            className="single-thumb mt-8"
+                            min={1000}
+                            max={1000000}
+                            step={1000}
+                            value={[0, customVal]}
+                            thumbsDisabled={[true, false]}
+                            rangeSlideDisabled={true}
+                            onInput={(value: any) => {
+                                console.log(value)
+                                setCustomVal(value[1]);
+                            }}
+                        />
+                    </div> */}
                     <ScrollArea className="w-full h-[300px] flex-grow py-3 px-5">
                         {configItems.map((invItem, index) => {
                             return !!invItem ?
