@@ -41,12 +41,16 @@ type Item = {
     name: string,
     image: string,
     /* pricePerStep: number, */
-    pricing: ItemPricing[]
+    pricing: ServerPricing
     defaultPricing: number
     min: number,
     max: number,
     step: number
     maxPerStack: number
+}
+
+type ServerPricing = {
+    [key:string]: ItemPricing[]
 }
 
 type ItemPricing = {

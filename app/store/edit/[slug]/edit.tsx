@@ -208,6 +208,7 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
                                     itemId={invItem}
                                     setItemAmount={inventory.setItemAmount}
                                     removeByType={inventory.removeByType}
+                                    serverName={packageContent.server}
                                 />
                                 : null
                         })}
@@ -218,6 +219,7 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
                                     invItems={inventory.clothingItems}
                                     itemId={invItem}
                                     removeByType={inventory.removeByType}
+                                    serverName={packageContent.server}
                                 />
                                 : null
                         })}

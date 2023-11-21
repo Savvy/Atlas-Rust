@@ -14,9 +14,10 @@ type ItemConfigProps = {
     /* itemAmounts: any, */
     setItemAmount?: any,
     removeByType: any
+    serverName: string
 }
 
-export default function ItemConfig({ invItems, itemId, setItemAmount, removeByType }: ItemConfigProps) {
+export default function ItemConfig({ invItems, itemId, setItemAmount, removeByType, serverName }: ItemConfigProps) {
 
     const currentAmount = useMemo(() => invItems.reduce((val, item) =>
         (item && item.item === itemId) ? val + item.amount : val, 0), [invItems, itemId]);
@@ -26,13 +27,13 @@ export default function ItemConfig({ invItems, itemId, setItemAmount, removeByTy
     const pricing = useMemo(() => {
         if (!invItem) return 0
         let newPrice = undefined;
-        const search = invItem.pricing.find((pricing) => (currentAmount >= pricing.min && currentAmount <= pricing.max));
+        const search = (invItem as Item).pricing[serverName].find((pricing) => (currentAmount >= pricing.min && currentAmount <= pricing.max));
         if (search) newPrice = search.price
         if (newPrice === undefined) {
             newPrice = invItem.defaultPricing
         }
         return newPrice;
-    }, [invItem, currentAmount])
+    }, [invItem, serverName, currentAmount])
 
     return invItem ?
         (

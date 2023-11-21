@@ -15,18 +15,32 @@ export const items = [
         name: "Wood",
         image: "wood.png",
         /* pricePerStep: 0.35, */
-        pricing: [
-            {
-                min: 0,
-                max: 3000,
-                price: 0.85
-            },
-            {
-                min: 4000,
-                max: 8000,
-                price: 0.45
-            },
-        ],
+        pricing: {
+            "us-5x": [
+                {
+                    min: 0,
+                    max: 3000,
+                    price: 0.85
+                },
+                {
+                    min: 4000,
+                    max: 8000,
+                    price: 0.45
+                },
+            ],
+            "eu-5x": [
+                {
+                    min: 0,
+                    max: 3000,
+                    price: 0.85
+                },
+                {
+                    min: 4000,
+                    max: 8000,
+                    price: 0.45
+                },
+            ],
+        },
         defaultPricing: 0.35,
         min: 1000, // 1000,
         max: 1000000, // 200000,
@@ -39,18 +53,32 @@ export const items = [
         type: 'item',
         name: "Stone",
         image: "stone.png",
-        pricing: [
-            {
-                min: 0,
-                max: 3000,
-                price: 0.85
-            },
-            {
-                min: 4000,
-                max: 8000,
-                price: 0.45
-            },
-        ],
+        pricing: {
+            "us-5x": [
+                {
+                    min: 0,
+                    max: 3000,
+                    price: 0.85
+                },
+                {
+                    min: 4000,
+                    max: 8000,
+                    price: 0.45
+                },
+            ],
+            "eu-5x": [
+                {
+                    min: 0,
+                    max: 3000,
+                    price: 0.85
+                },
+                {
+                    min: 4000,
+                    max: 8000,
+                    price: 0.45
+                },
+            ],
+        },
         defaultPricing: 0.35,
         min: 1000,
         max: 1000000,
@@ -63,13 +91,22 @@ export const items = [
         type: 'item',
         name: "Metal Fragments",
         image: "metalfrags.png",
-        pricing: [
-            {
-                min: 0,
-                max: 40,
-                price: 0.85
-            },
-        ],
+        pricing: {
+            "us-5x": [
+                {
+                    min: 0,
+                    max: 40,
+                    price: 0.85
+                },
+            ],
+            "eu-5x": [
+                {
+                    min: 0,
+                    max: 40,
+                    price: 0.85
+                },
+            ],
+        },
         defaultPricing: 0.35,
         min: 5,
         max: 40,
@@ -82,13 +119,22 @@ export const items = [
         type: 'item',
         name: "Assimov | AK",
         image: "assimov-ak.png",
-        pricing: [
-            {
-                min: 0,
-                max: 10,
-                price: 0.85
-            },
-        ],
+        pricing: {
+            "us-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+            "eu-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+        },
         defaultPricing: 0.35,
         min: 1,
         max: 10,
@@ -102,13 +148,22 @@ export const items = [
         type: 'item',
         name: "AVS | AK",
         image: "avs-ak.png",
-        pricing: [
-            {
-                min: 0,
-                max: 10,
-                price: 0.85
-            },
-        ],
+        pricing: {
+            "us-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+            "eu-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+        },
         defaultPricing: 0.35,
         min: 1,
         max: 10,
@@ -121,13 +176,22 @@ export const items = [
         type: 'item',
         name: "Rage | AK",
         image: "rage-ak.png",
-        pricing: [
-            {
-                min: 0,
-                max: 10,
-                price: 0.85
-            },
-        ],
+        pricing: {
+            "us-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+            "eu-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+        },
         defaultPricing: 0.35,
         min: 1,
         max: 10,
@@ -140,13 +204,22 @@ export const items = [
         type: 'item',
         name: "Assimov | AK",
         image: "assimov-ak.png",
-        pricing: [
-            {
-                min: 0,
-                max: 10,
-                price: 0.85
-            },
-        ],
+        pricing: {
+            "us-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+            "eu-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+        },
         defaultPricing: 0.35,
         min: 1,
         max: 10,
@@ -159,13 +232,22 @@ export const items = [
         type: 'item',
         name: "Eternal | AK",
         image: "eternal-ak.png",
-        pricing: [
-            {
-                min: 0,
-                max: 10,
-                price: 0.85
-            },
-        ],
+        pricing: {
+            "us-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+            "eu-5x": [
+                {
+                    min: 0,
+                    max: 10,
+                    price: 0.85
+                },
+            ],
+        },
         defaultPricing: 0.35,
         min: 1,
         max: 10,
@@ -178,14 +260,23 @@ export const items = [
         type: 'clothing-body1',
         name: "Blue Jumpsuit",
         image: "jumpsuit.suit.blue.png",
-        pricing: [
-            {
-                min: 0,
-                max: 10,
-                price: 2.85
-            },
-        ],
-        defaultPricing:2.35,
+        pricing: {
+            "us-5x": [
+                {
+                    min: 0,
+                    max: 1,
+                    price: 2.85
+                },
+            ],
+            "eu-5x": [
+                {
+                    min: 0,
+                    max: 1,
+                    price: 2.85
+                },
+            ],
+        },
+        defaultPricing: 2.35,
         min: 1,
         max: 1,
         step: 1,

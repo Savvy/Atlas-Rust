@@ -1,8 +1,8 @@
 import { items } from "@/data/items";
-import { InvItem } from "@/types";
+import { InvItem, Item } from "@/types";
 import { useMemo } from "react";
 
-export default function CartItem({ invItem, invItems, formatter }: { invItem: InvItem, invItems: InvItem[], formatter: any }) {
+export default function CartItem({ invItem, invItems, formatter, serverName }: { invItem: InvItem, invItems: InvItem[], formatter: any, serverName: string }) {
     const currentAmount = useMemo(() => invItems.reduce((val, item) =>
         (item && item.item === invItem.item) ? val + item.amount : val, 0), [invItems, invItem]);
 
@@ -11,13 +11,13 @@ export default function CartItem({ invItem, invItems, formatter }: { invItem: In
     const pricing = useMemo(() => {
         if (!itemInfo) return 0
         let newPrice = undefined;
-        const search = itemInfo.pricing.find((pricing) => (currentAmount >= pricing.min && currentAmount <= pricing.max));
+        const search = (itemInfo as Item).pricing[serverName].find((pricing) => (currentAmount >= pricing.min && currentAmount <= pricing.max));
         if (search) newPrice = search.price
         if (newPrice === undefined) {
             newPrice = itemInfo.defaultPricing
         }
         return newPrice;
-    }, [itemInfo, currentAmount])
+    }, [itemInfo, serverName, currentAmount])
 
 
     return itemInfo ? (

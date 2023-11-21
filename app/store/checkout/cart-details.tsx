@@ -52,7 +52,7 @@ export default function CartDetails() {
         return items.filter((value, index, self) =>
             value !== undefined && value !== null &&
             index === self.findIndex((item) => (
-                item !== undefined && item.item === value.item
+                item !== undefined && item != null && item.item === value.item
             ))
         )
     }
@@ -94,6 +94,7 @@ export default function CartDetails() {
                                         invItem={item}
                                         formatter={formatter}
                                         key={innerIndex}
+                                        serverName={cartItem.server}
                                     />
                                 ))}
 
@@ -103,6 +104,7 @@ export default function CartDetails() {
                                         invItem={item}
                                         formatter={formatter}
                                         key={innerIndex}
+                                        serverName={cartItem.server}
                                     />
                                 )}
                             </div>

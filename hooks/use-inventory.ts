@@ -177,7 +177,7 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
 
 
             let newPrice = undefined;
-            const search = item.pricing.find((pricing) => (invItem.amount >= pricing.min && invItem.amount <= pricing.max));
+            const search = (item as Item).pricing[packageContent.server].find((pricing) => (invItem.amount >= pricing.min && invItem.amount <= pricing.max));
             if (search) newPrice = search.price
             if (newPrice === undefined) {
                 newPrice = item.defaultPricing
@@ -192,7 +192,7 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
             if (!item) return acc
 
             let newPrice = undefined;
-            const search = item.pricing.find((pricing) => (invItem.amount >= pricing.min && invItem.amount <= pricing.max));
+            const search = (item as Item).pricing[packageContent.server].find((pricing) => (invItem.amount >= pricing.min && invItem.amount <= pricing.max));
             if (search) newPrice = search.price
             if (newPrice === undefined) {
                 newPrice = item.defaultPricing
