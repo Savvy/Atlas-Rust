@@ -1,8 +1,9 @@
 import XIcon from "@/components/icons/xicon";
+import { items } from "@/data/items";
 import { abbrNum, cn } from "@/lib/utils";
 import { InvItem, Item } from "@/types";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useMemo } from "react";
 import { DragPreviewImage, DragSourceMonitor, useDrag, useDrop } from "react-dnd";
 
 type DropCellProps = {
@@ -38,6 +39,8 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
         }
     }))
 
+    const itemInfo = useMemo(() => items.find((item) => item.id === (invItem ? invItem.item : 0)), [invItem]);
+
     return (
         <div className={cn(
             { "mt-2": mtTop },
@@ -46,7 +49,7 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
         )}
             ref={drop}
         >
-            {!!invItem ?
+            {itemInfo && !!invItem ?
                 <div
                     className={cn(
                         "relative flex flex-col justify-start items-center select-none group",
@@ -56,7 +59,7 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
                 >
                     <DragPreviewImage
                         connect={preview}
-                        src={`/images/store/items/${invItem.item.image}`}
+                        src={`/images/store/items/${itemInfo.image}`}
                     />
                     <div className={cn(
                         "w-full h-full",
@@ -64,15 +67,15 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
                         "rounded-md flex flex-col items-center justify-end",
                         "bg-[#434343] border border-[#434343] group-hover:border-primary",
                         "group-hover:scale-105 transition-transform duration-75 ease-in-out",
-                        {"justify-center": type.toLowerCase().startsWith("clothing-")}
+                        { "justify-center": type.toLowerCase().startsWith("clothing-") }
                     )}>
-                        {invItem.item.image
+                        {itemInfo.image
                             ? <Image
-                                src={`/images/store/items/${invItem.item.image}`}
+                                src={`/images/store/items/${itemInfo.image}`}
                                 width={48}
                                 height={45}
-                                alt={invItem.item.name}
-                                /* className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10" */
+                                alt={itemInfo.name}
+                            /* className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10" */
                             />
                             : <XIcon />
                         }
@@ -87,7 +90,7 @@ export default function DropCell({ invItem, addItemToInv, index, removeItem, typ
                         {!type.toLowerCase().startsWith("clothing-") ? <div className={cn(
                             "w-[100%] px-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-center flex justify-between",
                         )}>
-                            <span className="text-sm font-semibold font-rajdhani w-16 whitespace-nowrap overflow-hidden overflow-ellipsis text-left">{invItem.item.name}</span>
+                            <span className="text-sm font-semibold font-rajdhani w-16 whitespace-nowrap overflow-hidden overflow-ellipsis text-left">{itemInfo.name}</span>
                             <span className="text-sm font-semibold font-rajdhani">{abbrNum(invItem.amount, 0)}</span>
                         </div> : null}
                     </div>

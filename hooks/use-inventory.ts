@@ -1,4 +1,4 @@
-import { editPackage, misc } from "@/data/items";
+import { editPackage, items, misc } from "@/data/items";
 import { InvItem, Item, Package } from "@/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -39,7 +39,7 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
                     newArray[currentSlot] = JSON.parse(JSON.stringify(prev[index]));
                 }
             } else {
-                newArray[index] = { item, amount: item.min }
+                newArray[index] = { item: item.id, amount: item.min }
             }
             return newArray
         });
@@ -60,7 +60,7 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
     const removeByType = (id: number) => {
         setInvItems((prev) => {
             const newArray = [...prev];
-            return newArray.filter((item) => item && item.item.id !== id)
+            return newArray.filter((item) => item && item.item !== id)
         })
     }
 
@@ -69,9 +69,9 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
             const newArray = [...prev];
 
             const itemsInInv = newArray.reduce((val, invItem) =>
-                (invItem && invItem.item.id === item.id) ? val + 1 : val, 0);
+                (invItem && invItem.item === item.id) ? val + 1 : val, 0);
             const currentAmount = newArray.reduce((val, invItem) =>
-                (invItem && invItem.item.id === item.id) ? val + invItem.amount : val, 0);
+                (invItem && invItem.item === item.id) ? val + invItem.amount : val, 0);
 
             const itemsShouldHave = Math.ceil(amount / item.maxPerStack);
 
@@ -79,12 +79,12 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
                 let amountToAdd = amount;
                 for (let index = 0; index < newArray.length; index++) {
                     const invItem = newArray[index];
-                    if (!invItem || !invItem.item || item.id !== invItem.item.id) continue;
+                    if (!invItem || !invItem.item || item.id !== invItem.item) continue;
                     amountToAdd -= invItem.amount;
                 }
                 for (let index = 0; index < newArray.length; index++) {
                     const invItem = newArray[index];
-                    if (!invItem || !invItem.item || item.id !== invItem.item.id) continue;
+                    if (!invItem || !invItem.item || item.id !== invItem.item) continue;
                     if (invItem.amount === item.maxPerStack) continue;
                     let amountCanAdd = (item.maxPerStack - invItem.amount);
                     if (amountCanAdd > amountToAdd) {
@@ -109,9 +109,7 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
                                 }
                                 newArray[i] = {
                                     amount: am,
-                                    item: {
-                                        ...item
-                                    }
+                                    item: item.id
                                 }
                                 break innerLoop;
                             }
@@ -124,7 +122,7 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
                 for (let index = newArray.length - 1; index >= 0; index--) {
                     if (adjustedAmount === 0) break;
                     const invItem = newArray[index];
-                    if (!invItem || invItem.item.id !== item.id) continue;
+                    if (!invItem || invItem.item !== item.id) continue;
                     if (invItem.amount - adjustedAmount <= 0) {
                         adjustedAmount -= invItem.amount
                         newArray[index] = undefined!;
@@ -141,7 +139,7 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
     const addItemToClothing = (item: Item, index: number) => {
         setClothingItems((prev) => {
             const newArray = [...prev];
-            newArray[index] = { item, amount: item.min }
+            newArray[index] = { item: item.id, amount: item.min }
             return newArray
         });
     }
@@ -159,14 +157,48 @@ export const useInventory = ({ defaultItems, packageContent }: InventoryProps) =
         return INVENTORY_SLOTS - invItems.reduce((val, item) => (item === undefined) ? val + 1 : val, 0);
     }, [invItems])
 
+    const getItemInfo = (itemId: number) => items.find((item) => item.id === itemId);
+
     const totalPrice = useMemo(() => {
         let amount = packageContent.price;
-        amount += invItems.reduce((acc, invItem: InvItem) => {
-            return !!invItem ? acc + (invItem.amount * invItem.item.pricePerStep) : acc
+
+        const inventoryItems: InvItem[] = Array.from(new Set(invItems.filter((val) => val !== undefined).map(val => val.item))).map((id) => {
+            return {
+                item: id,
+                amount: invItems.reduce((val, item) =>
+                    (item && item.item === id) ? val + item.amount : val, 0)
+            }
+        });
+
+        amount += inventoryItems.reduce((acc, invItem: InvItem) => {
+            if (!invItem) return acc;
+            const item = getItemInfo(invItem.item);
+            if (!item) return acc
+
+
+            let newPrice = undefined;
+            const search = item.pricing.find((pricing) => (invItem.amount >= pricing.min && invItem.amount <= pricing.max));
+            if (search) newPrice = search.price
+            if (newPrice === undefined) {
+                newPrice = item.defaultPricing
+            }
+
+            return (invItem.amount * newPrice) + acc
         }, 0);
 
         amount += clothingItems.reduce((acc, invItem: InvItem) => {
-            return !!invItem ? acc + (invItem.amount * invItem.item.pricePerStep) : acc
+            if (!invItem) return acc;
+            const item = getItemInfo(invItem.item);
+            if (!item) return acc
+
+            let newPrice = undefined;
+            const search = item.pricing.find((pricing) => (invItem.amount >= pricing.min && invItem.amount <= pricing.max));
+            if (search) newPrice = search.price
+            if (newPrice === undefined) {
+                newPrice = item.defaultPricing
+            }
+
+            return (invItem.amount * newPrice) + acc
         }, 0);
 
         if (autoUpgrade) {

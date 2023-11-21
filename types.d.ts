@@ -40,14 +40,22 @@ type Item = {
     category: string,
     name: string,
     image: string,
-    pricePerStep: number,
+    /* pricePerStep: number, */
+    pricing: ItemPricing[]
+    defaultPricing: number
     min: number,
     max: number,
     step: number
     maxPerStack: number
 }
 
+type ItemPricing = {
+    min: number,
+    max: number,
+    price: number,
+}
+
 type InvItem = {
-    item: Item,
+    item: number,
     amount: number
 }

@@ -52,17 +52,10 @@ export default function CartDetails() {
         return items.filter((value, index, self) =>
             value !== undefined && value !== null &&
             index === self.findIndex((item) => (
-                item !== undefined && item.item.id === value.item.id
+                item !== undefined && item.item === value.item
             ))
         )
     }
-
-    /* const currentAmount = useMemo(() => invItems.reduce((val, item) => */
-    /*     (item && item.item.id === invItem.id) ? val + item.amount : val, 0), [invItems, invItem]); */
-
-   /*  useEffect(() => {
-        console.log(accordion);
-    }, [accordion]) */
 
     return (
         <div className="h-full flex flex-col justify-between">
@@ -105,12 +98,12 @@ export default function CartDetails() {
                                 ))}
 
                                 {filteredItems(cartItem.clothingItems).map((item, innerIndex) =>
-                                    <div key={innerIndex}>
-                                        <h5 className='w-full flex justify-between text-[#8F9199] font-semibold'>
-                                            <span>{item.item.name}: {(+item.amount).toLocaleString()}</span>
-                                            <span>{formatter?.format(item.amount * item?.item.pricePerStep)}</span>
-                                        </h5>
-                                    </div>
+                                    <CartItem
+                                        invItems={cartItem.clothingItems}
+                                        invItem={item}
+                                        formatter={formatter}
+                                        key={innerIndex}
+                                    />
                                 )}
                             </div>
                         </AccordionContent>

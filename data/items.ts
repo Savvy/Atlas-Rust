@@ -14,7 +14,20 @@ export const items = [
         type: 'item',
         name: "Wood",
         image: "wood.png",
-        pricePerStep: 1000,
+        /* pricePerStep: 0.35, */
+        pricing: [
+            {
+                min: 0,
+                max: 3000,
+                price: 0.85
+            },
+            {
+                min: 4000,
+                max: 8000,
+                price: 0.45
+            },
+        ],
+        defaultPricing: 0.35,
         min: 1000, // 1000,
         max: 1000000, // 200000,
         step: 1000, // 1000,
@@ -26,7 +39,19 @@ export const items = [
         type: 'item',
         name: "Stone",
         image: "stone.png",
-        pricePerStep: 1000,
+        pricing: [
+            {
+                min: 0,
+                max: 3000,
+                price: 0.85
+            },
+            {
+                min: 4000,
+                max: 8000,
+                price: 0.45
+            },
+        ],
+        defaultPricing: 0.35,
         min: 1000,
         max: 1000000,
         step: 1000,
@@ -38,20 +63,33 @@ export const items = [
         type: 'item',
         name: "Metal Fragments",
         image: "metalfrags.png",
-        pricePerStep: 0.35,
+        pricing: [
+            {
+                min: 0,
+                max: 40,
+                price: 0.85
+            },
+        ],
+        defaultPricing: 0.35,
         min: 5,
         max: 40,
         step: 5,
         maxPerStack: 10
     },
-
     {
         id: 4,
         category: "components",
         type: 'item',
         name: "Assimov | AK",
         image: "assimov-ak.png",
-        pricePerStep: 0.35,
+        pricing: [
+            {
+                min: 0,
+                max: 10,
+                price: 0.85
+            },
+        ],
+        defaultPricing: 0.35,
         min: 1,
         max: 10,
         step: 1,
@@ -64,7 +102,14 @@ export const items = [
         type: 'item',
         name: "AVS | AK",
         image: "avs-ak.png",
-        pricePerStep: 0.35,
+        pricing: [
+            {
+                min: 0,
+                max: 10,
+                price: 0.85
+            },
+        ],
+        defaultPricing: 0.35,
         min: 1,
         max: 10,
         step: 1,
@@ -76,7 +121,14 @@ export const items = [
         type: 'item',
         name: "Rage | AK",
         image: "rage-ak.png",
-        pricePerStep: 0.35,
+        pricing: [
+            {
+                min: 0,
+                max: 10,
+                price: 0.85
+            },
+        ],
+        defaultPricing: 0.35,
         min: 1,
         max: 10,
         step: 1,
@@ -88,7 +140,14 @@ export const items = [
         type: 'item',
         name: "Assimov | AK",
         image: "assimov-ak.png",
-        pricePerStep: 0.35,
+        pricing: [
+            {
+                min: 0,
+                max: 10,
+                price: 0.85
+            },
+        ],
+        defaultPricing: 0.35,
         min: 1,
         max: 10,
         step: 1,
@@ -100,7 +159,14 @@ export const items = [
         type: 'item',
         name: "Eternal | AK",
         image: "eternal-ak.png",
-        pricePerStep: 0.35,
+        pricing: [
+            {
+                min: 0,
+                max: 10,
+                price: 0.85
+            },
+        ],
+        defaultPricing: 0.35,
         min: 1,
         max: 10,
         step: 1,
@@ -112,7 +178,14 @@ export const items = [
         type: 'clothing-body1',
         name: "Blue Jumpsuit",
         image: "jumpsuit.suit.blue.png",
-        pricePerStep: 2.35,
+        pricing: [
+            {
+                min: 0,
+                max: 10,
+                price: 2.85
+            },
+        ],
+        defaultPricing:2.35,
         min: 1,
         max: 1,
         step: 1,

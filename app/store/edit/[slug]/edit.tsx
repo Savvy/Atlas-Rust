@@ -41,15 +41,15 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
 
     const items = useMemo(() => [...initialItems].filter((item) =>
         inventory.invItems.findIndex((invItem) =>
-            item.id === invItem?.item.id) === -1), [inventory.invItems]);
+            item.id === invItem?.item) === -1), [inventory.invItems]);
 
     const configItems = useMemo(() => [...initialItems].filter((item) =>
         inventory.invItems.findIndex((invItem) =>
-            item.id === invItem?.item.id) !== -1), [inventory.invItems]);
+            item.id === invItem?.item) !== -1), [inventory.invItems]).map((item) => item.id);
 
     const clothingConfigItems = useMemo(() => [...initialItems].filter((item) =>
         inventory.clothingItems.findIndex((invItem) =>
-            item.id === invItem?.item.id) !== -1), [inventory.clothingItems]);
+            item.id === invItem?.item) !== -1), [inventory.clothingItems]).map((item) => item.id);
 
     const addToCart = useCartStore((state) => state.addToCart);
 
@@ -89,11 +89,9 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
         router.push("/store/checkout");
     }
 
-    const getItemById = (id: number) => {
-        return inventory.invItems.find((item: InvItem) => item?.item.id === id)
-    }
-
-    const [customVal, setCustomVal] = useState<number>(100000)
+    /* const getItemById = (id: number) => {
+        return inventory.invItems.find((item: InvItem) => item?.item === id)
+    } */
 
     return (
         <>
@@ -207,7 +205,7 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
                                 <ItemConfig
                                     key={index}
                                     invItems={inventory.invItems}
-                                    invItem={invItem}
+                                    itemId={invItem}
                                     setItemAmount={inventory.setItemAmount}
                                     removeByType={inventory.removeByType}
                                 />
@@ -218,7 +216,7 @@ export default function Edit({ defaultItems, packageContent }: EditProps) {
                                 <ItemConfig
                                     key={index}
                                     invItems={inventory.clothingItems}
-                                    invItem={invItem}
+                                    itemId={invItem}
                                     removeByType={inventory.removeByType}
                                 />
                                 : null

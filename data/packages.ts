@@ -6,7 +6,7 @@ const storeItems = [
                 id: "eternal-rank",
                 name: "Eternal | Rank",
                 image: 'eternal.png',
-                price: 25.99,
+                price: 0.0,
                 server: 'us-5x',
                 editable: true,
                 misc: {
@@ -22,93 +22,27 @@ const storeItems = [
                 items: [
                     {
                         amount: 1000,
-                        item: {
-                            id: 1,
-                            category: "resources",
-                            type: 'item',
-                            name: "Wood",
-                            image: "wood.png",
-                            pricePerStep: 1.0,
-                            min: 1000, // 1000,
-                            max: 1000000, // 200000,
-                            step: 1000, // 1000,
-                            maxPerStack: 100000 // 50000
-                        },
+                        item: 1
                     },
                     {
                         amount: 1000,
-                        item: {
-                            id: 1,
-                            category: "resources",
-                            type: 'item',
-                            name: "Wood",
-                            image: "wood.png",
-                            pricePerStep: 1.0,
-                            min: 1000, // 1000,
-                            max: 1000000, // 200000,
-                            step: 1000, // 1000,
-                            maxPerStack: 100000 // 50000
-                        },
+                        item: 1
                     },
                     {
                         amount: 1000,
-                        item: {
-                            id: 1,
-                            category: "resources",
-                            type: 'item',
-                            name: "Wood",
-                            image: "wood.png",
-                            pricePerStep: 1.0,
-                            min: 1000, // 1000,
-                            max: 1000000, // 200000,
-                            step: 1000, // 1000,
-                            maxPerStack: 100000 // 50000
-                        },
+                        item: 1
                     },
                     {
                         amount: 5000,
-                        item: {
-                            id: 1,
-                            category: "resources",
-                            type: 'item',
-                            name: "Wood",
-                            image: "wood.png",
-                            pricePerStep: 1.0,
-                            min: 1000, // 1000,
-                            max: 1000000, // 200000,
-                            step: 1000, // 1000,
-                            maxPerStack: 100000 // 50000
-                        },
+                        item: 1
                     },
                     {
                         amount: 1000,
-                        item: {
-                            id: 2,
-                            category: "resources",
-                            type: 'item',
-                            name: "Stone",
-                            image: "stone.png",
-                            pricePerStep: 1.0,
-                            min: 1000,
-                            max: 1000000,
-                            step: 1000,
-                            maxPerStack: 100000
-                        },
+                        item: 2
                     },
                     {
                         amount: 5000,
-                        item: {
-                            id: 2,
-                            category: "resources",
-                            type: 'item',
-                            name: "Stone",
-                            image: "stone.png",
-                            pricePerStep: 1.0,
-                            min: 1000,
-                            max: 1000000,
-                            step: 1000,
-                            maxPerStack: 100000
-                        },
+                        item: 2
                     },
                 ],
                 clothingItems: [],
