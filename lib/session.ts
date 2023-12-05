@@ -5,6 +5,7 @@ import { DefaultSession } from 'next-auth/core/types';
 export interface IntUserProp {
     steamId?: string
     discordId?: string
+    id?: string
 }
 
 export type UserProps = DefaultSession["user"] & IntUserProp

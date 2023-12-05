@@ -26,7 +26,7 @@ export const mainNav = [
     {
         title: "Maps",
         href: "/maps",
-        disabled: true,
+        disabled: false,
         showCart: false,
     },
     {

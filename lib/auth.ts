@@ -5,7 +5,11 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import DiscordProvider from "next-auth/providers/discord";
 
-const prisma = new PrismaClient();
+import prisma from './db';
+import { IntUserProp } from "./session";
+
+/* const prisma = new PrismaClient(); */
+
 
 export const authOptions = (req: NextRequest): NextAuthOptions => {
     return {
@@ -35,8 +39,13 @@ export const authOptions = (req: NextRequest): NextAuthOptions => {
                     },
                 });
 
+                if (session.user && prismaUser) {
+                    const user = session.user as IntUserProp;
+
+                    user.id = prismaUser.id;
+                }
+
                 const steamAccount = prismaUser?.accounts.find(a => a.provider == "steam");
-                console.log(steamAccount)
                 if (!!steamAccount) {
                     // @ts-expect-error
                     session.user.steamId = steamAccount?.providerAccountId;
