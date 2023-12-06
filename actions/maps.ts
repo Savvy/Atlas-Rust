@@ -51,30 +51,7 @@ export async function submitVote(userId: string, voteId: string, index: number) 
     } catch (error) {
         console.error(error);
     }
-    /* return await prisma.playerVotes.upsert({
-        create: {
-            voteId: voteId,
-            voteIndex: index,
-            userId: ""
-        },
-        update: {
-            voteIndex: index,
-        },
-        where: {
-
-        }
-    }) */
 }
-
-/* 
-    model PlayerVotes {
-        id        String @id @default(cuid())
-        voteId    String
-        user      User   @relation(fields: [userId], references: [id])
-        userId    String
-        voteIndex Int
-    }
-*/
 
 export default async function checkVotes() {
     MAP_DATA.forEach(async (vote) => {

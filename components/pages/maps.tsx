@@ -29,10 +29,10 @@ export default function Maps({ user }: any) {
     }, []);
 
 
-   /*  useEffect(() => {
-        console.log(data);
-    }, [data]);
- */
+    /*  useEffect(() => {
+         console.log(data);
+     }, [data]);
+  */
     const activeVotes = useMemo(() => {
         return data ?
             data?.filter((vote) => (region === "all" || region === vote.region) && vote.startDate <= new Date() && vote.endDate > new Date())
@@ -86,8 +86,7 @@ export default function Maps({ user }: any) {
                         {inactiveVotes.map((vote) => (
                             <Vote
                                 key={vote.voteId}
-                                server={vote.server}
-                                region={vote.region}
+                                vote={vote}
                                 user={user}
                             />
                         ))}
