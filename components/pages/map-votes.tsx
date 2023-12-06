@@ -18,9 +18,9 @@ export default function MapVotes({ user, vote }: any) {
 
     const options = useMemo(() => JSON.parse(vote.mapOptions) || [], [vote]);
 
-  /*   useEffect(() => {
-        console.log(vote);
-    }, [vote]); */
+    /*   useEffect(() => {
+          console.log(vote);
+      }, [vote]); */
 
     return (
         <Dialog>
@@ -43,7 +43,13 @@ export default function MapVotes({ user, vote }: any) {
                 <div className="grid grid-cols-3 gap-4 py-4 w-full">
                     {/* {Array.from({ length: 6 }, (_, i) => { }).map((_, index) => ( */}
                     {options.map((option: any, index: number) => (
-                        <MapOption user={user} key={index} vote={vote} option={option} index={index} />
+                        <MapOption
+                            user={user}
+                            key={index}
+                            vote={vote}
+                            option={option}
+                            index={index}
+                        />
                     ))}
                 </div>
             </DialogContent>

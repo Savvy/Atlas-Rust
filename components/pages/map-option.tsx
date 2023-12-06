@@ -18,6 +18,7 @@ import { useState } from "react";
 import useMapInfo from "@/hooks/use-map-info";
 import { submitVote } from "@/actions/maps";
 import { useToast } from "../ui/use-toast";
+import { signIn } from "next-auth/react";
 
 export default function MapOption({ user, vote, option, index }: any) {
     const { data, isSuccess, isError, error, refetch } = useMapInfo(option);
@@ -55,30 +56,46 @@ export default function MapOption({ user, vote, option, index }: any) {
             )}>
                 <h1 className="text-lg font-semibold font-rajdhani text-primary-foreground">Map Option #{index + 1}</h1>
             </CardContent>
-            <CardFooter className="p-3 gap-3 flex justify-between flex-col md:flex-row text-primary-foreground font-poppins">
-                <Button
-                    variant={'outline'}
-                    className="border border-input/10 bg-transparent w-full"
-                    onClick={() => submitSelection()}
-                    disabled={isSubmitting}
-                >
-                    {isSubmitting
-                        ?
-                        <Icon path={mdiLoading} size={1} className="mr-1 animate-spin" />
+            {vote.endDate < new Date() ?
+                <CardFooter className="p-3 gap-3 flex justify-between flex-col md:flex-row text-primary-foreground font-poppins">
+                    <ExpandedMap data={data} submitSelection={submitSelection} isSubmitting={isSubmitting} isLoggedIn={user !== undefined && user !== null} />
+                </CardFooter>
+                :
+                <CardFooter className="p-3 gap-3 flex justify-between flex-col md:flex-row text-primary-foreground font-poppins">
+                    {!user ?
+                        <Button
+                            variant={'outline'}
+                            className="border border-input/10 bg-transparent w-full"
+                            onClick={() => signIn("steam")}
+                        >
+                            Login
+                        </Button>
                         :
-                        <>
-                            <Icon path={mdiCheckCircleOutline} size={1} className="mr-1" />
-                            Map Vote
-                        </>
+                        <Button
+                            variant={'outline'}
+                            className="border border-input/10 bg-transparent w-full"
+                            onClick={() => submitSelection()}
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting
+                                ?
+                                <Icon path={mdiLoading} size={1} className="mr-1 animate-spin" />
+                                :
+                                <>
+                                    <Icon path={mdiCheckCircleOutline} size={1} className="mr-1" />
+                                    Map Vote
+                                </>
+                            }
+                        </Button>
                     }
-                </Button>
-                <ExpandedMap data={data} submitSelection={submitSelection} isSubmitting={isSubmitting} />
-            </CardFooter>
+                    <ExpandedMap data={data} vote={vote} submitSelection={submitSelection} isSubmitting={isSubmitting} isLoggedIn={user !== undefined && user !== null} />
+                </CardFooter>
+            }
         </Card>
     )
 }
 
-function ExpandedMap({ data, submitSelection, isSubmitting }: any) {
+function ExpandedMap({ data, submitSelection, isSubmitting, isLoggedIn, vote }: any) {
     const [isOpen, setOpen] = useState<boolean>(false);
     return (
         <Dialog open={isOpen} onOpenChange={setOpen}>
@@ -104,32 +121,54 @@ function ExpandedMap({ data, submitSelection, isSubmitting }: any) {
                         className="rounded"
                     />
                 </div>
-                <DialogFooter>
-                    <Button
-                        variant={'outline'}
-                        className="border border-input/10 bg-transparent w-full"
-                        onClick={() => submitSelection()}
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting
-                            ?
-                            <Icon path={mdiLoading} size={1} className="mr-1 animate-spin" />
+                {vote.endDate < new Date() ?
+                    <DialogFooter>
+                        <Button
+                            variant={'outline'}
+                            className="border border-input/10 bg-transparent w-full"
+                            onClick={() => setOpen(false)}
+                        >
+                            <Icon path={mdiCancel} size={1} className="mr-1" />
+                            Cancel
+                        </Button>
+                    </DialogFooter>
+                    :
+                    <DialogFooter>
+                        {!isLoggedIn ?
+                            <Button
+                                variant={'outline'}
+                                className="border border-input/10 bg-transparent w-full"
+                                onClick={() => signIn("steam")}
+                            >
+                                Login
+                            </Button>
                             :
-                            <>
-                                <Icon path={mdiCheckCircleOutline} size={1} className="mr-1" />
-                                Map Vote
-                            </>
+                            <Button
+                                variant={'outline'}
+                                className="border border-input/10 bg-transparent w-full"
+                                onClick={() => submitSelection()}
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting
+                                    ?
+                                    <Icon path={mdiLoading} size={1} className="mr-1 animate-spin" />
+                                    :
+                                    <>
+                                        <Icon path={mdiCheckCircleOutline} size={1} className="mr-1" />
+                                        Map Vote
+                                    </>
+                                }
+                            </Button>
                         }
-                    </Button>
-                    <Button
-                        variant={'outline'}
-                        className="border border-input/10 bg-transparent w-full"
-                        onClick={() => setOpen(false)}
-                    >
-                        <Icon path={mdiCancel} size={1} className="mr-1" />
-                        Cancel
-                    </Button>
-                </DialogFooter>
+                        <Button
+                            variant={'outline'}
+                            className="border border-input/10 bg-transparent w-full"
+                            onClick={() => setOpen(false)}
+                        >
+                            <Icon path={mdiCancel} size={1} className="mr-1" />
+                            Cancel
+                        </Button>
+                    </DialogFooter>}
             </DialogContent>
         </Dialog>
     )
