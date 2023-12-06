@@ -23,30 +23,34 @@ export async function fetchMapInfo(id: string) {
 }
 
 export async function submitVote(userId: string, voteId: string, index: number) {
-    let val = await prisma.playerVotes.findFirst({
-        where: {
-            voteId: voteId,
-            userId: userId
-        }
-    });
-    if (!val) {
-        val = await prisma.playerVotes.create({
-            data: {
+    try {
+        let val = await prisma.playerVotes.findFirst({
+            where: {
                 voteId: voteId,
-                userId: userId,
-                voteIndex: index,
+                userId: userId
+            }
+        });
+        if (!val) {
+            val = await prisma.playerVotes.create({
+                data: {
+                    voteId: voteId,
+                    userId: userId,
+                    voteIndex: index,
+                }
+            })
+            return;
+        }
+        val = await prisma.playerVotes.update({
+            data: {
+                voteId: voteId
+            },
+            where: {
+                id: val.id
             }
         })
-        return;
+    } catch (error) {
+        console.error(error);
     }
-    val = await prisma.playerVotes.update({
-        data: {
-            voteId: voteId
-        },
-        where: {
-            id: val.id
-        }
-    })
     /* return await prisma.playerVotes.upsert({
         create: {
             voteId: voteId,
