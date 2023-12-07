@@ -14,7 +14,7 @@ import Icon from "@mdi/react";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { mdiCancel, mdiCheckCircleOutline, mdiInformationOutline, mdiLoading } from "@mdi/js"
 import Image from "next/image"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useMapInfo from "@/hooks/use-map-info";
 import { submitVote } from "@/actions/maps";
 import { useToast } from "../ui/use-toast";
@@ -39,6 +39,10 @@ export default function MapOption({ user, vote, option, index }: any) {
         })
     }
 
+    useEffect(() => {
+        console.log(vote)
+    }, [vote])
+
     return (
         <Card className="w-full bg-[#0E0E0E4D] border-0 overflow-hidden relative group">
             <CardHeader className="p-0">
@@ -56,7 +60,8 @@ export default function MapOption({ user, vote, option, index }: any) {
             )}>
                 <h1 className="text-lg font-semibold font-rajdhani text-primary-foreground">Map Option #{index + 1}</h1>
             </CardContent>
-            {vote.endDate < new Date() ?
+            {vote.endDate < new Date()
+                ?
                 <CardFooter className="p-3 gap-3 flex justify-between flex-col md:flex-row text-primary-foreground font-poppins">
                     <ExpandedMap data={data} submitSelection={submitSelection} isSubmitting={isSubmitting} isLoggedIn={user !== undefined && user !== null} />
                 </CardFooter>
@@ -88,14 +93,20 @@ export default function MapOption({ user, vote, option, index }: any) {
                             }
                         </Button>
                     }
-                    <ExpandedMap data={data} vote={vote} submitSelection={submitSelection} isSubmitting={isSubmitting} isLoggedIn={user !== undefined && user !== null} />
+                    <ExpandedMap
+                        data={data}
+                        endDate={vote.endDate}
+                        submitSelection={submitSelection}
+                        isSubmitting={isSubmitting}
+                        isLoggedIn={user !== undefined && user !== null}
+                    />
                 </CardFooter>
             }
         </Card>
     )
 }
 
-function ExpandedMap({ data, submitSelection, isSubmitting, isLoggedIn, vote }: any) {
+function ExpandedMap({ data, submitSelection, isSubmitting, isLoggedIn, endDate }: any) {
     const [isOpen, setOpen] = useState<boolean>(false);
     return (
         <Dialog open={isOpen} onOpenChange={setOpen}>
@@ -121,7 +132,7 @@ function ExpandedMap({ data, submitSelection, isSubmitting, isLoggedIn, vote }: 
                         className="rounded"
                     />
                 </div>
-                {vote.endDate < new Date() ?
+                {endDate < new Date() ?
                     <DialogFooter>
                         <Button
                             variant={'outline'}
@@ -173,3 +184,4 @@ function ExpandedMap({ data, submitSelection, isSubmitting, isLoggedIn, vote }: 
         </Dialog>
     )
 }
+

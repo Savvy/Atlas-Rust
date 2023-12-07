@@ -18,9 +18,9 @@ export default function MapVotes({ user, vote }: any) {
 
     const options = useMemo(() => JSON.parse(vote.mapOptions) || [], [vote]);
 
-    /*   useEffect(() => {
-          console.log(vote);
-      }, [vote]); */
+    useEffect(() => {
+        console.log(vote);
+    }, [vote]);
 
     return (
         <Dialog>
