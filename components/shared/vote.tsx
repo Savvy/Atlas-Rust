@@ -10,6 +10,7 @@ import Icon from "@mdi/react"
 import { mdiPlayCircleOutline } from "@mdi/js"
 import Image from "next/image"
 import MapVotes from "../pages/map-votes"
+import { formatDistance } from "date-fns"
 
 export function Vote({ user, vote }: any) {
     return (
@@ -51,7 +52,9 @@ export function Vote({ user, vote }: any) {
                     href={'#'}
                 >
                     <Icon path={mdiPlayCircleOutline} size={1} className="mr-1" />
-                    Ends In 3 Days
+                    {formatDistance(new Date(vote.endDate), new Date(), {
+                        addSuffix: true
+                    })}
                 </a>
                 <MapVotes user={user} vote={vote} />
             </CardFooter>
